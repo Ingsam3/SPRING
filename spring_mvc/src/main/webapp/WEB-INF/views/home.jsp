@@ -1,5 +1,5 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
+<%@page contentType="text/html; charset=UTF-8" %>
+<%--웹브라우저에 출력되는 문자와 태그, 언어코딩 타입을 지정 --%>
 <html>
 <head>
 	<title>Home</title>

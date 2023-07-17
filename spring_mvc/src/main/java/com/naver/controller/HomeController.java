@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- * Handles requests for the application home page.
+ * 스프링 컨트롤러 클래스
  */
-@Controller
+@Controller // 애노테이션을 사용함으로써 인터넷 웹상에서 작동하는 스프링 컨트롤러로 인식함
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
@@ -23,6 +23,7 @@ public class HomeController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
+	//매핑주소가-> / (루트경로)가 됨
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
@@ -32,8 +33,11 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 		
 		model.addAttribute("serverTime", formattedDate );
+		//문자열 속성키이름인 server Time에 값으로 날짜 포맷 정보를 저장함
 		
 		return "home";
+		//뷰페이지 경로(view 리졸브 경로) / WEB_INF/vuews/home.jsp
+		//home이 뷰페이지인 jsp 파일명이다
 	}
 	
 }

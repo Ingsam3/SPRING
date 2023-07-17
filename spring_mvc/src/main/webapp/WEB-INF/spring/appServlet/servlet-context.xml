@@ -18,7 +18,9 @@
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<!-- 뷰페이지 경로인 뷰리졸브가 설정되어있음 -->
 		<beans:property name="suffix" value=".jsp" />
+		<!-- 뷰페이지 확장자가 .jsp로 정의됨 -->
 	</beans:bean>
 	
 	<context:component-scan base-package="com.naver.controller" />
