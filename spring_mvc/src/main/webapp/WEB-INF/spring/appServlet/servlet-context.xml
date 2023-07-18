@@ -11,9 +11,12 @@
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
+	<!-- 스프링 컨트롤러 클래스 선언시 애노테이션을 이용해서 작성할 수 있다는 것을 선언 -->
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
+	<!-- STS 가상 경로 src/main/wepapp/resources 이경로 하위에는 HTML,CSS,JS,JQuery,
+	이미지 등 사이트 개발에 필요한 리소스 자원이 들어가는 경로이다 -->
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -24,7 +27,8 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="com.naver.controller" />
-	
+	<!-- context:component-scan = com.naver.controller 패키지에 있는 
+	스프링 컨트롤 클래스를 자동으로 찾아서 (AUTO 스캔) 애노테이션 처리가 된 컨트롤러 클래스를 스프링에서 인식하게 해줌 -->
 	
 	
 </beans:beans>
