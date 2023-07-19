@@ -15,10 +15,9 @@
 		<org.slf4j-version>1.7.25</org.slf4j-version>
 	</properties>
 	
-	
-	
 	<dependencies>
-	<!-- copy begin -->
+	
+	    <!-- copy begin -->
 		<!-- lombok 라이브러리 추가 : 다운로드 주소 ~ projectlombok.org   , cmd java -jar lombok.jar -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -104,7 +103,7 @@
 		</dependency>
 
 		<!-- copy end -->
-	
+		
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -188,13 +187,13 @@
 			<version>2.5</version>
 			<scope>provided</scope>
 		</dependency>-->
+		
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
 			<scope>provided</scope>
 		</dependency>
-		
 		
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
@@ -214,7 +213,8 @@
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 			<scope>test</scope>
-		</dependency>        
+		</dependency>     
+		   
 	</dependencies>
     <build>
         <plugins>
@@ -237,7 +237,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.5.1</version>
                 <configuration>
-                	<!-- java 8 -->
+                
+                    <!-- JAVA 8 -->
                     <source>1.8</source>
                     <target>1.8</target>
                     <compilerArgument>-Xlint:all</compilerArgument>

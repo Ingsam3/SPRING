@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Menber">
+<!-- 매퍼 태그namespace 명을 Member로 지정, mybatis에서 쿼리문을 다루는 태그를 매퍼라고 부른다 -->
+
+
+<!-- 회원저장 -->
+	<insert id="mem_in" parameterType="mem">
+	<!-- parameterType속성은 전달인자 타입이고 생략가능하다 
+	mem은 mybatis-confi.xml에서 설정한 MemberVo빈클래스 별칭 이름이다. 
+	 별칭명을 사용하지 않으면 풀패키지 경로인 com.naver.vo.MemberVo 모두 써줘야한다 -->
+	 
+	 <!--  insert into tbl_member (userid,userpw,username,email,regdate)
+	 valuse(#{userid},#{userpw},#{username},#{email},sysdate)-->
+	 
+	 insert into tbl_member values(#{userid},#{userpw},
+	 #{username},#{email},sysdate)
+	 
+	 
+	 <!-- #{userid} 자바코드로 표현하면 mem.getUserid()와 같은 역할을 함 -->
+	 
+	</insert>
+</mapper>
