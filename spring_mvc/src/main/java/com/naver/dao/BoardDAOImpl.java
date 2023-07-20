@@ -13,6 +13,11 @@ public class BoardDAOImpl implements BoardDAO {
 	private SqlSession sqlSession; //mybatis 쿼리문 실행
 	// (DI) 객체 의존성 주입
 	
+	@Override
+	public void insertBoard(BoardVO b) {
+		this.sqlSession.insert("board_in",b);
+		
+	}
 
 
 }

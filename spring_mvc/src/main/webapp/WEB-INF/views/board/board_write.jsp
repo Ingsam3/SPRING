@@ -5,21 +5,21 @@
 <head>
 <meta charset="UTF-8">
 <title>MVC 게시판 글쓰기</title>
-<script src="../resource/js/jquery.js"></script>
+<script src="../resources/js/jquery.js"></script>
 <script>
 	function write_check() {
-		if($.trim($("#witer").val())==""){
-			alert("글쓴이를 입력하세요");
-			$("#writer").val("").focus();
+		if($.trim($("#writer").val()) ==""){
+			alert("글쓴이를 입력하세요!");
+			$("#witer").val("").focus();
 			return false;
 		}
-		if($.trim($("#title").val())==""){
-			alert("글제목를 입력하세요");
+		if($.trim($("#title").val()) ==""){
+			alert("작성자명을 입력하세요!");
 			$("#title").val("").focus();
 			return false;
 		}
-		if($.trim($("#content").val())==""){
-			alert("글내용 입력하세요");
+		if($.trim($("#content").val()) ==""){
+			alert("작성자명을 입력하세요!");
 			$("#content").val("").focus();
 			return false;
 		}
