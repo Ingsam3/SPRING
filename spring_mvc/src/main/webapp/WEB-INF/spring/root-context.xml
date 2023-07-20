@@ -44,4 +44,15 @@
    <!-- 모델 DAOIMPL @Repository가 설정된 부분을 스프링에서 자동으로 찾아서 오토스캔하여 등록하게함 -->
 	<context:component-scan base-package="com.naver.dao" />
 
+	<!--서비스 추가 목적
+		비지니스 오토스캔 추가 이 패키지의 역할은 
+		첫번째 컨트롤과 모델 를 연결하는 중간 매개체 역할을 한 dao다
+		둘째 고객의 추가요구사항을 반영할 때 개발로직코드를 유연하게 작성가능하게 한다 
+	 	셋째 스프링의 를 통한 AOP(관점지향 프로그래밍) 트랜잭션 적용 핵심이다
+	 	이것을 적용해서 데이터의 불일치 현상을 제거해서 사이트의 신뢰도를 높인다
+	 	 -->
+	<context:component-scan base-package="com.naver.service" />
+	
+
+
 </beans>
