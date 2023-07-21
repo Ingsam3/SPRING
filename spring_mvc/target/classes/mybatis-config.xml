@@ -7,7 +7,10 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 
 <configuration>
   <typeAliases>
-  	<typeAlias type="com.naver.vo.MemberVO" alias="mem" />
-     <!-- MemberVO 객체 별칭명 생성 -->    
+  
+         <typeAlias type="com.naver.vo.MemberVO" alias="mem" />
+         <!-- MemberVO빈클래스의 객체 별칭명 mem을 지정 -->
+         
+         <typeAlias type="com.naver.vo.BoardVO" alias="board" />
   </typeAliases>
 </configuration>

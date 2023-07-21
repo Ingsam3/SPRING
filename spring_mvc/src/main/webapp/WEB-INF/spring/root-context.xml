@@ -29,30 +29,32 @@
        <property name="dataSource" ref="dataSource" />
        <!-- setter()를 통한 의존성 즉 DI설정, ref속성을 통해서 빈아이디 dataSource를 호출해서 오라클 연결함. -->
        <property name="configLocation" value="classpath:/mybatis-config.xml" />
-       <!-- classpath경로는 STS 개발툴의 가상경로인 src/main/resources이다. -->	   
-   
-   <!-- 쿼리문을 다루는 mybatis 매퍼 태그 파일이 들어가는 경로이다 -->
-   <property name="mapperLocations" value="classpath:com/naver/mappers/*/*.xml" />
-   </bean>	
-   
-   <bean id="sqlsession" class="org.mybatis.spring.SqlSessionTemplate"
-   destroy-method="clearCache"> <!-- 임시메모리 캐시를 비워서 데이터 베이스 연결을 해제 -->
-    <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
-   	<!-- 생성자를 통한 의존성 주입, 마이바티ㅡ 쿼리문을 수행할 sqlSession 할당 -->
+       <!-- classpath경로는 STS 개발툴의 가상경로인 src/main/resources이다. -->	
+       <property name="mapperLocations" value="classpath:com/naver/mappers/*/*.xml" />
+       <!-- 쿼리문을 다루는 mybatis 매퍼태그 파일이 들어가는 경로이다. -->   
    </bean>
    
-   <!-- 모델 DAOIMPL @Repository가 설정된 부분을 스프링에서 자동으로 찾아서 오토스캔하여 등록하게함 -->
-	<context:component-scan base-package="com.naver.dao" />
-
-	<!--서비스 추가 목적
-		비지니스 오토스캔 추가 이 패키지의 역할은 
-		첫번째 컨트롤과 모델 를 연결하는 중간 매개체 역할을 한 dao다
-		둘째 고객의 추가요구사항을 반영할 때 개발로직코드를 유연하게 작성가능하게 한다 
-	 	셋째 스프링의 를 통한 AOP(관점지향 프로그래밍) 트랜잭션 적용 핵심이다
-	 	이것을 적용해서 데이터의 불일치 현상을 제거해서 사이트의 신뢰도를 높인다
-	 	 -->
-	<context:component-scan base-package="com.naver.service" />
-	
-
-
+   <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"	
+   destroy-method="clearCache"> <!-- destroy-method="clearCache" 임시 메모리 캐시를 비워서 데이터베이
+   스 연결을 해제 -->
+       <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
+       <!-- 생성자를 통한 의존성 주입, mybatis 쿼리문을 수행할 sqlSession할당 -->
+   </bean>
+   
+   <!-- 모델 DAOImpl의 @Repository가 설정된 부분을 스프링에서 자동으로 찾아서(오토스켄)하여 등록하게 함 -->
+   <context:component-scan base-package="com.naver.dao" />
+   
+   <!-- 서비스 추가목적)
+        1.컨트롤러와 모델 DAO를 연결하는 중간 매개체 역할을 한다.
+        2.고객의 추가요구 사항을 반영할 때 개발로직코드를 보다 더 유연하게 작성가능하게 한다.
+        3.스프링의 AOP를 통한 트랜잭션 적용이다. 이것을 적용함으로써 데이터 불일치 현상을 제거해서 사이트의 신뢰도를 높인다.
+    -->
+   <context:component-scan base-package="com.naver.service" />
+    
 </beans>
+
+
+
+
+
+

@@ -1,12 +1,15 @@
 package com.naver.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
 
 import com.naver.vo.BoardVO;
 
 public interface BoardService {
-	
-	
+
 	void insertBoard(BoardVO b);
+
+	int getTotalCount();
+
+	List<BoardVO> getBoardList(BoardVO b);
 
 }
