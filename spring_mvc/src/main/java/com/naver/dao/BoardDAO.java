@@ -12,4 +12,6 @@ public interface BoardDAO {
 
 	List<BoardVO> getBoardList(BoardVO b); //페이징 시 b 추가
 
+	void updateHit(int bno);
+
 }

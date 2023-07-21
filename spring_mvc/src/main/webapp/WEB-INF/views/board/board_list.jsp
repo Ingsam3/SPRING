@@ -25,7 +25,13 @@
 				<c:forEach var="b" items="${blist }">
 					<tr>
 						<th>${b.bno }</th>
-						<th>${b.title }</th>
+						<th>
+							<a href="/controller/board/board_cont?=${bno }&page=${page}">${b.title }</a>
+							<%--bno, page 2개의 파라미터 값 전달됨
+								특히 쪽번호를 get으록 전달하는 이유는 책갈피 기능 구현 때문이다
+							 --%>
+						</th>
+						
 						<th>${b.writer }</th>
 						<th>${b.viewcnt }</th>
 						<th>${b.regdate }</th>
@@ -70,8 +76,9 @@
 	
 		<tr>
 			<td colspan="5" align="right">
-				<input type="button" value="글쓰기" onclick="location='/controller/board/board_write';">
-				<%-- 자바스크립트 location 객체에 의해서 이동하는 것은 get --%>
+				<input type="button" value="글쓰기" onclick="location='/controller/board/board_write?page=${page}';">
+				<%-- 자바스크립트 location 객체에 의해서 이동하는 것은 get
+				페이징에서 내가 본 쪽번호로 바로 이동하는 책갈피 기능을 구현하기 위해 board_write?page=쪽번호get 방식으로 전달한다 --%>
 			</td>
 		</tr>
 	</table>

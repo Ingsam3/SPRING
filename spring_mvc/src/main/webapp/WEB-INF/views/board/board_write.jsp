@@ -42,6 +42,10 @@
  <hr>
   <input type="submit" value="글쓰기" >
   <input type="Reset" value="취소" onclick="$('#writer').focus();" >
+  <input type="button" value="목록" onclick="location='/controller/board/board_list?page=${page}';" >
+  <%--페이징에서 책갈피 구현위해 board_list?page=쪽번호르르get으로 전달하면
+	  내가 본 페이지 번호로 바로 이동한다 --%>
+  
   <%--
     문제) 브라우저 주소창에 /board/board_write매핑주소를 get방식으로 실행해서 제대로 뷰페이지가 띄워지고 유효성 검증이
     되는 개발자 테스트과정(디버깅)을 해보자.

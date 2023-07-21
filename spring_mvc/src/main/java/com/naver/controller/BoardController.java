@@ -7,9 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -26,9 +28,18 @@ public class BoardController {
 	//게시판 글쓰기 폼
 	@RequestMapping(value="/board_write",method=RequestMethod.GET) //get으로 접근하는 매핑주소를 처리
 	// /board_write매핑주소 등록
-	public void board_write() {
+	public void board_write(Model wm, HttpServletRequest request) {//책갈피
 		//리턴타입이 void형이면 매핑주소가 뷰페이지 파일명이 된다.
 		//뷰리졸브 경로는 /WEB-INF/views/board/board_write.jsp
+		
+		int page =1;
+		if(request.getParameter("page")!=null) {
+			page=Integer.parseInt(request.getParameter("page"));
+			//쪽번호 받아서 정수 숫자로 변경해서 저장
+		}
+		wm.addAttribute("page",page);
+		//페이징에서 내가 본 쪽번호로 바로 이동하기 위한 책갈피 기능을 구현하기 위해서 
+		
 	}//board_write() =>GET방식
 	
 	//게시판 저장
@@ -85,7 +96,7 @@ public class BoardController {
 		
 		
 		listM.addAttribute("totalCount",totalCount);
-		//totalCount 키이름에 충 레코드 개수저장
+		//totalCount 키이름에 총 레코드 개수저장
 		listM.addAttribute("blist",blist);
 		//blist 키이름에 목록 저장
 		
@@ -100,13 +111,16 @@ public class BoardController {
 	}//board_list()
 	
 	
+	@GetMapping("/board_cont")//get으로 접근하는 매핑주소를 처리, board_cont 매핑주소 등록
 	
-	
-	
-	
-	
-	
-	
+	public ModelAndView board_cont(@RequestParam("bno") int bno, int page) {
+		
+		//@RequestParam :request.getparameter("bno")와 같음
+		//bno 파라미터에 담겨져서 전달된 번호값을 가져온다 int page만 사용하서 쪽번호를 받는다
+		BoardVO bc = this.boardService.getBoardCont(bno);
+		//내용보기+조회수 증가
+		return null;
+	} //board_cont
 	
 	
 	
