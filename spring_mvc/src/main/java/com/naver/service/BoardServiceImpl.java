@@ -21,20 +21,36 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public int getTotalCount() {
-		
 		return boardDao.getTotalCount();
 	}
 
 	@Override
-	public List<BoardVO> getBoardList(BoardVO b) { //페이징 시 BoardVO b
-
-		return this.boardDao.getBoardList(b);//페이징 시 인자값 b 추가
+	public List<BoardVO> getBoardList(BoardVO b) {
+		return this.boardDao.getBoardList(b);
 	}
-	//내용보기(2)+조회수증가(1) => 스프링AOP를 통한 트랜잭션을 적용함으로써 데이터 불일치 현상을 제거해서 사이트의 신뢰도를 높임
+
+	//조회수 증가+ 내용보기 => 스프링의 AOP를 통한 트랜잭션을 적용함으로써 데이터 불일치 현상을 제거해서 사이트의 신뢰도를 높임
 	@Override
 	public BoardVO getBoardCont(int bno) {
 		this.boardDao.updateHit(bno);//조회수 증가
-		return null;
+		return this.boardDao.getBoardCont(bno); // 번호에 해당하는 db 레코드 값을 가져옴
 	}
-	
+
+	@Override
+	public BoardVO getBoardCont2(int bno) {
+		
+		return this.boardDao.getBoardCont(bno);
+		//조회수 증가는 빼고 내용보기만.
+	}
+
+	@Override
+	public void editBoard(BoardVO eb) {
+		this.boardDao.editBoard(eb);	
+		
+	}
+
+	@Override
+	public void delBoard(int bno) {
+		this.boardDao.delBoard(bno);	
+	}	
 }

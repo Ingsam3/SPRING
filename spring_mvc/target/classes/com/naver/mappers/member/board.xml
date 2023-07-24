@@ -17,28 +17,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      문제)컨트롤러 부터 mybatis매퍼태그까지 게시판 저장되게 만들었다. 정상적으로 저장되게 개발자 테스트를 해보자.
     -->
     
-    <!-- 총 레코드 개수 => 총 게시물 개수 -->
-    <select id="board_count" resultType="int">
-    <!-- resultType는 반환 타입, 생략불가, 반환타입이 정수 숫자 타입이다 -->
-    	select count(*) from tbl_board 
-    	
-    </select>
-    
-    <!-- 게시물 목록 -->
-    <select id="board_list" resultType="board" parameterType="board">
-    
-    	select * from 
-    	(select rowNum rNum, bno, writer, title, viewcnt, regdate
-    	from(select * from tbl_board order by bno desc))
-    	where rNum &gt; = #{startrow} and rNum &lt; = #{endrow}
-    	
-    	<!-- rewNum 컬럼은 오라클에서 테이블 생성 시 기본으로 추가된다
-    	최초 레코드 저장시 1씩 증가하는 일련 번호값이 저장된다 
-    	&gt; : ~ 보다 크다 /&lt; : ~ 보다 작다 (1이상, 10이하)-->
-    </select>
-    
-    <!-- 조회수 증가 -->
-    <update id="board_hit" parameterType="int">
-    	update tbl_board set viewcnt = viewcnt+1 where bno=#{bno}
-    </update>
+   <!-- 총레코드 개수=>총 게시물 수 -->
+   <select id="board_count" resultType="int">
+    <!--  resultType은 반환 타입 속성이고 생략불가. 반환타입이 정수 숫자타입이다. 이 속성은 생략할 수 없다.-->
+     select count(*)  from tbl_board <!-- count()는 레코드 개수를 구하는 오라클 함수 이다. -->
+   </select>    
+   
+   <!-- 게시물 목록 -->
+   <select id="board_list" resultType="board" parameterType="board">
+    select * from
+    (select rowNum rNum,bno,writer,title,viewcnt,regdate
+    from (select * from tbl_board order by bno desc))
+    where rNum &gt;= #{startrow} and rNum &lt;= #{endrow}
+    <!--  rowNum컬럼은 오라클에서 테이블 생성시 기본으로 추가된다. 최초 레코드 저장시 1씩증가하는 일련번호값이 저장된다.
+    &gt;은 ~보다 크다(>), &lt; 은 ~보다 작다(<)  -->
+   </select>
+   
+   <!-- 조회수 증가 -->
+   <update id="board_hit" parameterType="int">
+     update tbl_board set viewcnt=viewcnt+1 where bno=#{bno}
+   </update>
+  
+   <!-- 내용보기 => parameter 타입 생략 -->
+   <select id="board_cont" resultType="board">
+   	select * from tbl_board where bno=#{bno}
+   </select>
+   
+   <!-- 게시판 수정 -->
+   <update id="board_edit">
+     update tbl_board set writer=#{writer},title=#{title},content=#{content}
+     where bno=#{bno}
+   </update>
+   
+   <!-- 게시판 삭제 -->
+  	<delete id="board_del" parameterType="int"><!-- bno 받아옴 -->
+  		delete from tbl_board where bno=#{bno}
+  	</delete>
+  	
 </mapper>
+
+
+
