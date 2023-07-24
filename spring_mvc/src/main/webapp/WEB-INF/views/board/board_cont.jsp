@@ -29,7 +29,7 @@
 				onclick="location='/controller/board/board_edit?bno=${bc.bno}&page=${page}';">
 				<input type="button" value="삭제" 
 				onclick="if(confirm('정말로 삭제?')==true){
-				location='/controller/board/board_list?bno=${bc.bno}&page=${page}';}else{return;}" >
+				location='/controller/board/board_del?bno=${bc.bno}&page=${page}';}else{return;}" >
 				<input type="button" value="목록" onclick="location='/controller/board/board_list?page=${page}';">
 			</th>
 			<!-- <td>${bc.viewcnt}</td> -->
