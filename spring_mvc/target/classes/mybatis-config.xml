@@ -12,5 +12,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
          <!-- MemberVO빈클래스의 객체 별칭명 mem을 지정 -->
          
          <typeAlias type="com.naver.vo.BoardVO" alias="board" />
+         <typeAlias alias="guest" type="com.naver.vo.GuestVO" /> 	
   </typeAliases>
 </configuration>

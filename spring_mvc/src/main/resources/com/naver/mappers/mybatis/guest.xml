@@ -1,12 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-<mapper namespace="Guest">
-
-
-
-
-</mapper>
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="Guest">
+ 
+     <!-- 방명록 저장 -->
+   <insert id="g_in" parameterType="guest">
+     <!-- parameterType속성은 전달인자 타입이다. 일반적으로 생략한다. -->
+      insert into tbl_guest (gno,gname,gtitle,gcont) values(gno_seq2.nextval,
+      #{gname},#{gtitle},#{gcont})
+   </insert>
+  
+    
+   <!-- 총레코드 개수=>총 게시물 수 -->
+   <select id="g_count" resultType="int">
+    <!--  resultType은 반환 타입 속성이고 생략불가. 반환타입이 정수 숫자타입이다. -->
+     select count(*)  from tbl_guest <!-- count()는 레코드 개수를 구하는 오라클 함수 이다. -->
+   </select>    
+   
+   <!-- 게시물 목록 -->
+   <select id="g_list" resultType="guest" parameterType="guest">
+    select * from
+    (select rowNum rNum,gno,gname,gtitle,ghit,gdate
+    from (select * from tbl_guest order by gno desc))
+    where rNum &gt;= #{startrow} and rNum &lt;= #{endrow}
+    <!--  rowNum컬럼은 오라클에서 테이블 생성시 기본으로 추가된다. 최초 레코드 저장시 1씩증가하는 일련번호값이 저장된다.
+    &gt;은 ~보다 크다(>), &lt; 은 ~보다 작다(<)  -->
+   </select>
+   
+    <!-- 조회수 증가 -->
+   <update id="g_hit" parameterType="int">
+     update tbl_guest set ghit=ghit+1 where gno=#{gno}
+   </update>
+   
+   <!-- 내용보기 =>parameterType속성은 생략 -->
+   <select id="g_cont" resultType="guest">
+     select * from tbl_guest where gno=#{gno}
+   </select>
+   
+   <!-- 수정완료 --> 
+   <update id="g_edit">
+     update tbl_guest set gname=#{gname},gtitle=#{gtitle},gcont=#{gcont}
+     where gno=#{gno}
+   </update>
+   
+   <!-- 삭제 -->
+   <delete id="g_del" parameterType="int">
+     delete from tbl_guest where gno=#{gno}   
+   </delete>
+ </mapper>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
