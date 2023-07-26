@@ -6,4 +6,29 @@
  
  <mapper namespace="Reply">
  
+
+ 	<!-- 댓글저장 -->
+ 	<insert id="reply_in" parameterType="reply">
+ 		insert into tbl_reply(rno,bno,replyer,replytext,regdate)
+ 		 values(rno_seq.nextval,#{bno},#{replyer},#{replytext},sysdate)
+ 	</insert>
+ 	
+ 	<!-- 댓글 목록 -->
+ 	<select id="reply_list" parameterType="int" resultType="reply">
+ 	<!-- parameterType: 전달인자 타입(생략가능)
+ 		 resultType : 반환타입 (생략불가능) -->
+ 		 select * from tbl_reply where bno=#{bno} order by rno desc
+ 	</select>
+ 	
+ 	<!-- 댓글 수정 -->
+ 	<update id="reply_edit">
+ 	<!-- paremetertype : 생략 -->
+ 	update tbl_reply set replytext=#{replytext}, updatedate = sysdate where rno=#{rno}
+ 	</update>
+ 	
+ 	<!-- 댓글 삭제 -->
+ 	<delete id="reply_del">
+ 	delete from  tbl_reply where rno =#{rno}
+ 	</delete>
+ 	
  </mapper>

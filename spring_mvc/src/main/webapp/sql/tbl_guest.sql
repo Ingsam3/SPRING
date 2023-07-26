@@ -28,7 +28,7 @@ create table tbl_reply(
 );
 select * from tbl_reply order by rno desc;
 
-alter table tbl_reply add constraint fk_board
+alter table tbl_reply add constraint tbl_reply_bno_fk
 foreign key(bno) references tbl_board(bno);
 
 --foreign key( ) ¿Ü·¡Å°
