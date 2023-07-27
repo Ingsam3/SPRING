@@ -13,6 +13,8 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	
+	<aop:aspectj-autoproxy/>
+	<!-- AOP 자동 프록시 설정  -->
 	<!-- 스프링과 오라클 연결 JDBC-->
 	<bean id="dataSource" 
 	class="org.springframework.jdbc.datasource.DriverManagerDataSource">
