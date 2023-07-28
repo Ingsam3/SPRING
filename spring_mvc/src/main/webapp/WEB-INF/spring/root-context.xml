@@ -37,6 +37,16 @@
        <!-- 쿼리문을 다루는 mybatis 매퍼태그 파일이 들어가는 경로이다. -->   
    </bean>
    
+   <!-- 스프링 트랜잭션 매니저 생성 -->
+   <bean id="transactionManager"
+	class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<property name="dataSource" ref="dataSource" /> 
+	<!-- setter(를 통한 의존성 주입 (DI설정) => ref been dataSource 아이디 호출해서 오라클 연결 ) -->
+   </bean>
+   <tx:annotation-driven />
+   <!-- 트랜잭션 설정 애너테이션 @Transactional 애너테이션을 이용한 트랜잭션 관리가 가능. -->
+   
+   
    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"	
    destroy-method="clearCache"> <!-- destroy-method="clearCache" 임시 메모리 캐시를 비워서 데이터베이
    스 연결을 해제 -->
@@ -56,6 +66,8 @@
    
    <aop:config/>
    <!-- aop =>AOP 설정 를 애너테이션 말고 XML -->
+   
+   
     
 </beans>
 

@@ -5,7 +5,10 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
  <mapper namespace="Message"> 
- 	
- 
+ 	<!-- 메세지 추가 -->
+ 	<insert id="message_in" parameterType="message"><!-- message :mybatis 에서 지정한 값 -->
+ 		insert into tbl_message(mid,targetid, sender, message,senddate )
+ 		values(mid_no_seq.nextval, #{targetid},#{sender},#{message},sysdate)
+ 	</insert>
  
  </mapper>
