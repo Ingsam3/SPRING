@@ -8,21 +8,21 @@
 <script src="../resources/js/jquery.js"></script>
 <script>
   function write_check(){
-	  if($.trim($("#writer").val())== ""){
+	  if($.trim($("#gongji_name").val())== ""){
 		  alert("글쓴이를 입력하세요!");
-		  $("#writer").val("").focus();
+		  $("#gongji_name").val("").focus();
 		  return false;
 	  }
 	  
-	  if($.trim($("#title").val())== ""){
+	  if($.trim($("#gongji_title").val())== ""){
 		  alert("글제목을 입력하세요!");
-		  $("#title").val("").focus();
+		  $("#gongji_title").val("").focus();
 		  return false;
 	  }
 	  
-	  if($.trim($("#content").val())== ""){
+	  if($.trim($("#gongji_cont").val())== ""){
 		  alert("글내용을 입력하세요!");
-		  $("#content").val("").focus();
+		  $("#gongji_cont").val("").focus();
 		  return false;
 	  }
   }
@@ -32,14 +32,14 @@
 <form method="post" onsubmit="return write_check();">
  
   <h2>스프링 MVC 공지 입력폼</h2>
-  공지작성자 : <input name="writer" id="writer" size="14"><br><br>
+  공지작성자 : <input name="gongji_name" id="gongji_name" size="14"><br><br>
  
-  공지제목 : <input name="title" id="title" size="14" ><br><br>
+  공지제목 : <input name="gongji_title" id="gongji_title" size="14" ><br><br>
   
-  공지내용 : <textarea name="content" id="content" rows="10" cols="36"></textarea>
+  공지내용 : <textarea name="gongji_cont" id="gongji_cont" rows="10" cols="36"></textarea>
  <hr>
   <input type="submit" value="공지작성" >
-  <input type="Reset" value="취소" onclick="$('#writer').focus();" >
+  <input type="Reset" value="취소" onclick="$('#gongji_name').focus();" >
   <input type="button" value="목록" onclick="location='/controller/gongji/gongji_list?page=${page}';" >
  
  </form>

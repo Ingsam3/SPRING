@@ -5,6 +5,11 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
  <mapper namespace="Gongji"> 
+ 	 <!-- 공지 저장 -->
+   <insert id="gongji_in" parameterType="gongji">
+     <!-- parameterType속성은 전달인자 타입이다. 일반적으로 생략한다. -->
+      insert into tbl_gongji (gongji_no,gongji_name,gongji_title,gongji_cont,gongji_date) values(gongji_no_seq.nextval,
+      #{gongji_name},#{gongji_title},#{gongji_cont},sysdate)
+   </insert>
  	
- 
  </mapper>

@@ -2,10 +2,16 @@ package com.naver.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.naver.service.GongjiService;
+import com.naver.vo.GongjiVO;
 
 @Controller
 @RequestMapping("/gongji/*")//컨트롤러 자체 매핑주소 등록
@@ -37,8 +43,41 @@ public class GongjiController {
 	  8. 공지 목록에서 등록날짜 출력할 때 jstl 사용해서 년월일만 나오게 한다.
 	 */
 	
-	
+	@Autowired
+	private GongjiService gongjiService;
 	//공지 작성  폼
+	//게시판 글쓰기 폼
+	
+		@RequestMapping(value="/gongji_insert",method=RequestMethod.GET) //get으로 접근하는 매핑주소를 처리
+		// 매핑주소 등록
+		public void gongji_insert(Model wm, HttpServletRequest request) {
+			//리턴타입이 void형이면 매핑주소가 뷰페이지 파일명이 된다.
+			//뷰리졸브 경로는 /WEB-INF/views/gongji/gongji_insert.jsp
+			int page=1;
+			if(request.getParameter("page") != null) {
+				page = Integer.parseInt(request.getParameter("page"));
+				//쪽번호를 받아서 정수 숫자로 변경해서 저장
+			}
+			wm.addAttribute("page",page);//페이징에서 내가본 쪽번호로 바로 이동하기 위한 책갈피 기능을 구현하기 
+			//위해서 page키이름에 쪽번호를 저장해서 전달한다.
+		}//gongji_insert() =>GET방식
+
+		//게시판 저장
+		@RequestMapping(value="/gongji_insert_ok",method=RequestMethod.POST) //post로 접근하는 매핑주소를 처리	
+		public ModelAndView gongji_insert_ok(GongjiVO vo,RedirectAttributes rttr) {
+			//전달인자 개수가 다른 메서드 오버로딩
+			/* GuestVO.java의 변수명과 guest_write.jsp의 네임피라미터 이름이 같으면 GuestVO g라고만 해도 g객체에 글쓴
+			 * 이,글제목,글내용이 저장되어 있다. 
+			 */
+			this.gongjiService.insertGongji(vo);//게시판 저장
+			rttr.addFlashAttribute("msg","success");
+			/* 백엔드 서버의 스프링 컨트롤러 에서 다른 매핑주소로 msg키이름에 success문자열을 담아서 값을 전달할 때
+			 * 사용한다. 이 방법은 웹주소창에 값 노출이 안된다.보안상 좋다.
+			 */
+			return new ModelAndView("redirect:/gongji/gongji_list");
+			
+		}//gongji_insert_ok() => POST방식
+
 		
 	
 		

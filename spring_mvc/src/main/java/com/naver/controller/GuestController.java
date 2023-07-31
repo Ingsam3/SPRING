@@ -28,7 +28,7 @@ public class GuestController {
 
 	//게시판 글쓰기 폼
 	@RequestMapping(value="/guest_write",method=RequestMethod.GET) //get으로 접근하는 매핑주소를 처리
-	// /board_write매핑주소 등록
+	// 매핑주소 등록
 	public void guest_write(Model wm, HttpServletRequest request) {
 		//리턴타입이 void형이면 매핑주소가 뷰페이지 파일명이 된다.
 		//뷰리졸브 경로는 /WEB-INF/views/guest/guest_write.jsp

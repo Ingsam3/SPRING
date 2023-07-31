@@ -4,8 +4,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
-@Getter
+@Data
 public class GongjiVO {
 	private int gongji_no;
 	private String gongji_name;
