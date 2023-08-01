@@ -4,12 +4,49 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
- <mapper namespace="Gongji"> 
- 	 <!-- 공지 저장 -->
+ <mapper namespace="Gongji">
+ 
+   <!-- 공지 저장 -->
    <insert id="gongji_in" parameterType="gongji">
      <!-- parameterType속성은 전달인자 타입이다. 일반적으로 생략한다. -->
-      insert into tbl_gongji (gongji_no,gongji_name,gongji_title,gongji_cont,gongji_date) values(gongji_no_seq.nextval,
-      #{gongji_name},#{gongji_title},#{gongji_cont},sysdate)
+      insert into tbl_gongji (gongji_no,gongji_name,gongji_title,gongji_cont) values(gongji_no_seq.nextval,
+      #{gongji_name},#{gongji_title},#{gongji_cont})
    </insert>
- 	
+   
+   <!-- 총레코드 개수=>총 게시물 수 -->
+   <select id="gongji_count" resultType="int">
+    <!--  resultType은 반환 타입 속성이고 생략불가. 반환타입이 정수 숫자타입이다. -->
+     select count(*)  from tbl_gongji <!-- count()는 레코드 개수를 구하는 오라클 함수 이다. -->
+   </select>    
+   
+   <!-- 페이지 공지 목록 -->
+   <select id="gongji_li" resultType="gongji" parameterType="gongji">
+    select * from
+    (select rowNum rNum,gongji_no,gongji_name,gongji_title,gongji_hit,gongji_date
+    from (select * from tbl_gongji order by gongji_no desc))
+    where rNum &gt;= #{startrow} and rNum &lt;= #{endrow}
+    <!--  rowNum컬럼은 오라클에서 테이블 생성시 기본으로 추가된다. 최초 레코드 저장시 1씩증가하는 일련번호값이 저장된다.
+    &gt;은 ~보다 크다(>), &lt; 은 ~보다 작다(<)  -->
+   </select>
+   
+   <!-- 조회수 증가 -->
+   <update id="gongji_hi" parameterType="int">
+     update tbl_gongji set gongji_hit=gongji_hit+1 where gongji_no=#{gno}
+   </update>
+   
+   <!-- 공지 내용 보기 =>parameterType속성은 생략 -->
+   <select id="gongji_co" resultType="gongji">
+     select * from tbl_gongji where gongji_no=#{gno}
+   </select>
+   
+   <!-- 공지 수정 완료 --> 
+   <update id="gongji_up">
+     update tbl_gongji set gongji_name=#{gongji_name},gongji_title=#{gongji_title},gongji_cont=#{gongji_cont}
+     where gongji_no=#{gongji_no}
+   </update>
+   
+   <!--  공지 삭제 -->
+   <delete id="gongji_de" parameterType="int">
+     delete from tbl_gongji where gongji_no=#{gno}   
+   </delete>
  </mapper>

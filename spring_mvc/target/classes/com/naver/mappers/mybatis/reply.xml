@@ -31,4 +31,9 @@
  	delete from  tbl_reply where rno =#{rno}
  	</delete>
  	
+ 	<!-- 댓글 번호를 기준으로 게시판 번호값 알아내기 -->
+ 	<select id="reply_bno" resultType="int">
+ 		select bno from tbl_reply where rno=#{rno}
+ 	</select>
+ 	
  </mapper>

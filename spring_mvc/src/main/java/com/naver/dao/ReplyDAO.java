@@ -14,4 +14,6 @@ public interface ReplyDAO {
 
 	void delReply(int rno);
 
+	int getBno(int rno);
+
 }

@@ -83,6 +83,7 @@
 	</div>
 	<br>
 	<hr>
+	[댓글 개수 : ${bc.replycnt}개]
 	<br>
 
 	<%--댓글 목록 --%>
@@ -196,7 +197,9 @@
 						if (result == 'SUCCESS') {
 						alert("댓글이 삭제되었습니다"); 
 						$("#modDiv").hide("slow");
+						location.reload();//새로고침 F5
 						getAllList();
+						
 						}
 					}
 				});//ajax

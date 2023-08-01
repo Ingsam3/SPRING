@@ -1,6 +1,8 @@
 package com.naver.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +58,17 @@ public class BoardDAOImpl implements BoardDAO {
 		this.sqlSession.delete("board_del",bno);
 		//mybatis에서 delete()메서드는 레코드를 삭제한다.
 	}//삭제
+
+	@Override
+	public void updateReplyCnt(int bno, int count) {
+		//인자값 2개 가 board.xml로 넘어갈 땐 MAP 사용
+		Map<String, Object> pm = new HashMap<>();
+		//키, 값 쌍으로 저장하는 컬렉션 사전적인 자료구조
+		pm.put("bno", bno);//게시판 번호 저장
+		pm.put("count", count);//카운트 저장
+		
+		this.sqlSession.update("updateReplyCnt",pm);
+	}//댓글 개수 카운트 
 }
 
 

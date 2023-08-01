@@ -28,6 +28,11 @@
     <a href="/controller/board/board_cont?bno=${b.bno}&page=${page}">${b.title}</a>
     <%-- board_cont?bno=번호값&page=쪽번호 get방식으로 bno에 번호,page에 쪽번호 2개의 피라미터 값이 전달됨.
     특히  쪽번호를 get으로 전달하는 이유는 책갈피 기능 구현 때문이다. --%>
+    
+    <c:if test="${b.replycnt != 0}"> <%--댓글 개수가 있는 경우만 실행 --%>
+    	<strong>[댓글 개수 : ${ b.replycnt}]</strong>
+    </c:if>
+    
    </th>
    <th>${b.writer}</th>
    <th>${b.viewcnt}</th>

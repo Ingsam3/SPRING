@@ -26,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    <!-- 게시물 목록 -->
    <select id="board_list" resultType="board" parameterType="board">
     select * from
-    (select rowNum rNum,bno,writer,title,viewcnt,regdate
+    (select rowNum rNum,bno,writer,title,viewcnt,regdate,replycnt
     from (select * from tbl_board order by bno desc))
     where rNum &gt;= #{startrow} and rNum &lt;= #{endrow}
     <!--  rowNum컬럼은 오라클에서 테이블 생성시 기본으로 추가된다. 최초 레코드 저장시 1씩증가하는 일련번호값이 저장된다.
@@ -44,7 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    </select>
    
    <!-- 게시판 수정 -->
-   <update id="board_edit">
+   <update id="board_edit" >
      update tbl_board set writer=#{writer},title=#{title},content=#{content}
      where bno=#{bno}
    </update>
@@ -53,6 +53,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	<delete id="board_del" parameterType="int"><!-- bno 받아옴 -->
   		delete from tbl_board where bno=#{bno}
   	</delete>
+  	
+  	<!-- 댓글 카운트 -->
+  	<update id="updateReplyCnt">
+  		update tbl_board set replycnt=replycnt+#{count} where bno=#{bno}
+  	</update>
   	
 </mapper>
 
