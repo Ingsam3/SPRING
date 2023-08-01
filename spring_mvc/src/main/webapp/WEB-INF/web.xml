@@ -1,8 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 서블릿 2.5 주석문 처리
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-
+ -->
+ <!-- 새 서블릿 설정
+ 	1. Spring 레거시 프로젝트 (SpringMVC 프러젝트)에서는 서블릿 2.5버전 이기 때문에 xml 네임스페이스를
+ 	   버전 2.5 -> 버전  3.1로 수정해야 한다.
+ 	2. 톰캣 7.0 버전 이후부터는 서블릿 3.0이상 지원하기 때문에 pom.xml에서 이진파일 (자료실의 파일첨부 된 파일을 말함)
+ 		업로드 라이브러리를 추가하지 않고 서블릿 자체적인 파일 업로드 api를 사용한다	
+  --> 
+  
+  <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+   xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+   id="WebApp_ID" version="3.1">
+ 
+ 
+ 
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
@@ -23,7 +39,27 @@
 			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		
+		<!-- 자료실 기능 => 이진파일 업로드 설정 -->	
+		<multipart-config>
+			<location>C:\\upload</location>
+			<!-- 업로드 되는 경로 첨부파일은 실제 서버가 동작하는 컴퓨터 내에 있는 폴더에 .
+			업로드 시켜야 하므로 드라이브 밑에 폴더와 임시 c upload
+			업로드 파일을 저장할 폴더를 각각 생성 temp -->
+			<max-file-size>20971520</max-file-size> 
+			<!--1MB * 20=> 업로드 되는 파일 최대크기--> 
+			<max-request-size>41943040</max-request-size>
+			<!-- 40MB => 한번에 올릴 수 있는 최대크기 --> 
+			<file-size-threshold>20971520</file-size-threshold> 
+			<!--20MB => 메모리 사용 크기 --> 
+		</multipart-config>
+		
 	</servlet>
+		
+	
+		
+		
+		
 		
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>

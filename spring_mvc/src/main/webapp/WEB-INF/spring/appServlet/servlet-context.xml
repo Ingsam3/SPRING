@@ -30,5 +30,9 @@
 	<!-- context:component-scan = com.naver.controller 패키지에 있는 
 	스프링 컨트롤 클래스를 자동으로 찾아서 (AUTO 스캔) 애노테이션 처리가 된 컨트롤러 클래스를 스프링에서 인식하게 해줌 -->
 	
+	<!-- api => id 스프링 이진파일 업로드 설정 첨부파일을 처리하는 빈 설정--> 
+	<beans:bean id="multipartResolver"
+	class="org.springframework.web.multipart.support.StandardServletMultipartResolver" />
+	
 	
 </beans:beans>
