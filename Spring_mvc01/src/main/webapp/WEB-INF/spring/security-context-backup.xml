@@ -25,11 +25,6 @@ http://www.springframework.org/schema/beans/spring-beans.xsd">
          2.bcrypt는 태생 자체가 패스워드를 저장하는 용도로 설계된 것으로 특정 문자열을 암호화 한다.
            체크하는 쪽에서는 암호화 된 패스워드가 가능한 패스워드 인지만 확인하고 다시 원래 원문으로 되돌리지는 못한다.                   
    -->
-   
-   <bean id="customUserDetailsService" 
-         class="net.daum.security.CustomUserDetailsService" />
-   <!-- CustomUserDetailsService 빈아이디 customUserDetailsService 등록=>스프링 시큐리티
-   자동 로그인과 연관된 부분 -->      
     
    <security:http> <!-- 스프링 시큐리티가 http에서 알수 있게 하는 시작 시점 설정 -->
    
@@ -58,25 +53,44 @@ http://www.springframework.org/schema/beans/spring-beans.xsd">
       <!-- 커스텀 로그인 페이지로 이동하는 매핑주소 /customLogin 등록 , 로그인 성공시 
       customLoginSuccess 빈아이디를 호출-->
       
-      <security:remember-me data-source-ref="dataSource" 
-      token-validity-seconds="604800" />
-      <!-- remember-me는 시큐리티 자동로그인,  data-source-ref="dataSource" 는 root-con
-      text.xml 빈아이디를 호출해서 오라클 연결, token-validity-seconds 초단위 쿠키 유효시간-->
-      
-      <security:logout logout-url="/customLogout" invalidate-session="true" 
-      delete-cookies="remember-me" />
+      <security:logout logout-url="/customLogout" invalidate-session="true" />
       <!--  로그아웃시 customLogout 매핑주소가 실행,  invalidate-session="true"은 로그아웃시
-      세션 무효화를 해서 로그아웃 처리함. delete-cookies="remember-me" 자동로그인에서 사용하는 쿠키이름
-      삭제-->
+      세션 무효화를 해서 로그아웃 처리함.-->
       
    </security:http>
    
-    <security:authentication-manager>
-    <security:authentication-provider user-service-ref="customUserDetailsService">
-       <!-- 시큐리티 인증 제공자에서 customUserDetailsService 빈아이디를 호출 -->
-             
+   <security:authentication-manager> <!-- 스프링 시큐리티가 동작하기 위해서는  authentication-manager
+   인 인증관리자 설정-->
+    <security:authentication-provider> <!-- 인증 제공자 -->
+      <security:user-service>
+        <security:user name="member"  password="{noop}member" authorities="ROLE_MEMBER" />
+        <!-- 아이디가 member,비번이 member인 사용자는 로그인 인증 처리를 한다. {noop}는 비번을 인코딩 즉 
+        암호화 처리 없이 사용한다.  -->
+        
+        <security:user name="admin" password="{noop}admin" 
+         authorities="ROLE_MEMBER,ROLE_ADMIN"/>
+         <!-- 아이디가 admin,비번이 admin인 사용자는 /sample/member와 /sample/admin에 모두 접근 가능하다. -->
+         
+      </security:user-service>
+    </security:authentication-provider>    
+   </security:authentication-manager>
+   
+   <security:authentication-manager>
+    <security:authentication-provider>
+      <!-- <security:jdbc-user-service data-source-ref="dataSource" /> -->
+      <!-- root-content.xml의 빈아이디 dataSource를 호출해서 오라클 연결 -->
+      
+        <!--<security:password-encoder ref="customPasswordEncoder" />
+        CustomNoOpPasswordEncoder 빈아이디 customPasswordEncoder를 호출 -->
+        
         <security:password-encoder ref="bcryptPasswordEncoder" />
-        <!-- bcryptPasswordEncoder  빈아이디 객체를 호출하면서 비번을 암호화 시킨다. -->        
+        <!-- bcryptPasswordEncoder  빈아이디 객체를 호출하면서 비번을 암호화 시킨다. -->
+      
+        <security:jdbc-user-service data-source-ref="dataSource"
+                                    users-by-username-query=
+          "select userid,userpw,enabled from tbl_member where userid=?"
+                                    authorities-by-username-query=
+          "select userid,auth from tbl_member_auth where userid=?"/>
           
     </security:authentication-provider>
    </security:authentication-manager>
