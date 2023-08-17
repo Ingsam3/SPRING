@@ -15,7 +15,7 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString(exclude="membre")
+@ToString(exclude="member")
 //toString ()매서드를 호출할 때 member 변수를 재외 시켜서 호출 안 되게 한다
 @Entity
 @SequenceGenerator(
