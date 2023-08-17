@@ -7,7 +7,7 @@
  <mapper namespace="Point"> 
  	<!-- 메시지를 보낸 사람에세 포인터 점수 10점 업데이트 -->
  	<update id="pointUP" parameterType="java.util.Map">
- 		update tbl_user set upoint=upoint+#{point} where uid27 = #{sender}
+ 		update tbl_user set upoint=upoint+#{point} where uid2 = #{sender}
  	</update>
  
  </mapper>
