@@ -1,0 +1,14 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymLeaf.org">
+	<head>
+		<title>ThymLeaf 복수개 값 가져오기</title>
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	</head>
+	<body>
+		<h1 th:text=" 'Hello!,  ' +${cont_title} + '~' "></h1>
+		<hr>
+		<ul>
+			<li th:each="data : ${list}" th:text="${data}"></li>
+		</ul>
+	</body>
+</html>

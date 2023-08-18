@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="UserAddr"> 
+ 	<!-- spring Boot and mbatis로 레코드 저장 -->
+ 	<insert id="useraddr_in" parameterType="useraddr">
+ 	<!-- parameterType은 전달인자 속성 -->
+ 	<!--  insert into tbl_useraddr2 (userno,username,address,regdate) valuse(
+ 	bno_seq2.nextval, #{username}, #{address}, sysdate)-->
+ 	
+ 	insert into tbl_useraddr2 (userno,address,username,regdate) values(
+ 	bno_seq2.nextval, #{username}, #{address}, sysdate); 
+ 	</insert>
+ </mapper>
