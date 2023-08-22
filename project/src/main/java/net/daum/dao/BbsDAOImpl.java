@@ -25,7 +25,7 @@ public class BbsDAOImpl implements BbsDAO {
 		int bbs_no=this.sqlsession.selectOne("bbs_max_no");
 		//자료실 번호에서 최대값을 구함 mybatis에서 selectOne는 단 한개의 레코드 값만 반환
 		System.out.println("최대값 번호" +bbs_no);
-		b.setBbs_ref(bbs_no);//글 그룹 번호로 저장
+		b.setBbs_ref(bbs_no+1);//글 그룹 번호로 저장
 		
 		this.bbsRepo.save(b); //jpa로 하이버 네이트를 구동해서 저장함
 	}//자료실 저장

@@ -6,9 +6,9 @@
  
  <mapper namespace="Bbs">
  
- 	<!-- 최대값 번호 값  -->
- 	<select id="bbs_max_no">
- 	
+ 	<!-- 자료실 최대값 번호 값 구하기  -->
+ 	<select id="bbs_max_no" resultType="int">
+ 		select max(bbs_no) from bbs 
  	</select>
  	
  	<!-- 자료실 저장 --> 
@@ -22,6 +22,5 @@
  	</insert>
  	
  	
- 
  
  </mapper>
