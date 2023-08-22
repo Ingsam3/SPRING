@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="Bbs">
+ 
+ 	<!-- 최대값 번호 값  -->
+ 	<select id="bbs_max_no">
+ 	
+ 	</select>
+ 	
+ 	<!-- 자료실 저장 --> 
+ 	<insert id="bbs_in" parameterType="bbs">
+ 		<!-- parameterType은 전달인자 타입 속성, 생략가능함  -->
+ 		insert into bbs (bbs_no, bbs_name,bbs_title,bbs_pwd,bbs_cont,
+ 						 bbs_file,bbs_hit,bbs_ref,bbs_level,bbs_step,bbs_date)
+ 		values (bbs_no_seq.nextval, 
+ 				#{bbs_name},#{bbs_title},#{bbs_pwd},#{bbs_cont},#{bbs_file}
+ 				,0,bbs_no_seq.nextval,0,0,sysdate)
+ 	</insert>
+ 	
+ 	
+ 
+ 
+ </mapper>
