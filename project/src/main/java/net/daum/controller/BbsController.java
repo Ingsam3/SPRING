@@ -19,35 +19,33 @@ import net.daum.service.BbsService;
 import net.daum.vo.BbsVO;
 import net.daum.vo.PageVO;
 
-@Controller // 스프링에서 컨트롤러로 인식
+@Controller //@Controller 애노테이션을 설정함으로써 스프링에서 컨트롤러로 인식한다.
 public class BbsController {
-	
+
 	@Autowired
 	private BbsService bbsService;
 	
 	//자료실 글쓰기 폼
-	@GetMapping("bbs_write") //get으로 접근하는 매핑주소 처리
+	@GetMapping("/bbs_write") //get으로 접근하는 매핑주소 처리,  bbs_write매핑주소 등록
 	public ModelAndView bbs_write(HttpServletRequest request) {
-		//pasing 에서 내가 본 쪽번호로 바로이동
-		int page =1;
+		//페이징에서 내가 본 쪽번호로 바로 이동하는 기능=>책갈피 기능
+		int page=1;
 		if(request.getParameter("page") != null) {
 			page=Integer.parseInt(request.getParameter("page"));
-			//get으로 전달된 쪽번호가 있는경우 쪽번호를 정수 숫자로 바꿔서 저장
+			//get으로 전달된 쪽번호가 있는 경우 쪽번호를 정수숫자로 바꿔서 저장
 		}
-		ModelAndView wm = new ModelAndView();
-		wm.addObject("page", page);//페이징 책갈피 기능 때문에 page 키이름에 쪽번호 저장
-		wm.setViewName("bbs/bbs_write"); //뷰패이지 경로 
 		
-		
+		ModelAndView wm=new ModelAndView();
+		wm.addObject("page",page);//페이징 책갈피 기능때문에 page키이름에 쪽번호 저장
+		wm.setViewName("bbs/bbs_write");//뷰페이지 경로(뷰리졸브 경로)->/WEB-INF/bbs/bbs_write
+		//.jsp
 		return wm;
 	}//bbs_write()
 	
-	
 	//자료실 저장
-	@PostMapping("/bbs_write_ok")
-	public String bbs_write_ok(BbsVO b, HttpServletRequest request) throws
+	@PostMapping("/bbs_write_ok") //post로 접근하는 매핑주소 처리
+	public String bbs_write_ok(BbsVO b,HttpServletRequest request) throws 
 	Exception{
-		
 		String saveFolder=request.getRealPath("upload");
 	      //이진 파일 업로드 서버 경로            
 	      int fileSize=5*1024*1024; //이진파일 업로드 최대크기
@@ -96,15 +94,15 @@ public class BbsController {
 	      
 	      this.bbsService.insertBbs(b);//자료실 저장
 	      
-	      return "redirect:/bbs_list"; //자료실 목록 보기로 매핑 주소가 이동
+	      return "redirect:/bbs_list";//자료실 목록보기로 매핑주소가 이동
 	}//bbs_write_ok()
 	
-	
-	//페이징과 검색기능 되는 자료실 목록
+	//페이징과 검색기능이 되는 자료실 목록
 	@RequestMapping("/bbs_list")
-	public ModelAndView bbs_list(HttpServletRequest request, BbsVO b, PageVO p) {
-		ModelAndView listM =new ModelAndView("./bbs/bbs_list");
-		//생성자 인자값 뷰페이지
+	public ModelAndView bbs_list(HttpServletRequest request,BbsVO b,PageVO p) {
+		
+		ModelAndView  listM=new ModelAndView("./bbs/bbs_list");//생성자 인자값으로 뷰페이지
+		//경로 설정=> /WEB-INF/bbs/bbs_list.jsp
 		return listM;
 	}//bbs_list()
 }
