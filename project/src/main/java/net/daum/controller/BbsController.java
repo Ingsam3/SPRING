@@ -174,7 +174,15 @@ public class BbsController {
 
 		
 		return cm;
-	}
+	}//bbs_cont
+	
+	//답변저장
+	@PostMapping("/bbs_reply_ok")
+	public String bbs_reply_ok(BbsVO b, int page) {
+		
+		return null;
+	}//bbs_reply_ok
+	
 }
 
 
