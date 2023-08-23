@@ -20,22 +20,23 @@ import lombok.ToString;
 @Getter //getter()메서드 자동제공
 @ToString //toString()메서드 자동제공
 @Entity //엔티티빈 의미 JPA
+/*
 @SequenceGenerator(//@SequenceGenerator 시퀀스 생성기 애너테이션
 		  name="bbs_no_seq_gename", //시퀀스 제너레이터 이름
 		  sequenceName = "bbs_no_seq",//시퀀스 이름-> bbs_no_seq라는 시퀀스가 생성
 		  initialValue = 1, //시퀀스 번호 시작값
 		  allocationSize = 1 //증가값 1, 기본값 50
-		)
+		)*/
 @Table(name="bbs") //bbs테이블을 생성
 @EqualsAndHashCode(of="bbs_no")
 //equals(),hashCode(),canEqual() 메서드 자동 생성
 public class BbsVO {//bbs 자료실 테이블 생성과 중간 자료 저장하는 BbsVO 엔티티빈 클래스=>JPA
 
 	@Id //기본키 컬럼->식별키
-	@GeneratedValue(
+	/*@GeneratedValue(
 			  strategy = GenerationType.SEQUENCE, //사용할 전략을 시퀀스로 선택
 			  generator = "bbs_no_seq_gename" //시퀀스 생성기에서 설정해 놓은 시퀀스 제너레이터 이름
-			)
+			)*/
 	private int bbs_no;//자료실 번호 ->jpa를 통해서 bbs_no컬럼이 생성이 되고 primary key 즉 기본키
 	//가 된다.
 	

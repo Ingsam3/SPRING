@@ -33,4 +33,4 @@ select bno_seq.nextval from dual;
 
 select *from tbl_user order by uid2  asc;
 select *from tbl_message order by mid asc;
-
+select * from bbs;
