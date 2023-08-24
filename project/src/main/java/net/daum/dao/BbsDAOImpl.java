@@ -122,6 +122,7 @@ public class BbsDAOImpl implements BbsDAO {
 		
 		System.out.println("\n===================>JPA 자료실 삭제");
 		this.bbsRepo.deleteById(bbs_no);
+		//번호를 기준으로 삭제
 		
 	}//자료실 삭제
 
