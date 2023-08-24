@@ -56,12 +56,12 @@
    
    <!-- 조회수 증가 -->
    <update id="bbs_hi" parameterType="int">
-   	update bbs set bbs_hit=bbs_hit+1 where bbs_no=#{bbs_no}
+     update bbs set bbs_hit=bbs_hit+1 where bbs_no=#{bbs_no}
    </update>
    
    <!-- 내용보기 -->
    <select id="bbs_co" resultType="net.daum.vo.BbsVO">
-   select *from bbs where bbs_no=#{bbs_no}
+     select * from bbs where bbs_no=#{bbs_no}
    </select>
  </mapper>
  

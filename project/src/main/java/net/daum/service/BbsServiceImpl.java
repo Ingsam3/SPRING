@@ -2,16 +2,14 @@ package net.daum.service;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import net.daum.dao.BbsDAO;
 import net.daum.vo.BbsVO;
 import net.daum.vo.PageVO;
-
 
 @Service
 public class BbsServiceImpl implements BbsService {
@@ -31,8 +29,7 @@ public class BbsServiceImpl implements BbsService {
 	}
 
 	@Override
-	public int getRowCount(PageVO p) {
-		
+	public int getRowCount(PageVO p) {		
 		return this.bbsDao.getRowCount(p);
 	}
 
@@ -41,19 +38,21 @@ public class BbsServiceImpl implements BbsService {
 		return this.bbsDao.getBbsList(p);
 	}
 
-	//내용보기 + 조회수 증가 => AOP를 통한 트랜잭션 적용
-	@Transactional(isolation =Isolation.READ_COMMITTED)//트랜젝션 격리(트랜잭션이 적용되는 중간에 외부 간섭을 배제하는 것)
+	//내용보기+조회수 증가 => 스프링의 AOP를 통한 트랜잭션 적용
+	@Transactional(isolation = Isolation.READ_COMMITTED) // 트랜잭션 격리(트랜잭션이 적용되는
+	//중간에 외부간섭을 배제하는 것)
 	@Override
 	public BbsVO getBbsCont(int bbs_no) {
 		this.bbsDao.updateHit(bbs_no);//조회수 증가
-		BbsVO bc = this.bbsDao.getBbsCont(bbs_no);
-		bc.setBbs_hit(bc.getBbs_hit()+1);//실제가져오는 조회숙 실제 레코드보다 1개 적다 따라서 +1
+		BbsVO bc=this.bbsDao.getBbsCont(bbs_no);
 		
+		bc.setBbs_hit(bc.getBbs_hit()+1);//실제 가져오는 조회수가 실제 레코드 보다 하나 적다. 그래서
+		//+1 =>JPA로 실행할 때만 추가 코드하고 mybatis일때는 이 코드 필요 없다.
 		return bc;
 	}
 
 	@Override
 	public BbsVO getBbsCont2(int bbs_no) {
 		return this.bbsDao.getBbsCont(bbs_no);
-	}	//답변폼, 수정폼, 삭제폼일때는 조회수 증가X ,내용보기만 가능하다
+	}//답변폼,수정폼,삭제폼일때는 조회수는 증가 안되고 내용보기 만 가능하다.	
 }

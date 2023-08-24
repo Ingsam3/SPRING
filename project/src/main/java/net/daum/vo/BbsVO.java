@@ -20,8 +20,7 @@ import lombok.ToString;
 @Getter //getter()메서드 자동제공
 @ToString //toString()메서드 자동제공
 @Entity //엔티티빈 의미 JPA
-/*
-@SequenceGenerator(//@SequenceGenerator 시퀀스 생성기 애너테이션
+/*@SequenceGenerator(//@SequenceGenerator 시퀀스 생성기 애너테이션
 		  name="bbs_no_seq_gename", //시퀀스 제너레이터 이름
 		  sequenceName = "bbs_no_seq",//시퀀스 이름-> bbs_no_seq라는 시퀀스가 생성
 		  initialValue = 1, //시퀀스 번호 시작값

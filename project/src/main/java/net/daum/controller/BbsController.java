@@ -149,40 +149,43 @@ public class BbsController {
 	
 	//자료실 내용보기+답변폼+수정폼+삭제폼
 	@RequestMapping("/bbs_cont")
-	public ModelAndView bbs_cont(int bbs_no, String state, int page, BbsVO b) {
-		if(state.equals("cont")) {//내용보기 일 때 만 조회수 증가
+	public ModelAndView bbs_cont(int bbs_no,String state,int page,BbsVO b) {
+		
+		if(state.equals("cont")) {//내용보기일때만 조회수 증가 시킨다.
 			b=this.bbsService.getBbsCont(bbs_no);
-		}else {//답변폼, 수정폼, 삭제폼일 때는 조회 수 증가 안 시킨다
+		}else {//답변폼,수정폼,삭제폼일때는 조회수 증가 안시킨다.
 			b=this.bbsService.getBbsCont2(bbs_no);
 		}
-		String bbd_cont = b.getBbs_cont().replace("\n", "<br>");
-		//textarea 입력박스에서 엔터키 친 부분은 웹상에서 볼 떄 줄바꿈한다
-		ModelAndView cm = new ModelAndView();
-		cm.addObject("page",page); //페이징에서 책갈피 기능 때문에 쪽번호 저장
-		cm.addObject("b",b); 
-		cm.addObject("bbs_cont",b); 
 		
-		if(state.equals("cont")) {
-			cm.setViewName("./bbs/bbs_cont");
-		}else if(state.equals("reply")){//답변폼일 때
+		String bbs_cont = b.getBbs_cont().replace("\n","<br>");
+		//textarea 입력박스에서 엔터키를 친 부분 \n을 <br>태그로 변경해서 웹상에서 내용을 볼 때 줄바꿈해서
+		//보여진다.
+		
+		ModelAndView cm=new ModelAndView();
+		cm.addObject("page",page);//페이징에서 책갈피 기능 때문에 쪽번호 저장
+		cm.addObject("b",b);
+		cm.addObject("bbs_cont",bbs_cont);
+		
+		if(state.equals("cont")) {//내용보기 일때 실행할 뷰페이지 경로
+			cm.setViewName("./bbs/bbs_cont");//뷰리졸브 경로는 /WEB-INF/views/bbs/bbs_cont
+			//.jsp			
+		}else if(state.equals("reply")) {//답변 폼일때
 			cm.setViewName("./bbs/bbs_reply");
-		}else if(state.equals("edit")){//수정폼일 떄
+		}else if(state.equals("edit")) {//자료실 수정폼일때
 			cm.setViewName("./bbs/bbs_edit");
-		}else if(state.equals("del")){//삭제폼일 떄
-			cm.setViewName("./bbs/bbs_del");
+		}else if(state.equals("del")) {//삭제폼일 때
+			cm.setViewName("./bbs/bbs_del");//setViewName()메서드 인자값에 redirect:/가 들어
+			//가면 새로운 매핑주소가 들어간다. 여기서는 뷰페이지 경로가 들어갔다.
 		}
-
-		
 		return cm;
-	}//bbs_cont
+	}//bbs_cont()
 	
 	//답변저장
-	@PostMapping("/bbs_reply_ok")
-	public String bbs_reply_ok(BbsVO b, int page) {
+	@PostMapping("/bbs_reply_ok") //post로 접근하는 매핑주소 처리, bbs_reply_ok 매핑주소 등록
+	public String bbs_reply_ok(BbsVO b,int page) {
 		
 		return null;
-	}//bbs_reply_ok
-	
+	}//bbs_reply_ok()
 }
 
 

@@ -1,5 +1,7 @@
 select * from bbs order by bbs_no desc;
 
+delete from bbs where bbs_no=3;
+
 commit;
 
 alter table bbs MODIFY (bbs_cont varchar2(4000));
@@ -13,5 +15,14 @@ create sequence bbs_no_seq
 increment by 1 --1씩 증가 옵션
 start with 1 -- 1부터 시작
 nocache;
+
+
+select *from car_member;
+
+insert into car_member (m_id, m_pwd, m_name, m_email, 
+                    m_phone, m_tel, m_birth, m_no, regdate) 
+    values ('1','1','1','1','1','1','1',car_seq.nextval, sysdate);
+
+delete from car_member where m_id='1';
 
 

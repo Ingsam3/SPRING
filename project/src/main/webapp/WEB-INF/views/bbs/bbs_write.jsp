@@ -14,11 +14,11 @@
       <form method="post" action="bbs_write_ok"
          onsubmit="return write_check();" enctype="multipart/form-data">
          <%-- 자료실 기능을 만들려면 첫번째,method=post만 가능하다.
-			  두번째 폼태그내에 enctype속성을 꼭 지정해야 한다. 파일첨부해서
-			  서버로 전송되는 첨부된 파일을 포함한 일반문자를 바이너리 모드
-			  (binary mode) 즉 이진파일이라 부른다. 그렇지 않은 일반게시판에
-			  서 서버로 전송되는 데이터를 ascii mode(아스키 모드) 파일
-			  이라 한다. --%>
+  두번째 폼태그내에 enctype="multipart/form-data"속성을 꼭 지정해야 한다. 파일첨부해서
+  서버로 전송되는 첨부된 파일을 포함한 일반문자를 바이너리 모드
+  (binary mode) 즉 이진파일이라 부른다. 그렇지 않은 일반게시판에
+  서 서버로 전송되는 데이터를 ascii mode(아스키 모드) 파일
+  이라 한다. --%>
          <table id="bsW_t">
             <tr>
                <th>글쓴이</th>

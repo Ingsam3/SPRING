@@ -3,7 +3,6 @@ package net.daum.dao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 import net.daum.vo.BbsVO;
 
@@ -14,8 +13,11 @@ public interface BbsRepository extends JpaRepository<BbsVO, Integer> {
  * PagingAndSortingRepository의 부모 인터페이스가 CrudRepository이다.
  */
 	
-	@Modifying // : DML(insert, update, delete)문 처리가능
-	@Query("update BbsVO set b.bbs_hit =?2 where b.bbs_no=?1")
-	//?2 = 2번째로 전달되는 인자값(증가 조회수 값) / ?1= 1번 째로 전달인자값(파라미터값)
+	//조회수 증가->JPQL(JPA에서 사용하는 Query Language이다 => Java Persistence Query Language
+	//의 약어이다). JPQL문을 사용하면 실제 테이블명 대신에 엔티티빈 클래스명을 사용하고,실제 테이블 컬럼명 대신
+	//엔티티빈 클래스의 속성에 해당하는 변수명을 사용한다.
+	@Modifying //@Modifying을 이용해서 DML(insert,update,delete)문 작업 처리가 가능하다.
+	@Query("update BbsVO b set b.bbs_hit = ?2 where b.bbs_no=?1")
+	//?2는 두번째로 전달되는 인자값=>증가 조회수 값, ?1은 첫번째로 전달되는 인자값(피라미터 값)
 	public void updateBbsHit(int bbs_no, int count);
 }
