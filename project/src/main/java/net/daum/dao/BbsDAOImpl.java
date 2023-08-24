@@ -118,9 +118,10 @@ public class BbsDAOImpl implements BbsDAO {
 
 	@Override
 	public void delBbs(int bbs_no) {
-		this.sqlSession.delete("bbs_del", bbs_no);
+		//this.sqlSession.delete("bbs_del", bbs_no);
 		
-		
+		System.out.println("\n===================>JPA 자료실 삭제");
+		this.bbsRepo.deleteById(bbs_no);
 		
 	}//자료실 삭제
 
