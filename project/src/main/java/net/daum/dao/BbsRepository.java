@@ -20,4 +20,21 @@ public interface BbsRepository extends JpaRepository<BbsVO, Integer> {
 	@Query("update BbsVO b set b.bbs_hit = ?2 where b.bbs_no=?1")
 	//?2는 두번째로 전달되는 인자값=>증가 조회수 값, ?1은 첫번째로 전달되는 인자값(피라미터 값)
 	public void updateBbsHit(int bbs_no, int count);
+
+	//답변 레벨 증가
+	@Modifying
+	@Query("update BbsVO b Set b.bbs_level=b.bbs_level+1 where b.bbs_ref=?1"
+			+" and b.bbs_level> ?2")
+	public void updateLevel(int ref, int level); //답변 레벨 증가
+	
+	//자료실 수정
+	@Modifying
+	@Query("update BbsVO b set b.bbs_name=?1 ,bbs_title=?3, b.bbs_cont=?4, "
+			+" bbs_file=?5 where b.bbs_no=?2")
+	public void updatebbs(String name, int no, String title, String cont, String file); 
+	//자료실 수정
+	
 }
+
+
+

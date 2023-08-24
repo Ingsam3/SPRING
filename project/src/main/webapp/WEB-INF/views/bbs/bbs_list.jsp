@@ -28,10 +28,23 @@
 						<tr>
 							<td align="center">
 							<c:if test="${b.bbs_step ==0}">
-									<%--원본글일때만 실행 --%>
+									<%--원본글일때만 글그룹번호가 출력되고, 
+									답변글일때는 그룹 번호가출력 안 됨 --%>
                                    ${b.bbs_ref}
                             </c:if></td>
-							<td>				      
+							<td>		
+							
+							
+				<c:if test="${b.bbs_step != 0 }">
+				<!-- 답변글일때만 실행 -> 계단형 형태로 게시판 표시 -->
+					<c:forEach begin="1" end="${b.bbs_step}" step="1">
+						&nbsp; 
+						<%--빈공백 처리하면서 다음 답변글부터 들여쓰기 됨 
+						   EX) 두번째면 들여쓰기 2번--%>
+					</c:forEach>
+					<img src="./images/AnswerLine.gif"><%--답변글 이미지 출력--%>
+				</c:if>			
+									      
 				<a href="bbs_cont?bbs_no=${b.bbs_no}&state=cont&page=${page}">
 				${b.bbs_title}</a>
 				</td>

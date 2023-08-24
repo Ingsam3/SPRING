@@ -12,5 +12,8 @@ public interface BbsService {
 	List<BbsVO> getBbsList(PageVO p);
 	BbsVO getBbsCont(int bbs_no);
 	BbsVO getBbsCont2(int bbs_no);
+	void replyBbs(BbsVO b);
+	void editBbs(BbsVO b);
+	void delBbs(int bbs_no);
 
 }

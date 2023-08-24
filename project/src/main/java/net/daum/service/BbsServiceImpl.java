@@ -55,4 +55,25 @@ public class BbsServiceImpl implements BbsService {
 	public BbsVO getBbsCont2(int bbs_no) {
 		return this.bbsDao.getBbsCont(bbs_no);
 	}//답변폼,수정폼,삭제폼일때는 조회수는 증가 안되고 내용보기 만 가능하다.	
+
+	
+	//답변저장 레벨 증가 + 답변 저장(Update+insert => AOP를 통한 트랜잭션 적용대상)
+	@Transactional//트랜잭션 적용
+	@Override
+	public void replyBbs(BbsVO b) {
+		this.bbsDao.updateLevel(b);//답변 레벨 증가
+		this.bbsDao.replyBbs(b);//답변저장
+	}
+
+	@Override
+	public void editBbs(BbsVO b) {
+		this.bbsDao.editBbs(b);
+		
+	}//자료실 수정
+
+	@Override
+	public void delBbs(int bbs_no) {
+		this.bbsDao.delBbs(bbs_no);
+		
+	}//자료실 삭제
 }
