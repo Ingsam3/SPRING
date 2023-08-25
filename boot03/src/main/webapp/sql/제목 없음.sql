@@ -37,6 +37,9 @@ select *from test_board;
 insert into test_board (board_no, board_title, board_cont)
 values(test_seq.nextval,'1','1');
 
+--------
+
+select * from car_member;
 
     
     

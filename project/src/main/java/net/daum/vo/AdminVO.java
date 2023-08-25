@@ -33,6 +33,4 @@ public class AdminVO { //관리자 엔티티빈 클래스
 	private Timestamp admin_date;//등록날짜 =>JPA 로 레코드 저장시 실행되어 등록시점 날짜값이 기록
 	
 	
-	
-	
 }

@@ -7,3 +7,6 @@ create table admin(
   );
  
  select * from admin;
+ 
+ insert into admin(admin_id,admin_date,admin_name,admin_no,admin_pwd)
+ 		values('admin',sysdate, 'admin',1,'admin');
