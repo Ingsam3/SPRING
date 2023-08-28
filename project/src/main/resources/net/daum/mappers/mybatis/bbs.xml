@@ -65,29 +65,28 @@
    </select>
    
    <!-- 답변 레벨 증가 -->
-   <update id="levelUp" >
-   	update bbs set bbs_level=bbs_level+1 where bbs_ref=#{bbs_ref} 
-   	and bbs_level > #{bbs_level}
+   <update id="levelUp">
+     update bbs set bbs_level=bbs_level+1 where bbs_ref=#{bbs_ref} 
+     and bbs_level > #{bbs_level}
    </update>
    
    <!-- 답변 저장 -->
    <insert id="reply_in2">
-   	insert into bbs (bbs_no,bbs_name,bbs_title,bbs_pwd,bbs_cont,bbs_hit,bbs_ref,
-   	bbs_step,bbs_level,bbs_date) values(bbs_no_seq.nextval,#{bbs_name},
-     #{bbs_title},#{bbs_pwd},#{bbs_cont},0,#{bbs_ref},#{bbs_step}+1,#{bbs_level}+1,sysdate)
+    insert into bbs (bbs_no,bbs_name,bbs_title,bbs_pwd,bbs_cont,bbs_hit,bbs_ref,
+    bbs_step,bbs_level,bbs_date) values(bbs_no_seq.nextval,#{bbs_name},#{bbs_title},
+    #{bbs_pwd},#{bbs_cont},0,#{bbs_ref},#{bbs_step}+1,#{bbs_level}+1,sysdate)
    </insert>
    
    <!-- 자료실 수정 -->
    <update id="bbs_edit" parameterType="bbs">
-   	update bbs set bbs_name=#{bbs_name}, bbs_title=#{bbs_title},bbs_cont=#{bbs_cont},
-   	bbs_file=#{bbs_file} where bbs_no=#{bbs_no}
-   
+     update bbs set bbs_name=#{bbs_name}, bbs_title=#{bbs_title},bbs_cont=#{bbs_cont},
+     bbs_file=#{bbs_file} where bbs_no=#{bbs_no}
    </update>
    
-   <!-- 자료실 삭제  -->
-   <delete id="bbs_del">
-   	delete from bbs where bbs_no=#{bbs_no}
-   
+   <!-- 자료실 삭제 -->
+   <delete id="bbs_del" >
+     delete from bbs where bbs_no=#{bbs_no}
+     <!-- where bbs_no=#{bbs_no} 조건절에서 #{}을 생략하닌 깐 전체 레코드가 삭제된다. -->
    </delete>
  </mapper>
  

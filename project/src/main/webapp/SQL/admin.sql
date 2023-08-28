@@ -6,7 +6,13 @@ create table admin(
   ,admin_date date --등록날짜
   );
  
- select * from admin;
+ delete from admin;
+ select * from admin order by admin_id asc;
+ 
+ commit;
  
  insert into admin(admin_id,admin_date,admin_name,admin_no,admin_pwd)
- 		values('admin',sysdate, 'admin',1,'admin');
+ 		values('admin1',sysdate, 'admin1',1,'admin1');
+        
+        
+        
