@@ -20,7 +20,7 @@
       <ul>
         <li><a href="${path}/rent/rent">차량예약</a></li>
         <li><a href="${path}/rent">예약확인</a></li>
-        <li><a href="${path}/guide">이용안내</a></li>
+        <li><a href="${path}/guide/guide">이용안내</a></li>
         <li><a href="${path}/insurance/insurance">보험안내</a></li>
         <li><a href="${path}/event">이벤트</a></li>
         <li><a href="${path}/service/service_center">고객센터</a></li>

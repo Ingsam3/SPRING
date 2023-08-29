@@ -28,7 +28,7 @@ import lombok.ToString;
 		initialValue = 1, //시작값
 		allocationSize = 1 // 기본값 - 50, 증가값 - 1
 		)
-public class MemberVO { //관리자 엔티티빈 클래스
+public class MemberVO { 
 
 	private int m_no;//번호값
 	@Id//식별키 기본키 컬럼
@@ -40,7 +40,7 @@ public class MemberVO { //관리자 엔티티빈 클래스
 	private String m_tel; 
 	private String m_birth; 
 	
-	@CreationTimestamp//하이버네이트 - 등록시점의 날짜 값을 기록함(mybatis는 구동 안 됨)
+	@CreationTimestamp
 	private Timestamp regdate;//등록날짜 =>JPA 로 레코드 저장시 실행되어 등록시점 날짜값이 기록
 	
 	

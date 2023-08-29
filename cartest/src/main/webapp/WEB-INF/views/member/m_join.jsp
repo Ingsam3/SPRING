@@ -64,7 +64,7 @@
 				<select id="user_hp_type" name="m_tel" class="select">
 		    		<option value="">통신사 선택</option>
 		    		<option value="SK">SK</option>
-		    		<option value="KTF">KT</option>
+		    		<option value="KT">KT</option>
 		    		<option value="LG">LGU+</option>
 		    		<option value="알뜰">알뜰폰</option>
 				</select>
