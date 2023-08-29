@@ -55,3 +55,12 @@ footer {
   text-align: center;
 }
 
+/* 메인페이지(index.jsp) css */
+.login {
+	margin-top: 50px;
+	color: white;
+}
+.login a {
+	text-decoration: none;
+	color: inherit;
+}

@@ -61,7 +61,7 @@
 				<span class="emailck"></span>
 			</div>
 			<div id="telform">
-				<select id="user_hp_type" name="user_hp_type" class="select">
+				<select id="user_hp_type" name="m_tel" class="select">
 		    		<option value="">통신사 선택</option>
 		    		<option value="SK">SK</option>
 		    		<option value="KTF">KT</option>
@@ -78,9 +78,9 @@
 			<span id="text"></span>
 			<!-- 버튼 -->
 			<div id="form3">
-				<!--  <input type="submit" value="가입하기">
-				<input type="reset" value="취소">-->
-				<button type="submit" value="Y" name="Y" id="btn1" onclick=" return joinCheck()" >가입하기</button>
+				  <input type="submit"  name="Y" id="btn1"  value="가입하기" onclick=" return joincheck();">
+				<!-- <input type="reset" value="취소"> -->
+				<!--<button type="submit" value="Y" name="Y" id="btn1" onclick=" return joinCheck()" >가입하기</button>-->
 			</div>
 		</div><%--form1 end --%>
 	</div> <%-- wrap end --%>

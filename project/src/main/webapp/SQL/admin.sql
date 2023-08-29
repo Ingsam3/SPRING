@@ -8,6 +8,10 @@ create table admin(
  
  delete from admin;
  select * from admin order by admin_id asc;
+  select * from  bbs;
+  
+  select * from C_member;
+
  
  commit;
  
