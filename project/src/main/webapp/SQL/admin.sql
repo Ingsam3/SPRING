@@ -6,12 +6,10 @@ create table admin(
   ,admin_date date --등록날짜
   );
  
- delete from admin;
- select * from admin order by admin_id asc;
-  select * from  bbs;
-  
-  select * from C_member;
 
+select * from admin order by admin_id asc;
+select * from  bbs;
+  
  
  commit;
  

@@ -2,6 +2,8 @@ package net.daum.dao;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -58,6 +60,29 @@ public class AdminBbsDAOImpl implements AdminBbsDAO {
 		return bc;
 		
 	}//관리자 자료실 상세정보와 수정폼 보기
+	
+	@Transactional
+	@Override
+	public void adminUpdateBbs(BbsVO b) {
+		//this.sqlSession.update("abbs_edit",b);
+		
+		//JPA
+		System.out.println(" \n ============>JPA로 관리자 자료실 수정");
+		this.adminBbsRepo.adminEditBbs(b.getBbs_name(), b.getBbs_title(),
+				b.getBbs_cont(), b.getBbs_file(), b.getBbs_no());
+		
+	}//관리자 자료실 수정 완료
+
+	@Override
+	public void adminBbdDel(int no) {
+		//this.sqlSession.delete("abbs_del",no);
+		
+		//JPA
+		System.out.println(" \n ============>JPA로 관리자 자료실 삭제");
+		this.adminBbsRepo.deleteById(no);
+		//번호기준으로 삭제
+		
+	}//관리자 자료실 삭제
 	
 	
 	

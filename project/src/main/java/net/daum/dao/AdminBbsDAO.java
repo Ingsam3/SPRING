@@ -11,5 +11,7 @@ public interface AdminBbsDAO {
 	List<BbsVO> getadminBbsList(PageVO p);
 	void adminInsertBbs(BbsVO b);
 	BbsVO getadminBbsCont(int no);
+	void adminUpdateBbs(BbsVO b);
+	void adminBbdDel(int no);
 
 }

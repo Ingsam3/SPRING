@@ -36,5 +36,17 @@ public class AdminBbsServiceImpl implements AdminBbsService {
 	public BbsVO getadminBbsCont(int no) {
 		return this.adminBbsDao.getadminBbsCont(no);
 	}
+
+	@Override
+	public void adminUpdateBbs(BbsVO b) {
+		this.adminBbsDao.adminUpdateBbs(b);
+		
+	}
+
+	@Override
+	public void adminBbdDel(int no) {
+		this.adminBbsDao.adminBbdDel(no);
+		
+	}
 	
 }

@@ -217,12 +217,119 @@ public class AdminBbsController {//관리자 자료실 컨트롤러
 			HttpSession session , BbsVO b)throws Exception {
 		response.setContentType("text/html;charset=UTF-8");
 		if(isAdminLogin(session, response)) {
-			
+			String saveFolder=request.getRealPath("upload"); 
+			//수정 첨부된 파일을 실제 업로드 하는 서버 폴더 경로
+	         int fileSize=5*1024*1024;
+	         //업로드 되는 최대 크기
+	         MultipartRequest multi=null;
+	         //form enpetype 
+	         multi=new MultipartRequest(request,saveFolder,fileSize,"UTF-8");
+	         
+	         int bbs_no=Integer.parseInt(multi.getParameter("bbs_no"));
+	         int page=1;
+	         if(multi.getParameter("page") != null) {
+	            page=Integer.parseInt(multi.getParameter("page"));
+	         }
+	         String bbs_name=multi.getParameter("bbs_name");
+	         String bbs_title=multi.getParameter("bbs_title");
+	         String bbs_cont=multi.getParameter("bbs_cont");
+	         
+	         BbsVO db_File=this.adminBbsService.getadminBbsCont(bbs_no);
+	         //DB로 부터 기존 첨부파일명을 구함
+	         File upFile=multi.getFile("bbs_file");
+	         //수정 첨부 된 파일을 가져온다
+	         
+	         if(upFile != null) {//수정 첨부된 파일이 있는 경우 실행
+	            String fileName=upFile.getName();//수정 첨부된 파일 명을 구함
+	            File delFile=new File(saveFolder+db_File.getBbs_file());
+	            //삭제할 파일 객체 생성
+	            if(delFile.exists()) { 
+	               delFile.delete();//기존첨부파일을 삭제            
+	            }
+	            Calendar cal=Calendar.getInstance();
+	            int year=cal.get(Calendar.YEAR);//년도값
+	            int month=cal.get(Calendar.MONTH)+1;//월값
+	            int date=cal.get(Calendar.DATE);//일값
+	            
+	            String homedir=saveFolder+"/"+year+"-"+month+"-"+date;
+	            File path01=new File(homedir);
+	            if(!(path01.exists())) {//오늘날짜 폴더 경로가 없으면 
+	               path01.mkdir();//오늘날짜 폴더를 생성
+	            }
+	            Random r=new Random();
+	            /*Random & Math = java 난수 발생 방법 2가지*/
+	            int random=r.nextInt(100000000);
+	            
+	            /*첨부 파일 확장자를 구함*/
+	            int index=fileName.lastIndexOf(".");
+	            String fileExtendsion=fileName.substring(index+1);
+	            //.이후 부터 마지막 문자 까지 구함.즉 첨부파일 확장자를 구함.
+	            String refileName="bbs"+year+month+date+random+"."+fileExtendsion;
+	            //변경된 첨부파일명
+	            String fileDBName="/"+year+"-"+month+"-"+date+"/"+refileName;
+	            //db에 저장될 레코드 값
+	            upFile.renameTo(new File(homedir+"/"+refileName));
+	            //오늘 날짜 폴더 경로에 변경된 파일로 실제 업로드
+	            b.setBbs_file(fileDBName);
+	         }else {//수정 첨부되지 않았을 경우 실행
+	            String fileDBName="";
+	            if(db_File.getBbs_file() != null) {//기존 첨부파일이 있는 경우
+	               b.setBbs_file(db_File.getBbs_file());
+	            }else {
+	               b.setBbs_file(fileDBName);
+	            }
+	         }//if else
+	         b.setBbs_no(bbs_no); b.setBbs_name(bbs_name);
+	         b.setBbs_title(bbs_title); b.setBbs_cont(bbs_cont);
+	         
+	         this.adminBbsService.adminUpdateBbs(b);//자료실 수정
+	         
+	         /* 문제) mybatis를 이용하여 번호를 기준으로 글쓴이,글제목,글내용,첨부파일을 수정되게 한다. 
+	          * (개발자 테스트까지 해본다.) 
+	          * mybatis 유일 아이디명 = abbs_edit
+	          */
+	         
+	         ModelAndView em=new ModelAndView("redirect:/admin_bbs_list?page="+page);
+	         /*
+	          ModelAndView 스프링 API 생성자 인자값으로 두가지가 들어간다
+	           1. 화면에 보이는 뷰페이지 경로와 파일명
+	           2. redirect:/매핑 주소 경로 => 새로운 매핑 주소로 이동 
+	           (레코그 값이 저장, 수정, 삭제 후 변경된 레코드를 제대로 확인하기 위해 사용한다)
+	          */
+	         
+	         return em;//admin_bbs_list?page=쪽번호 가 get으로 전달된다.
 			
 		}
 		return null;
 	}//admin_bbs_edit_ok()
 	
+	//관리자 자료실 삭제
+	@GetMapping("/admin_bbs_del")
+	public ModelAndView admin_bbs_del(int no, int page, HttpServletResponse response,
+			HttpSession session, HttpServletRequest request)throws Exception {
+		
+		response.setContentType("text/html;charset=UTF-8");
+		
+		if(isAdminLogin(session, response)) {
+			String saveFolder = request.getRealPath("upload"); 
+			BbsVO db_file = this.adminBbsService.getadminBbsCont(no);
+			
+			if(db_file.getBbs_file() != null) {//기존 첨부파일이 있는경우
+				File delFile = new File(saveFolder+db_file.getBbs_file());
+				//삭제할 파일 객체 생성
+				delFile.delete();//	폴더는 삭제 안 되고 기존 첨부 파일만 삭제	
+			}
+			this.adminBbsService.adminBbdDel(no);//번호를 기준으로 삭제
+			
+			ModelAndView dm = new ModelAndView();
+			dm.setViewName("redirect:/admin_bbs_list");
+			dm.addObject("page",page);
+			return dm;
+			/*admin_bbs_list?page=쪽번호로 주소에 노출되는 
+			get 방식으로 관리자 목록보기 매핑주소로 이동(새로운 매핀주소로 이동)*/
+		}
+		return null;
+	}//admin_bbs_del()
 	
 	
 	//반복적인 관리자 로그인을 안 히기 위한 코드 추가
