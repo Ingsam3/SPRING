@@ -22,31 +22,26 @@ public class AdminBbsServiceImpl implements AdminBbsService {
 
 	@Override
 	public List<BbsVO> getadminBbsList(PageVO p) {
-		
 		return this.adminBbsDao.getadminBbsList(p);
 	}
 
 	@Override
 	public void adminInsertBbs(BbsVO b) {
-		this.adminBbsDao.adminInsertBbs(b);
-		
+		this.adminBbsDao.adminInsertBbs(b);		
 	}
 
 	@Override
-	public BbsVO getadminBbsCont(int no) {
-		return this.adminBbsDao.getadminBbsCont(no);
+	public BbsVO getAdminBbsCont(int no) {
+		return this.adminBbsDao.getAdminBbsCont(no);
 	}
 
 	@Override
 	public void adminUpdateBbs(BbsVO b) {
-		this.adminBbsDao.adminUpdateBbs(b);
-		
+		this.adminBbsDao.adminUpdateBbs(b);		
 	}
 
 	@Override
-	public void adminBbdDel(int no) {
-		this.adminBbsDao.adminBbdDel(no);
-		
-	}
-	
+	public void adminBbsDel(int no) {
+		this.adminBbsDao.adminBbsDel(no);		
+	}	
 }

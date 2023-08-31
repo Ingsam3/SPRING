@@ -53,17 +53,17 @@ public class AdminBbsController {//관리자 자료실 컨트롤러
 			String find_field=request.getParameter("find_field");//검색 필드
 			p.setFind_field(find_field);
 			p.setFind_name("%"+find_name+"%");
-			//%는 sql문에서 검색 와일드 카드 문자로서 하나이상의 임의의 모르는 문자와 매핑 대응, 하나의 모르는 문자와 매핑 대응하는 와일드 카드문자는 _
+			//%는 sql문에서 검색 와일드 카드 문자로서 하나이상의 임의의 모르는 문자와 매핑 대응, 
+			//하나의 모르는 문자와 매핑 대응하는 와일드 카드문자는 _
 
 			int listcount=this.adminBbsService.getListCount(p);
 			//검색전 전체 레코드 개수 또는 검색후 레코드 개수
-			System.out.println("총 게시물수:"+listcount+"개");
+			//System.out.println("총 게시물수:"+listcount+"개");
 
 			p.setStartrow((page-1)*7+1);//시작행번호
 			p.setEndrow(p.getStartrow()+limit-1);//끝행번호
 
-			List<BbsVO> blist=this.adminBbsService.getadminBbsList(p);
-			//검색 전후 목록 p에 4 값 입력됨
+			List<BbsVO> blist=this.adminBbsService.getadminBbsList(p);//검색 전후 목록
 
 			//총페이지수
 			int maxpage=(int)((double)listcount/limit+0.95);
@@ -93,261 +93,247 @@ public class AdminBbsController {//관리자 자료실 컨트롤러
 	
 	//관리자 자료실 글쓰기
 	@GetMapping("/admin_bbs_write")
-	public ModelAndView admin_bbd_write(HttpServletResponse response,
-			HttpSession session, HttpServletRequest request) throws Exception{
-		
+	public ModelAndView admin_bbs_write(HttpServletResponse response,
+			HttpSession session,HttpServletRequest request) throws Exception{
 		response.setContentType("text/html;charset=UTF-8");
 		
-		if(isAdminLogin(session, response)) {//true 인 경우 실행 == true 생략
-			int page =1;
+		if(isAdminLogin(session, response)) {//true인 경우 실행, ==true가 생략됨.
+			int page=1;
+			
 			if(request.getParameter("page") != null) {
 				page=Integer.parseInt(request.getParameter("page"));
-				
 			}
+			
 			ModelAndView wm = new ModelAndView("admin/admin_bbs_write");
-			wm.addObject("page",page);//페이징에서 책갈피 기능 때문에 추가
+			wm.addObject("page",page);//페이징에서 책갈피 기능때문에 추가
 			return wm;
 		}
-		
 		return null;
 	}//admin_bbs_write()
 	
 	//관리자 자료실 저장
 	@PostMapping("/admin_bbs_write_ok")
-	public ModelAndView admin_bbs_write_ok(HttpSession session, HttpServletResponse response,
-			HttpServletRequest request, BbsVO b) throws Exception{
-		
+	public ModelAndView admin_bbs_write_ok(HttpSession session,HttpServletResponse
+			response,HttpServletRequest request, BbsVO b) throws Exception{
 		response.setContentType("text/html;charset=UTF-8");
-		
+	
 		if(isAdminLogin(session, response)) {
-			
 			String saveFolder=request.getRealPath("upload");
-	         //이진파일 업로드 서버경로
-	         int fileSize=5*1024*1024;//이진파일 업로드 최대크기
-	         MultipartRequest multi=null;//이진파일을 받을 참조변수
+			//이진파일 업로드 서버경로
+			int fileSize=5*1024*1024;//이진파일 업로드 최대크기
+			MultipartRequest multi=null;//이진파일을 받을 참조변수
 
-	         multi=new MultipartRequest(request,saveFolder,
-	               fileSize,"UTF-8");
-	         String bbs_name=multi.getParameter("bbs_name");
-	         String bbs_title=multi.getParameter("bbs_title");
-	         String bbs_pwd=multi.getParameter("bbs_pwd");
-	         String bbs_cont=multi.getParameter("bbs_cont");
+			multi=new MultipartRequest(request,saveFolder,
+					fileSize,"UTF-8");
+			String bbs_name=multi.getParameter("bbs_name");
+			String bbs_title=multi.getParameter("bbs_title");
+			String bbs_pwd=multi.getParameter("bbs_pwd");
+			String bbs_cont=multi.getParameter("bbs_cont");
 
-	         File upFile=multi.getFile("bbs_file");//첨부한 이진파일
-	         //을 받아옴.
-	         if(upFile != null) {//첨부한 이진파일이 있다면
-	            String fileName=upFile.getName();//첨부한 파일명
-	            Calendar c=Calendar.getInstance();//칼렌더는 추상
-	            //클래스로 new로 객체 생성을 못함. 년월일 시분초 값을 반환
-	            int year=c.get(Calendar.YEAR);//년도값
-	            int month=c.get(Calendar.MONTH)+1;//월값. +1을 한
-	            //이유가 1월이 0으로 반환 되기 때문이다.
-	            int date=c.get(Calendar.DATE);//일값
-	            String homedir=saveFolder+"/"+year+"-"+month+"-"+date;//오늘
-	            //날짜 폴더 경로 저장
-	            File path1=new File(homedir);
-	            if(!(path1.exists())) {
-	               path1.mkdir();//오늘날짜 폴더경로를 생성
-	            }
-	            Random r=new Random();
-	            int random=r.nextInt(100000000);
+			File upFile=multi.getFile("bbs_file");//첨부한 이진파일
+			//을 받아옴.
+			if(upFile != null) {//첨부한 이진파일이 있다면
+				String fileName=upFile.getName();//첨부한 파일명
+				Calendar c=Calendar.getInstance();//칼렌더는 추상
+				//클래스로 new로 객체 생성을 못함. 년월일 시분초 값을 반환
+				int year=c.get(Calendar.YEAR);//년도값
+				int month=c.get(Calendar.MONTH)+1;//월값. +1을 한
+				//이유가 1월이 0으로 반환 되기 때문이다.
+				int date=c.get(Calendar.DATE);//일값
+				String homedir=saveFolder+"/"+year+"-"+month+"-"+date;//오늘
+				//날짜 폴더 경로 저장
+				File path1=new File(homedir);
+				if(!(path1.exists())) {
+					path1.mkdir();//오늘날짜 폴더를 생성
+				}
+				Random r=new Random();
+				int random=r.nextInt(100000000);
 
-	            /*첨부 파일 확장자 구함*/
-	            int index=fileName.lastIndexOf(".");//마침표 위치
-	            //번호를 구함
-	            String fileExtension=fileName.substring(index+1);//마침표
-	            //이후부터 마지막 문자까지 구함.첨부파일 확장자를 구함
-	            String refileName="bbs"+year+month+date+random+"."+
-	                  fileExtension;//새로운 이진파일명 저장
-	            String fileDBName="/"+year+"-"+month+"-"+date+"/"+
-	                  refileName;//디비에 저장될 레코드값
-	            upFile.renameTo(new File(homedir+"/"+refileName));
-	            //바뀌어진 이진파일로 업로드
-	            b.setBbs_file(fileDBName);
-	         }else {//mybatis에서는 컬럼에 null을 insert하지 못함.
-	            String fileDBName="";
-	            b.setBbs_file(fileDBName);//첨부하지 않았을때 빈공백을 저장
-	         }
-	         b.setBbs_name(bbs_name); b.setBbs_title(bbs_title);
-	         b.setBbs_pwd(bbs_pwd); b.setBbs_cont(bbs_cont);
+				/*첨부 파일 확장자 구함*/
+				int index=fileName.lastIndexOf(".");//마침표 위치
+				//번호를 구함
+				String fileExtension=fileName.substring(index+1);//마침표
+				//이후부터 마지막 문자까지 구함.첨부파일 확장자를 구함
+				String refileName="bbs"+year+month+date+random+"."+
+						fileExtension;//새로운 이진파일명 저장
+				String fileDBName="/"+year+"-"+month+"-"+date+"/"+
+						refileName;//DB에 저장될 레코드값
+				upFile.renameTo(new File(homedir+"/"+refileName));
+				//바뀌어진 이진파일로 업로드
+				b.setBbs_file(fileDBName);
+			}else {
+				String fileDBName="";
+				b.setBbs_file(fileDBName);//첨부하지 않았을때 빈공백을 저장
+			}
+			b.setBbs_name(bbs_name); b.setBbs_title(bbs_title);
+			b.setBbs_pwd(bbs_pwd); b.setBbs_cont(bbs_cont);
 
-	         this.adminBbsService.adminInsertBbs(b);//자료실 저장
+			this.adminBbsService.adminInsertBbs(b);//관리자 자료실 저장
 
-	         return new ModelAndView("redirect:/admin_bbs_list"); 
-		}
-		
+			return new ModelAndView("redirect:/admin_bbs_list"); 
+		}		
 		return null;
 	}//admin_bbs_write_ok()
 	
-	
-	//관리자 자료실 상세정보 +수정폼
+	//관리자 자료실 상세정보+수정폼
 	@RequestMapping("/admin_bbs_cont")
-	public ModelAndView admin_bbs_cont(int no, int page, String state, 
-			HttpServletResponse response,
-			HttpSession session) throws Exception{
-		
+	public ModelAndView admin_bbs_cont(int no,int page,String state,
+			HttpServletResponse response, HttpSession session) throws Exception{
 		response.setContentType("text/html;charset=UTF-8");
 		
 		if(isAdminLogin(session, response)) {
-			//로그인 된 상태일 때
-			BbsVO bc = this.adminBbsService.getadminBbsCont(no);
-			//번호에 해당되는 레코드 값 적용
-			String bbs_cont = bc.getBbs_cont().replace("/n", "<br>");
-			/*엔터키 친 부분을 줄바꿈해서 내용보기 한다*/
-			ModelAndView cm = new ModelAndView();
-			cm.addObject("b",bc);
-			cm.addObject("bbs_cont",bbs_cont);
-			cm.addObject("page",page); //책갈피 기능
-			
-			if(state.equals("cont")) {
-				//관리자 자료실 상세정보 보기
-				cm.setViewName("./admin/admin_bbs_cont");
-			}else if(state.equals("edit")) {
-				//관리자 자료실 수정 폼
-				cm.setViewName("./admin/admin_bbs_edit");
-			}
-			return cm;
+			BbsVO bc = this.adminBbsService.getAdminBbsCont(no);
+		    String bbs_cont = bc.getBbs_cont().replace("\n","<br>");/* textarea에서
+		    엔터키를 친 부분을 줄바꿈 처리해서 내용보기 한다. */
+		    
+		    ModelAndView cm=new ModelAndView();
+		    cm.addObject("b",bc);
+		    cm.addObject("bbs_cont",bbs_cont);
+		    cm.addObject("page",page);
+		    
+		    if(state.equals("cont")) {//관리자 자료실 상세정보 보기
+		    	cm.setViewName("./admin/admin_bbs_cont");
+		    }else if(state.equals("edit")) {//관리자 자료실 수정폼
+		    	cm.setViewName("./admin/admin_bbs_edit");
+		    }
+		    return cm;
 		}//if
 		return null;
 	}//admin_bbs_cont()
 	
-	//관리자 자료실 수정 완료
-	@PostMapping("/admin_bbs_edit_ok")
-	public ModelAndView admin_bbs_edit_ok(HttpServletRequest request, HttpServletResponse response,
-			HttpSession session , BbsVO b)throws Exception {
+	//관리자 자료실 수정완료
+	@RequestMapping("/admin_bbs_edit_ok")
+	public ModelAndView admin_bbs_edit_ok(HttpServletRequest request,
+			HttpServletResponse response,HttpSession session,BbsVO b) throws Exception{
 		response.setContentType("text/html;charset=UTF-8");
+		
 		if(isAdminLogin(session, response)) {
-			String saveFolder=request.getRealPath("upload"); 
-			//수정 첨부된 파일을 실제 업로드 하는 서버 폴더 경로
-	         int fileSize=5*1024*1024;
-	         //업로드 되는 최대 크기
-	         MultipartRequest multi=null;
-	         //form enpetype 
-	         multi=new MultipartRequest(request,saveFolder,fileSize,"UTF-8");
-	         
-	         int bbs_no=Integer.parseInt(multi.getParameter("bbs_no"));
-	         int page=1;
-	         if(multi.getParameter("page") != null) {
-	            page=Integer.parseInt(multi.getParameter("page"));
-	         }
-	         String bbs_name=multi.getParameter("bbs_name");
-	         String bbs_title=multi.getParameter("bbs_title");
-	         String bbs_cont=multi.getParameter("bbs_cont");
-	         
-	         BbsVO db_File=this.adminBbsService.getadminBbsCont(bbs_no);
-	         //DB로 부터 기존 첨부파일명을 구함
-	         File upFile=multi.getFile("bbs_file");
-	         //수정 첨부 된 파일을 가져온다
-	         
-	         if(upFile != null) {//수정 첨부된 파일이 있는 경우 실행
-	            String fileName=upFile.getName();//수정 첨부된 파일 명을 구함
-	            File delFile=new File(saveFolder+db_File.getBbs_file());
-	            //삭제할 파일 객체 생성
-	            if(delFile.exists()) { 
-	               delFile.delete();//기존첨부파일을 삭제            
-	            }
-	            Calendar cal=Calendar.getInstance();
-	            int year=cal.get(Calendar.YEAR);//년도값
-	            int month=cal.get(Calendar.MONTH)+1;//월값
-	            int date=cal.get(Calendar.DATE);//일값
-	            
-	            String homedir=saveFolder+"/"+year+"-"+month+"-"+date;
-	            File path01=new File(homedir);
-	            if(!(path01.exists())) {//오늘날짜 폴더 경로가 없으면 
-	               path01.mkdir();//오늘날짜 폴더를 생성
-	            }
-	            Random r=new Random();
-	            /*Random & Math = java 난수 발생 방법 2가지*/
-	            int random=r.nextInt(100000000);
-	            
-	            /*첨부 파일 확장자를 구함*/
-	            int index=fileName.lastIndexOf(".");
-	            String fileExtendsion=fileName.substring(index+1);
-	            //.이후 부터 마지막 문자 까지 구함.즉 첨부파일 확장자를 구함.
-	            String refileName="bbs"+year+month+date+random+"."+fileExtendsion;
-	            //변경된 첨부파일명
-	            String fileDBName="/"+year+"-"+month+"-"+date+"/"+refileName;
-	            //db에 저장될 레코드 값
-	            upFile.renameTo(new File(homedir+"/"+refileName));
-	            //오늘 날짜 폴더 경로에 변경된 파일로 실제 업로드
-	            b.setBbs_file(fileDBName);
-	         }else {//수정 첨부되지 않았을 경우 실행
-	            String fileDBName="";
-	            if(db_File.getBbs_file() != null) {//기존 첨부파일이 있는 경우
-	               b.setBbs_file(db_File.getBbs_file());
-	            }else {
-	               b.setBbs_file(fileDBName);
-	            }
-	         }//if else
-	         b.setBbs_no(bbs_no); b.setBbs_name(bbs_name);
-	         b.setBbs_title(bbs_title); b.setBbs_cont(bbs_cont);
-	         
-	         this.adminBbsService.adminUpdateBbs(b);//자료실 수정
-	         
-	         /* 문제) mybatis를 이용하여 번호를 기준으로 글쓴이,글제목,글내용,첨부파일을 수정되게 한다. 
-	          * (개발자 테스트까지 해본다.) 
-	          * mybatis 유일 아이디명 = abbs_edit
-	          */
-	         
-	         ModelAndView em=new ModelAndView("redirect:/admin_bbs_list?page="+page);
-	         /*
-	          ModelAndView 스프링 API 생성자 인자값으로 두가지가 들어간다
-	           1. 화면에 보이는 뷰페이지 경로와 파일명
-	           2. redirect:/매핑 주소 경로 => 새로운 매핑 주소로 이동 
-	           (레코그 값이 저장, 수정, 삭제 후 변경된 레코드를 제대로 확인하기 위해 사용한다)
-	          */
-	         
-	         return em;//admin_bbs_list?page=쪽번호 가 get으로 전달된다.
+			String saveFolder=request.getRealPath("upload");//수정 첨부된 파일을 실제 업로드하는
+			//서버 폴더 경로
+			int fileSize=5*1024*1024;
 			
+			MultipartRequest multi=null;
+			multi=new MultipartRequest(request,saveFolder,fileSize,"UTF-8");
+			
+			int bbs_no=Integer.parseInt(multi.getParameter("bbs_no"));
+			int page=1;
+			if(multi.getParameter("page") != null) {
+				page=Integer.parseInt(multi.getParameter("page"));
+			}
+			String bbs_name=multi.getParameter("bbs_name");
+			String bbs_title=multi.getParameter("bbs_title");
+			String bbs_cont=multi.getParameter("bbs_cont");
+			
+			BbsVO db_File=this.adminBbsService.getAdminBbsCont(bbs_no);
+			//DB로 부터 기존 첨부파일명을 구함
+			File upFile=multi.getFile("bbs_file");//수정 첨부된 파일을 가져온다.
+			
+			if(upFile != null) {//수정 첨부된 파일이 있는 경우 실행
+				String fileName=upFile.getName();//수정 첨부된 파일명을 구함.
+				File delFile=new File(saveFolder+db_File.getBbs_file());
+				//삭제할 파일 객체 생성
+				if(delFile.exists()) { 
+					delFile.delete();//기존첨부파일을 삭제				
+				}
+				Calendar cal=Calendar.getInstance();
+				int year=cal.get(Calendar.YEAR);//년도값
+				int month=cal.get(Calendar.MONTH)+1;//월값
+				int date=cal.get(Calendar.DATE);//일값
+				
+				String homedir=saveFolder+"/"+year+"-"+month+"-"+date;
+				File path01=new File(homedir);
+				if(!(path01.exists())) {//오늘날짜 폴더 경로가 없어면
+					path01.mkdir();//오늘날짜 폴더를 생성
+				}
+				Random r=new Random();
+				int random=r.nextInt(100000000);
+				
+				/*첨부 파일 확장자를 구함*/
+				int index=fileName.lastIndexOf(".");
+				String fileExtendsion=fileName.substring(index+1);//
+				//.이후 부터 마지막 문자 까지 구함.즉 첨부파일 확장자를 구함.
+				String refileName="bbs"+year+month+date+random+"."+fileExtendsion;
+				//변경된 첨부파일명
+				String fileDBName="/"+year+"-"+month+"-"+date+"/"+refileName;
+				//db에 저장될 레코드 값
+				upFile.renameTo(new File(homedir+"/"+refileName));
+				//오늘 날짜 폴더 경로에 변경된 파일로 실제 업로드
+				b.setBbs_file(fileDBName);
+			}else {//수정 첨부되지 않았을 때 실행
+				String fileDBName="";
+				if(db_File.getBbs_file() != null) {//기존 첨부파일이 있는 경우
+					b.setBbs_file(db_File.getBbs_file());
+				}else {
+					b.setBbs_file(fileDBName);
+				}
+			}//if else
+			b.setBbs_no(bbs_no); b.setBbs_name(bbs_name);
+			b.setBbs_title(bbs_title); b.setBbs_cont(bbs_cont);
+			
+			this.adminBbsService.adminUpdateBbs(b);//관리자 자료실 수정
+			/* 문제) mybatis로 번호를 기준으로 글쓴이,글제목,글내용,첨부파일을 수정되게 한다. 
+			 * (개발자 테스트까지 해본다.)  admin_bbs.xml에 설정할 유일 아이디명은 abbs_edit이다.
+			 */
+			
+			ModelAndView em=new ModelAndView("redirect:/admin_bbs_list?page="+page);
+			/* ModelAndView 스프링 api 생성자 인자값으로 2가지가 들어간다.
+			 *   1.화면에 보이는 뷰페이지 경로와 파일명
+			 *   2.redirect:/매핑주소 경로->새로운 매핑주소로 이동(레코드값이 저장 ,수정,삭제후 변경된
+			 *   레코드를 제대로 확인하기 위해서 사용한다.
+			 */
+			return em;//admin_bbs_list?page=쪽번호 가 get으로 전달된다.
 		}
 		return null;
 	}//admin_bbs_edit_ok()
 	
 	//관리자 자료실 삭제
 	@GetMapping("/admin_bbs_del")
-	public ModelAndView admin_bbs_del(int no, int page, HttpServletResponse response,
-			HttpSession session, HttpServletRequest request)throws Exception {
-		
+	public ModelAndView admin_bbs_del(int no,int page,HttpServletResponse response,
+			HttpSession session,HttpServletRequest request) throws Exception{
 		response.setContentType("text/html;charset=UTF-8");
 		
 		if(isAdminLogin(session, response)) {
-			String saveFolder = request.getRealPath("upload"); 
-			BbsVO db_file = this.adminBbsService.getadminBbsCont(no);
+			String saveFolder = request.getRealPath("upload");
+			BbsVO db_file = this.adminBbsService.getAdminBbsCont(no);
 			
-			if(db_file.getBbs_file() != null) {//기존 첨부파일이 있는경우
-				File delFile = new File(saveFolder+db_file.getBbs_file());
-				//삭제할 파일 객체 생성
-				delFile.delete();//	폴더는 삭제 안 되고 기존 첨부 파일만 삭제	
+			if(db_file.getBbs_file() != null) {//기존 첨부파일이 있는 경우
+				File delFile = new File(saveFolder+db_file.getBbs_file());//삭제할 파일
+				//객체 생성
+				delFile.delete();//폴더는 삭제 안되고 기존 첨부파일만 삭제
 			}
-			this.adminBbsService.adminBbdDel(no);//번호를 기준으로 삭제
+			this.adminBbsService.adminBbsDel(no);//번호를 기준으로 삭제
 			
-			ModelAndView dm = new ModelAndView();
+			ModelAndView dm=new ModelAndView();
 			dm.setViewName("redirect:/admin_bbs_list");
 			dm.addObject("page",page);
-			return dm;
-			/*admin_bbs_list?page=쪽번호로 주소에 노출되는 
-			get 방식으로 관리자 목록보기 매핑주소로 이동(새로운 매핀주소로 이동)*/
+			return dm;//admin_bbs_list?page=쪽번호로 주소창에 노출되는 get방식으로 관리자 목록보기
+			//매핑주소로 이동(새로운 매핑주소로 이동)
 		}
 		return null;
 	}//admin_bbs_del()
 	
-	
-	//반복적인 관리자 로그인을 안 히기 위한 코드 추가
-	public static boolean isAdminLogin(HttpSession session, HttpServletResponse response
-			)throws Exception {
+	//반복적인 관리자 로그인을 안하기 위한 코드 추가
+	public static boolean isAdminLogin(HttpSession session, HttpServletResponse 
+			response) throws Exception{
 		
 		PrintWriter out=response.getWriter();
-		String admin_id = (String)session.getAttribute("admin_id");
-		//관리자 세션 아이디를 구함
-		if(admin_id == null) {//관리자 로그아웃 됐을 때
+		String admin_id=(String)session.getAttribute("admin_id");//관리자 세션 아이디를 구함
+		if(admin_id == null) {//관리자 로그아웃 되었을 때 실행
 			out.println("<script>");
 			out.println("alert('관리자로 로그인 하세요!');");
-			out.println("location='admin_login';");
-			out.println("</script>");
-			
-			return false;
+		    out.println("location='admin_login';");
+		    out.println("</script>");
+		
+		    return false;
 		}
 		return true;
 	}//isAdminLogin()
-	
 }//AdminBbsController.java
+
+
+
+
+
+
+
+

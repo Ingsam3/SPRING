@@ -24,4 +24,9 @@ SELECT * FROM member;
 alter table member MODIFY (mem_delcont varchar2(4000));
   
 SELECT * FROM zipcode;
+
+insert into zipcode (no,zipcode,sido,gugun,gil,bunji)values(
+1,'123-789','서울시','종로구','돈화문로','26 단성사 빌딩');
+
+commit;
   

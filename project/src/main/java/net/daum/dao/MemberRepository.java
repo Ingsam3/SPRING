@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import net.daum.vo.MemberVO;
 
-public interface MemberRepository extends JpaRepository<MemberVO, Integer> {
+public interface MemberRepository extends JpaRepository<MemberVO, String> {
 
 }
