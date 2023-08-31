@@ -119,9 +119,9 @@ public class MemberController {//사용자 회원관리
 		
 		//비번 찾기 공치창
 		@GetMapping("/pwd_find")
-		public ModelAndView pwd_find() {
+		public String pwd_find() {
 			
-			return new ModelAndView("redirect:/pwd_find");
+			return "member/pwd_find";
 		}//pwd_find()
 		
 		
@@ -140,6 +140,7 @@ public class MemberController {//사용자 회원관리
 			m.setMem_id(pwd_id);
 			m.setMem_name(pwd_name);
 			
+			//return new ModelAndView("redirect:/pwd_find");
 			return new ModelAndView("redirect:/pwd_find");
 		}//pwd_find_ok()
 		
