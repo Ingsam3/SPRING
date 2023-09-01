@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+   xmlns:aop="http://www.springframework.org/schema/aop"
+   xmlns:context="http://www.springframework.org/schema/context"
+   xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+   xmlns:tx="http://www.springframework.org/schema/tx"
+   xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+      http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+      http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+   
+   <aop:aspectj-autoproxy/>
+   <!-- 스프링 AOP 자동 프록시 설정 -->
+   
+   <!-- 스프링과 오라클 연결 JDBC-->
+   <bean id="dataSource" 
+   class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+      <property name="driverClassName" value="oracle.jdbc.OracleDriver" />
+      <property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:xe" />
+      <property name="username" value="day" />
+      <property name="password" value="day" />
+   </bean>
+   
+   <!-- 스프링과 mybatis연결과 mybatis에서 데이터 저장빈 클래스 객체 별칭을 관리하는 mybatis-config.xml파일
+   설정과 sql문을 관리하는 mybatis매퍼 태그 설정 -->
+   <bean id="sqlSessionFactory"
+     class="org.mybatis.spring.SqlSessionFactoryBean">
+     <property name="dataSource" ref="dataSource"/>
+     <!-- setter()를 통한 의존성 즉 DI설정, ref속성을 통해서 빈아이디 dataSource를 호출해서 오라클 연결함. -->
+     <property name="configLocation" value="classpath:/mybatis-config.xml"/>
+     <!-- classpath경로는 STS개발툴의 가상경로인 src/main/resources이다. -->
+     <property name="mapperLocations" value="classpath:com/car/mappers/*/*.xml"/>
+     <!-- 쿼리문을 다루는 mybatis 매퍼태그 파일이 들어가는 경로이다. -->
+     </bean>
+     
+     <!-- 스프링 트랜잭션 매니져 설정 -->
+     <bean id="transactionManager"
+       class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+        <!-- setter()를 통한 의존성 주입(DI설정) => ref 빈아이디 dataSoruce를 호출해서 오라클 연결한다. -->
+     </bean>
+     <tx:annotation-driven/><!-- 트랜잭션 설정 애노테이션 => @Transactional 애노테이션을 통한 트랜잭션 관리가 가능함. -->
+     
+     <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+     <!-- destroy-method="clearCache" 임시 메모리 캐시를 비워서 데이터베이스 연결을 해제 -->
+        <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/>
+     </bean>
+      
+      <aop:config/> <!-- AOP XML 환경 설정 -->
+      
+</beans>

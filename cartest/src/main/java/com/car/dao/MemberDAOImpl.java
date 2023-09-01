@@ -15,13 +15,5 @@ public class MemberDAOImpl implements MemberDAO {
 		@Autowired
 		private SqlSession sqlSession;
 
-		@Override
-		public void insertMember(MemberVO m) {
-			this.sqlSession.insert("mem_in",m);
-			
-			/*JPS
-			System.out.println("====>JPA 회원 로그인");
-			this.memberRepo.save(m);*/
-			
-		}
+	
 }

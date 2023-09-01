@@ -4,6 +4,6 @@ import com.car.vo.MemberVO;
 
 public interface MemberService {
 
-	void insertMember(MemberVO m);
+	
 
 }

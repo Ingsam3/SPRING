@@ -50,17 +50,7 @@ public class MemberController {
 		   return "member/m_join";
 	   }
 	   
-	   // 임시 회원 저장
-	   @PostMapping("/m_join_ok")
-	   public ModelAndView m_join_ok(HttpServletResponse response, HttpSession session, HttpServletRequest request, MemberVO m)
-	   throws Exception{
-		   
-		   response.setContentType("text/html;charset=UTF-8");
-		   PrintWriter out = response.getWriter();
-		   this.memberService.insertMember(m);
-		   
-	       return new ModelAndView("redirect:/member/m_login"); 
-	   }
+	  
 	   
 	   @GetMapping("test")
 	   public String test() {
