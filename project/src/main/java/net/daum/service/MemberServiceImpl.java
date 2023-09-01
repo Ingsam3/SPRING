@@ -17,23 +17,38 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberVO idCheck(String id) {
-		
 		return this.memberDao.idCheck(id);
 	}
 
 	@Override
 	public List<ZipCodeVO> zipFind(String dong) {
-		
 		return this.memberDao.zipFind(dong);
 	}
 
 	@Override
 	public void insertMember(MemberVO m) {
-		this.memberDao.insertMember(m);
+		this.memberDao.insertMember(m);		
 	}
-	
-	
-	
-	
-	
+
+	@Override
+	public MemberVO pwdMember(MemberVO m) {
+		return this.memberDao.pwdMember(m);
+	}
+
+	@Override
+	public void updateRanPwd(MemberVO m) {
+		this.memberDao.updateRanPwd(m);		
+	}
+
+	@Override
+	public MemberVO loginCheck(String login_id) {
+		
+		return this.memberDao.loginCheck(login_id);
+	}
+
+	@Override
+	public MemberVO getMember(String id) {
+		
+		return this.memberDao.getMember(id);
+	}	
 }

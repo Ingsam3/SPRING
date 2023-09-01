@@ -8,9 +8,11 @@ import net.daum.vo.ZipCodeVO;
 public interface MemberService {
 
 	MemberVO idCheck(String id);
-
 	List<ZipCodeVO> zipFind(String dong);
-
 	void insertMember(MemberVO m);
+	MemberVO pwdMember(MemberVO m);
+	void updateRanPwd(MemberVO m);
+	MemberVO loginCheck(String login_id);
+	MemberVO getMember(String id);
 
 }
