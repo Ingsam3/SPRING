@@ -78,7 +78,7 @@
 			<span id="text"></span>
 			<!-- 버튼 -->
 			<div id="form3">
-				  <input type="submit"  name="Y" id="btn1"  value="가입하기" onclick=" return joincheck();">
+				  <input type="submit"  name="Y" id="btn1"  value="가입하기" onclick=" return joinCheck();">
 				<!-- <input type="reset" value="취소"> -->
 				<!--<button type="submit" value="Y" name="Y" id="btn1" onclick=" return joinCheck()" >가입하기</button>-->
 			</div>

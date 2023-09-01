@@ -14,3 +14,5 @@ create table C_member(
 select * from C_member;
 --¸â¹ö ½ÃÄö½º
 CREATE SEQUENCE carmem_seq START WITH 1 INCREMENT BY 1;
+
+commit;

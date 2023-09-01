@@ -33,15 +33,6 @@ public class MemberController {
 		   return "member/m_login";
 	   }
 	
-	//임시 로그인
-	@PostMapping("/m_login_ok")
-	public ModelAndView m_login_ok () {
-		
-		
-		
-		return null;
-	}
-	   
 	
 	   @GetMapping("m_join")
 	   public String m_join( HttpServletResponse response) {
