@@ -5,8 +5,19 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
  <mapper namespace="Car">
- 
-   
+ 	<!-- 아이디 중복 검색 -->
+   	<select id="m_idcheck"  resultType="car">
+   		select * from cid_members where m_id=#{id}
+   	</select>
+   	
+   	<!-- 회원 저장 -->
+   	<insert id="C_mem_in">
+   		insert into 
+   		cid_members(m_id,m_pwd,m_birth,m_name,m_email,m_tel,m_phone,
+   		m_state,regdate)
+   		values(#{m_id},#{m_pwd},#{m_birth},#{m_name},#{m_email},
+   		#{m_tel},#{m_phone},1,sysdate)
+   	</insert>
  </mapper>
  
  

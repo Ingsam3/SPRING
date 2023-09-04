@@ -46,6 +46,13 @@
 	margin-top: 20px;
 }
 
+#idform{
+	margin-bottom: 35px;
+}
+#idcheck{
+	margin-left: 10px; 
+}
+
 input:focus {
 	outline: 2px solid #dcdcdc;
 }
@@ -124,7 +131,7 @@ input:focus {
 	color: #464646;
 }
 
-#telform>#user_hp_type {
+#telform>#m_tel {
 	margin: 0 auto;
 	width: 400px;
 	height: 50px;
@@ -136,7 +143,7 @@ input:focus {
 	color: #969696;
 }
 
-#telform>#user_hp_type>option {
+#telform>#m_tel>option {
 	text-align: center;
 	cursor: pointer;
 }

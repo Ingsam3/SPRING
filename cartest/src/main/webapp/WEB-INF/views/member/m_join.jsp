@@ -16,7 +16,7 @@
 <body>
 <%-- include : main --%>
 <%@ include file="../include/header.jsp" %>
-<form action="m_join_ok" method="post">
+<form action="member_join_ok" method="post">
 	<div id="logo">
 		<hr>
 		CARINDRIVE
@@ -28,10 +28,10 @@
 			<div id="idform">
 				<input id="m_id" name="m_id" placeholder="아이디"
 				onfocus="this.placeholder=''" onblur="this.placeholder='아이디'">
-				<span class="idck"></span>
+				<br><span id="idcheck"></span>
 			</div>
 			<div id="checkid">
-				<input type="button" id="ckidbtn" onclick="return checkid();" value="중복 학인">
+				<input type="button" id="ckidbtn" onclick="return id_check();" value="중복 확인">
 			</div>
 			<div id="pwdform">
 				<input type="password" id="m_pwd" name="m_pwd" placeholder="비밀번호"
@@ -61,7 +61,7 @@
 				<span class="emailck"></span>
 			</div>
 			<div id="telform">
-				<select id="user_hp_type" name="m_tel" class="select">
+				<select id="m_tel" name="m_tel" class="select">
 		    		<option value="">통신사 선택</option>
 		    		<option value="SK">SK</option>
 		    		<option value="KT">KT</option>
