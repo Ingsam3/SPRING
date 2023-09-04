@@ -21,6 +21,13 @@ create table member( --회원 관리 테이블
   
 SELECT * FROM member;
 
+ 	update member set mem_pwd='wwwww', mem_name='rewwwww',
+   	 mem_zip='', mem_zip2='',
+   	 mem_addr='', mem_addr2='',
+   	 mem_phone01='',mem_phone02='',mem_phone03='',
+   	 mail_id='',mail_domain=''
+   	 where mem_id='wwwww';
+
 alter table member MODIFY (mem_delcont varchar2(4000));
   
 SELECT * FROM zipcode;

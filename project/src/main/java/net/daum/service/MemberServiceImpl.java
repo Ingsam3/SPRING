@@ -50,5 +50,17 @@ public class MemberServiceImpl implements MemberService {
 	public MemberVO getMember(String id) {
 		
 		return this.memberDao.getMember(id);
+	}
+
+	@Override
+	public void updateMember(MemberVO m) {
+		this.memberDao.updateMember(m);
+		
+	}
+
+	@Override
+	public void delMem(MemberVO dm) {
+		this.memberDao.delMem(dm);
+		
 	}	
 }

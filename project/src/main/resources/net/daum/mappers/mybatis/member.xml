@@ -45,7 +45,22 @@
    	select * from member where mem_id = #{id}
    </select>
    
+   <!-- 회원 정보 수정 완료 -->
+   <update id="medit_ok" >
+   	update member set mem_pwd=#{mem_pwd}, mem_name=#{mem_name},
+   	 mem_zip=#{mem_zip}, mem_zip2=#{mem_zip2},
+   	 mem_addr=#{mem_addr}, mem_addr2=#{mem_addr2},
+   	 mem_phone01=#{mem_phone01},mem_phone02=#{mem_phone02},mem_phone03=#{mem_phone03},
+   	 mail_id=#{mail_id},mail_domain=#{mail_domain}
+   	 where mem_id=#{mem_id}
+   </update>
    
+   <!-- 회원 탈퇴 -->
+   	<update id="mDel_ok" >
+   		update member set mem_delcont=#{mem_delcont}, mem_state=2,
+   		mem_deldate=sysdate
+   		where mem_id=#{mem_id}
+   	</update>
  </mapper>
  
  

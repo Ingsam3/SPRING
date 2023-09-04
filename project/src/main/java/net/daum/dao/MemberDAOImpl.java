@@ -1,5 +1,6 @@
 package net.daum.dao;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -88,8 +89,53 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public MemberVO getMember(String id) {
 		
-		return this.sqlSession.selectOne("m_EditMember",id);
+		//return this.sqlSession.selectOne("m_EditMember",id);
+		
+		//JPA
+		System.out.println(" \n ==============> 아이디에 해당되는 회원정보 읽기(JPA)"
+				+ ":로그인 된 상태에서 실행하기 때문에 반드시 DB 회원정보 레코드가 있는 경우이다."
+				+ "이런 경우는 getReferenceById()내장메서드 사용하면 된다. ");
+		MemberVO m =this.memberRepo.getReferenceById(id);
+		
+		return m; 
 	}//아이디에 해당하는 회원정보 읽어오기
+
+	@Transactional
+	@Override
+	public void updateMember(MemberVO m) {
+		
+		this.sqlSession.update("medit_ok",m);
+		/*
+		System.out.println(" \n ==============> 회원 정보 수정 완료(JPQL문)");
+		this.memberRepo.updateMember(m.getMem_pwd(), m.getMem_name(),
+				m.getMem_zip(), m.getMem_zip2(), m.getMem_addr(), m.getMem_addr2(), 
+				m.getMem_phone01(), m.getMem_phone02(), m.getMem_phone03(),
+				m.getMail_id(), m.getMail_domain(), m.getMail_id());
+				*/
+		
+	}//회원 정보 수정 완료
+
+	@Override
+	public void delMem(MemberVO dm) {
+		//this.sqlSession.update("mDel_ok",dm);
+		
+		//JPA
+		System.out.println(" \n ==============>회원 탈퇴(JPQL문)");
+		Optional<MemberVO> result =this.memberRepo.findById(dm.getMail_id());
+		MemberVO member;
+		if(result.isPresent()) {
+			//아이디에 해당하는 회원 정보가 있다면
+			member =result.get();
+			//MemberVO 엔티티 타이 객체를 구함
+			member.setMem_delcont(dm.getMem_delcont());
+			//탈퇴 사유 저장
+			member.setMem_state(2);
+			//탈퇴회원일 때 2, 가입이면 1
+			member.setMem_deldate(new Timestamp(System.currentTimeMillis()));
+			//탈퇴 날짜 저장
+			this.memberRepo.save(member);
+		}
+	}//회원 탈퇴
 	
 	
 	
