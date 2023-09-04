@@ -230,94 +230,86 @@ public class MemberController {//사용자 회원관리
     	return null;
     }//member_edit()
     
-    
-    //회원 정보 수정 완료
+    //회원정보 수정완료
     @PostMapping("/member_update_ok")
-    public ModelAndView member_update_ok(MemberVO m ,HttpSession session,
-    		HttpServletResponse response)throws Exception {
-    	
+    public ModelAndView member_update_ok(MemberVO m,HttpServletResponse response,
+    		HttpSession session) throws Exception{
     	response.setContentType("text/html;charset=UTF-8");
-    	PrintWriter out = response.getWriter();
+    	PrintWriter out=response.getWriter();
     	
     	String id=(String)session.getAttribute("id");
     	
     	if(isLogin(session, response)) {
-    		m.setMail_id(id);
-    		m.setMem_pwd(PwdChange.getPassWordToXEMD5String(m.getMem_pwd()));
-    		//정식비번 암호화
-    		this.memberService.updateMember(m);
-    		//정보수정
-    		//아이디를 기준으로 비번, 회원이름, 우편번호, 주소, 폰번호, 전자우편까지 수정되게 만든다
-    		//medit_ok
+    		m.setMem_id(id);
+    		m.setMem_pwd(PwdChange.getPassWordToXEMD5String(m.getMem_pwd()));//정식 비번
+    		//암호화
+    		
+    		this.memberService.updateMember(m);//정보 수정
+    		/* 문제) 아이디를 기준으로 비번,회원이름,우편번호,주소,폰번호,전자우편까지 수정되게 만들어 본다.
+    		 * mybatis 유일 아이디명은 medit_ok로 한다.
+    		 */
+    		
     		out.println("<script>");
-        	out.println("alert('정보수정했습니다!');");
-        	out.println("location='member_edit';");
-        	out.println("</script>");
+    		out.println("alert('정보 수정했습니다!');");
+    		out.println("location='member_edit';");
+    		out.println("</script>");
     		
     	}
     	return null;
     }//member_update_ok()
     
-    //회원 탈퇴
+    //회원탈퇴 폼
     @RequestMapping("/member_del")
-    public ModelAndView member_del(HttpSession session,
-    		HttpServletResponse response)throws Exception {
-    	
+    public ModelAndView member_del(HttpServletResponse response,HttpSession session)
+    throws Exception{
     	response.setContentType("text/html;charset=UTF-8");
-    	String id =(String)session.getAttribute("id");
+    	String id=(String)session.getAttribute("id");
     	
     	if(isLogin(session, response)) {
     		MemberVO dm=this.memberService.getMember(id);
-    		//아이디에 해당하는 회원 정보 가져옴
-    		ModelAndView m =new ModelAndView("member/member_DeL");
-    		//생성자 인자값으로 뷰페이지 경로가 들어감
+    		
+    		ModelAndView m=new ModelAndView("member/member_DeL");//생성자 인자값으로 뷰페이지
+    		//경로가 들어감
     		m.addObject("dm",dm);
     		return m;
-    		
     	}
     	return null;
     }//member_del()
     
-    
-    //회원 탈퇴 완료
+    //회원탈퇴 완료
     @RequestMapping("/member_del_ok")
-    public ModelAndView member_del_ok(String del_pwd, String del_cont,
-    		HttpSession session,HttpServletResponse response) 
-    		throws Exception{
-		
-    	
+    public ModelAndView member_del_ok(String del_pwd,String del_cont,
+    		HttpServletResponse response,HttpSession session)
+    throws Exception{
     	response.setContentType("text/html;charset=UTF-8");
-    	PrintWriter out = response.getWriter();
-    	String id =(String)session.getAttribute("id");
+    	PrintWriter out=response.getWriter();
+    	String id = (String)session.getAttribute("id");
     	
-    	if(isLogin(session, response)) {//로그인 된 상태
-    		del_pwd = PwdChange.getPassWordToXEMD5String(del_pwd);
-    		//비번 암호화
-    		MemberVO db_pwd=this.memberService.getMember(id);
-    		
-    		if(!db_pwd.getMem_pwd().equals(del_pwd)) {
-    			out.println("<script>");
-            	out.println("alert('비번이 다릅니다!');");
-            	out.println("history.back();");
-            	out.println("</script>");
-    		}else {
-    			MemberVO dm=new MemberVO();
-    			dm.setMail_id(id); dm.setMem_delcont(del_cont);
-    			
-    			this.memberService.delMem(dm);
-    			//회원 탈퇴
-    			
-    			session.invalidate();
-    			//세션 만료=>로그아웃
-    			out.println("<script>");
-            	out.println("alert(' 회원 탈퇴 했습니다!');");
-            	out.println("location='member_login';");
-            	out.println("</script>");
-    		}
-    	}
-    	
+    	if(isLogin(session, response)) {
+    	  del_pwd = PwdChange.getPassWordToXEMD5String(del_pwd);//비번 암호화
+    	  MemberVO db_pwd = this.memberService.getMember(id);
+    	  
+    	  if(!db_pwd.getMem_pwd().equals(del_pwd)) {
+    		  out.println("<script>");
+    		  out.println("alert('비번이 다릅니다!');");
+    		  out.println("history.back();");
+    		  out.println("</script>");
+    	  }else {
+    		  MemberVO dm=new MemberVO();
+    		  dm.setMem_id(id); dm.setMem_delcont(del_cont);
+    		  
+    		  this.memberService.delMem(dm);//회원 탈퇴
+    		  
+    		  session.invalidate();//세션 만료=>로그아웃
+    		  
+    		  out.println("<script>");
+    		  out.println("alert('회원 탈퇴 했습니다!');");
+    		  out.println("location='member_login';");
+    		  out.println("</script>");    		  
+    	  }
+    	}    	
     	return null;
-	}//member_del_ok()
+    }//member_del_ok()
     
     //반복적인 코드를 하나로 줄이기
     public static boolean isLogin(HttpSession session,HttpServletResponse response)
