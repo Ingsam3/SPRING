@@ -59,7 +59,7 @@ input:focus {
 
 #m_id, #m_pwd, #m_name, #m_birth, #m_phone, #m_email, #m_gender, #pwd_ck
 	{
-	background-image: url('../images/people.png');
+	background-image: url('../images/member/people.png');
 	background-repeat: no-repeat;
 	background-size: 30px 30px;
 	background-position: 20px center;
@@ -73,23 +73,23 @@ input:focus {
 }
 
 #m_pwd, #pwd_ck {
-	background-image: url('../images/lock_icon.png');
+	background-image: url('../images/member/lock_icon.png');
 }
 
 #m_name {
-	background-image: url('../images/people.png');
+	background-image: url('../images/member/people.png');
 }
 
 #m_birth {
-	background-image: url('../images/calender.png');
+	background-image: url('../images/member/calender.png');
 }
 
 #m_phone {
-	background-image: url('../images/phone.png');
+	background-image: url('../images/member/phone.png');
 }
 
 #m_email {
-	background-image: url('../images/email.png');
+	background-image: url('../images/member/email.png');
 }
 
 #form3 {
@@ -149,7 +149,7 @@ input:focus {
 }
 
 .select {
-	background: url('../images/tel.png') calc(100% - 350px) center no-repeat;
+	background: url('../images/member/tel.png') calc(100% - 350px) center no-repeat;
 	background-size: 30px;
 }
 

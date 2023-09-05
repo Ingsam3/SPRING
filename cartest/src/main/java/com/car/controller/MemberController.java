@@ -2,7 +2,6 @@ package com.car.controller;
 
 import java.io.PrintWriter;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -16,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.car.service.MemberService;
 import com.car.vo.CarMemberVO;
-import com.car.vo.MemberVO;
 
 import pwdchange.CarPwdCh;
 
@@ -31,12 +29,9 @@ public class MemberController {
 	   public String service() {
 	      return "member/member";
 	   }
-	@GetMapping("m_login")
-	   public String memberLogin() {
-		   return "member/m_login";
-	   }
 	
 	
+	   //회원가입  
 	   @GetMapping("m_join")
 	   public String m_join( HttpServletResponse response) {
 		   response.setContentType("text/html;charset=UTF-8");
@@ -71,7 +66,7 @@ public class MemberController {
 	    }//member_idcheck()
 	  
 	   
-	    //회원저장
+	    //회원 가입 저장
 	    @RequestMapping("member_join_ok")
 	    public ModelAndView member_join_ok(CarMemberVO cm) {
 	    	
@@ -82,12 +77,58 @@ public class MemberController {
 	    }
 	    
 	    //회원 로그인
+	    @GetMapping("m_login")
+		   public String memberLogin() {
+			   return "member/m_login";
+		   }
 	    
-	    
-	    
-	   @GetMapping("test")
-	   public String test() {
-		   return "member/test";
-	   }
 	
+	    
+	    // 로그인 인증 처리
+	    //가입회원인 경우는 mem_state=1 일때 로그인 인증 처리(탈퇴 회원은 mem_state=2라서 로그인 인증 불가)
+	    @PostMapping("/m_login_ok")
+	    public ModelAndView member_login_ok(String login_id,String login_pwd,
+	    		HttpServletResponse response,HttpSession session) throws Exception{
+	        response.setContentType("text/html;charset=UTF-8");
+	        PrintWriter out=response.getWriter();
+	        
+	        CarMemberVO cm=this.memberService.loginCheck(login_id);//아이디와 가입회원 1인 경우만
+	        //로그인 인증 처리한다.
+	        
+	        if(cm == null) {
+	        	out.println("<script>");
+	        	out.println("alert('가입 안된 회원입니다.!');");
+	        	out.println("history.back();");
+	        	out.println("</script>");
+	        }else {
+	        	if(!cm.getM_pwd().equals(CarPwdCh.getPassWordToXEMD5String(login_pwd))) {
+	        		out.println("<script>");
+	        		out.println("alert('비번이 다릅니다!');");
+	        		out.println("history.go(-1);");
+	        		out.println("</script>");        		
+	        	}else {
+	        		session.setAttribute("id",login_id);//세션 id키이름에 아이디를 저장
+	        		return new ModelAndView("redirect:/member_login");
+	        	}
+	        }
+	    	return null;
+	    }//member_login_ok()
+	   
+	 //반복적인 코드를 하나로 줄이기 =>로그인 상태 확인
+	    public static boolean isLogin(HttpSession session,HttpServletResponse response)
+	    throws Exception{
+	    	PrintWriter out=response.getWriter();
+	    	String id=(String)session.getAttribute("id");
+	    	
+	    	if(id == null) {
+	    		out.println("<script>");
+	    		out.println("alert('다시 로그인 하세요!');");
+	    		out.println("location='member_login';");
+	    		out.println("</script>");
+	    		
+	    		return false;
+	    	}
+	    	return true;
+	    }//isLogin()
+	   
 }

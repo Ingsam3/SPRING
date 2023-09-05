@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>보험 안내</title>
-<link rel="stylesheet" href="${path}/resources/css/ins.css" />
+<link rel="stylesheet" href="${path}/resources/css/ins/ins.css" />
 </head>
 <body>
 <%-- include : main --%>

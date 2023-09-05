@@ -9,6 +9,8 @@ public interface MemberService {
 
 	void insertMember(CarMemberVO cm);
 
+	CarMemberVO loginCheck(String login_id);
+
 	
 
 }

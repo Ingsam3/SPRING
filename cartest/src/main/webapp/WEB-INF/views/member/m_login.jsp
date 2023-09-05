@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>carindrive : 로그인페이지</title>
 
-<link rel="stylesheet" type="text/css" href="${path}/resources/css/m_log.css">
+<link rel="stylesheet" type="text/css" href="${path}/resources/css/member/m_log.css">
 <script type="text/javascript" src="${path}/resources/js/m_login.js"></script>
 
 <script src="${path}/resources/js/jquery.js"></script>
@@ -19,7 +19,7 @@
 <%-- include : main --%>
 <%@ include file="../include/header.jsp" %>
 
-<form action="member_login_ok" method="post">
+<form action="m_login_ok" method="post">
 	<div id="wrap">
 		<div id="all_form">
 			<div id="logo">
@@ -42,7 +42,7 @@
 					<input type="checkbox" id="checkbox" name="checkbox"><label for="checkbox"><span>로그인 상태 유지</span></label>
 				</div><%--maitain_form --%>
 				<div id="button_form">
-					<input type="button" value="로그인" id="btn1" onclick="return logCk()">
+					<input type="submit" value="로그인" id="btn1" onclick="return logCk()">
 				</div>
 			</div><%--logform end --%>
 			<%--아이디, 비밀번호찾기 & 회원가입 --%>
@@ -53,9 +53,9 @@
 			</div>
 			<%-- SNS 로그인 --%>
 			<div id="social">
-				<a href="#"><img src="${path}/resources/images/naver_icon.png"  id="naver"></a>
-				<a href="#"><img src="${path}/resources/images/kakao_icon.png"id="kakao"></a>
-				<a href="#"><img src="${path}/resources/images/google_icon.png"  id="google"></a>
+				<a href="#"><img src="${path}/resources/images/member/naver_icon.png"  id="naver"></a>
+				<a href="#"><img src="${path}/resources/images/member/kakao_icon.png"id="kakao"></a>
+				<a href="#"><img src="${path}/resources/images/member/google_icon.png"  id="google"></a>
 			</div>
 			<%-- 기타--%>
 			<div id="ano">

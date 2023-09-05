@@ -9,6 +9,8 @@ public interface MemberDAO {
 
 	void insertMember(CarMemberVO cm);
 
+	CarMemberVO loginCheck(String login_id);
+
 
 
 

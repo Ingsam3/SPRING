@@ -1,7 +1,5 @@
 @charset "UTF-8";
 
-@charset "UTF-8";
-
 input[type="checkbox"] {
 	width: 1rem;
 	height: 1rem;
@@ -10,11 +8,6 @@ input[type="checkbox"] {
 	appearance: none;
 	cursor: pointer;
 	transition: background 0.2s;
-}
-
-#search {
-	font-size: 20px;
-	margin: 10px;
 }
 
 input[type="checkbox"]:checked {
@@ -29,7 +22,8 @@ input[type="checkbox"]:checked {
 	border-radius: 10px;
 	border: 1px solid #dcdcdc;
 	margin: 0 auto;
-	margin-top: 10px;
+	margin-top: 50px;
+	margin-bottom: 50px;
 }
 
 #logo {
@@ -65,7 +59,7 @@ input:focus {
 }
 
 #m_id, #m_pwd, #m_name, #m_birth, #m_phone, #m_email, #m_gender {
-	background-image: url('../images/people.png');
+	background-image: url('../images/member/people.png');
 	background-repeat: no-repeat;
 	background-size: 30px 30px;
 	background-position: 20px center;
@@ -79,7 +73,7 @@ input:focus {
 }
 
 #m_pwd {
-	background-image: url('../images/lock_icon.png');
+	background-image: url('../images/member/lock_icon.png');
 	background-size: 20px 20px;
 }
 
@@ -104,6 +98,10 @@ a {
 	color: #bebebe;
 }
 
+#another_form>a {
+	color: #8c8c8c;
+}
+
 #maintain {
 	font-size: 15px;
 	color: #8c8c8c;
@@ -116,7 +114,7 @@ input[id="checkbox"] {
 }
 
 label[for="checkbox"] {
-	margin-left: 6px;
+	margin-left: 10px;
 	cursor: pointer;
 }
 

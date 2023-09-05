@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>비밀번호 찾기 페이지</title>
-<link rel="stylesheet" type="text/css" href="${path}/resources/css/serch_pwd.css">
+<link rel="stylesheet" type="text/css" href="${path}/resources/css/member/serch_pwd.css">
 <script src="${path}/resources/js/jquery.js"></script>
 <script src="${path}/resources/js/s_pwd.js"></script>
 </head>
