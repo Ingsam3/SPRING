@@ -30,7 +30,12 @@
     </nav>
     
     <div class="login">
-    	<b><a href="${path}/member/m_login">로그인</a></b> | <b><a href="${path}/member/m_join">회원가입</a></b>
+	    <c:if test="${empty id}">
+	    	<b><a href="${path}/member/m_login">로그인</a></b> | <b><a href="${path}/member/m_join">회원가입</a></b>
+	    </c:if>
+	     <c:if test="${!empty id}">
+	    	 <b><span style="color: white;">${id}님</span><a href="${path}/"> 마이페이지</a></b> | <b><a href="${path}/member/m_logout">로그아웃</a></b> 
+	     </c:if>	
     </div>
   </header>
   
