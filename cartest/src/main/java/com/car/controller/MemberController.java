@@ -116,8 +116,25 @@ public class MemberController {
 	        }
 	    	return null;
 	    }//member_login_ok()
+	    
+	    //로그아웃
+	    @RequestMapping("/m_logout")
+	    public String m_logout(HttpServletResponse response,
+	    		HttpSession session) throws Exception{
+	    	response.setContentType("text/html;charset=UTF-8");
+	    	PrintWriter out=response.getWriter();
+	    	
+	    	session.invalidate();//세션 만료 => 로그아웃
+	    	
+	    	out.println("<script>");
+	    	out.println("alert('로그아웃 되었습니다!');");
+	    	out.println("</script>");
+	    	
+	    	return "main/index";
+	    }//m_logout()
+	    
 	   
-	 //반복적인 코드를 하나로 줄이기 =>로그인 상태 확인
+	    //반복적인 코드를 하나로 줄이기 =>로그인 상태 확인
 	    public static boolean isLogin(HttpSession session,HttpServletResponse response)
 	    throws Exception{
 	    	PrintWriter out=response.getWriter();
