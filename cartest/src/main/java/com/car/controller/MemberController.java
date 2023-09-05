@@ -87,13 +87,15 @@ public class MemberController {
 	    // 로그인 인증 처리
 	    //가입회원인 경우는 mem_state=1 일때 로그인 인증 처리(탈퇴 회원은 mem_state=2라서 로그인 인증 불가)
 	    @PostMapping("/m_login_ok")
-	    public ModelAndView member_login_ok(String login_id,String login_pwd,
+	    public String m_login_ok(String m_id,String m_pwd,
 	    		HttpServletResponse response,HttpSession session) throws Exception{
 	        response.setContentType("text/html;charset=UTF-8");
 	        PrintWriter out=response.getWriter();
 	        
-	        CarMemberVO cm=this.memberService.loginCheck(login_id);//아이디와 가입회원 1인 경우만
-	        //로그인 인증 처리한다.
+        	
+	        CarMemberVO cm=this.memberService.loginCheck(m_id);
+	        //아이디와 가입회원 1인 경우만로그인 인증 처리
+	        //login_id =m_id //login_pwd =m_pwd
 	        
 	        if(cm == null) {
 	        	out.println("<script>");
@@ -101,14 +103,15 @@ public class MemberController {
 	        	out.println("history.back();");
 	        	out.println("</script>");
 	        }else {
-	        	if(!cm.getM_pwd().equals(CarPwdCh.getPassWordToXEMD5String(login_pwd))) {
+	        	if(!cm.getM_pwd().equals(CarPwdCh.getPassWordToXEMD5String(m_pwd))) {
 	        		out.println("<script>");
 	        		out.println("alert('비번이 다릅니다!');");
 	        		out.println("history.go(-1);");
 	        		out.println("</script>");        		
 	        	}else {
-	        		session.setAttribute("id",login_id);//세션 id키이름에 아이디를 저장
-	        		return new ModelAndView("redirect:/member_login");
+	        		session.setAttribute("id",m_id);//세션 id키이름에 아이디를 저장
+	        		return "main/index";
+	        		
 	        	}
 	        }
 	    	return null;
@@ -130,5 +133,21 @@ public class MemberController {
 	    	}
 	    	return true;
 	    }//isLogin()
+	    
+	    //아이디 찾기 뷰페이지
+	    @RequestMapping("/serch_id")
+	    public String serch_id() {
+	    	
+	    	return "member/serch_id";
+	    }
+	    
+	    //비밀번호 찾기 뷰페이지
+	    @RequestMapping("/serch_pwd")
+	    public String serch_pwd() {
+	    	
+	    	return "member/serch_pwd";
+	    }
+	   
+	    
 	   
 }

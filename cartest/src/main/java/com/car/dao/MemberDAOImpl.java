@@ -29,10 +29,14 @@ public class MemberDAOImpl implements MemberDAO {
 		}//회원 저장
 
 		@Override
-		public CarMemberVO loginCheck(String login_id) {
+		public CarMemberVO loginCheck(String m_id) {
 			
-			return this.sqlSession.selectOne("C_login",login_id);
-		}//회원 로그인
+			return this.sqlSession.selectOne("C_mem_login",m_id);
+		}
+
+		
+		
+
 
 	
 }

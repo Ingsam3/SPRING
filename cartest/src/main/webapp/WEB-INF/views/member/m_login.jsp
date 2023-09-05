@@ -29,15 +29,16 @@
 			</div>
 			<div id="log_form">
 				<div id="id_form">
-					<input id="m_id" name="m_id" placeholder="아이디"
+					<input id="m_id" name="m_id" placeholder="아이디" 
 					onfocus="this.placeholder=''" onblur="this.placeholder='아이디'">
 					<span class="idck"></span>
 				</div><%--id_form --%>
 				<div id="pwd_form">
-					<input id="m_pwd" name="m_pwd" placeholder="비밀번호"
+					<input type="password" id="m_pwd" name="m_pwd" placeholder="비밀번호"
 					onfocus="this.placeholder=''" onblur="this.placeholder='비밀번호'">
 					<span class="pwdck"></span>
 				</div><%--pwd_form --%>
+				 
 				<div id="maintain">
 					<input type="checkbox" id="checkbox" name="checkbox"><label for="checkbox"><span>로그인 상태 유지</span></label>
 				</div><%--maitain_form --%>

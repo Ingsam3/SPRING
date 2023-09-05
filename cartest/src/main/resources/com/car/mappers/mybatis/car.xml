@@ -19,10 +19,11 @@
    		#{m_tel},#{m_phone},1,sysdate)
    	</insert>
    	
-   	<!-- 회원 로그인  -->
-   	<select id="C_login" resultType="car">
-   		select * from cid_members where m_id = #{login_id} and mem_state=1
+   	<!-- 회원 로그인 -->
+   	<select id="C_mem_login" resultType="car">
+   		select * from cid_members where m_id=#{m_id} and m_state=1
    	</select>
+  
  </mapper>
  
  

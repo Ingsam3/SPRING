@@ -65,7 +65,7 @@ input:focus {
 }
 
 #m_id, #m_pwd, #m_name, #m_birth, #m_phone, #m_email, #m_gender {
-	background-image: url('../images/member/people.png');
+	background-image: url('../../images/member/people.png');
 	background-repeat: no-repeat;
 	background-size: 30px 30px;
 	background-position: 20px center;
@@ -79,7 +79,7 @@ input:focus {
 }
 
 #m_pwd {
-	background-image: url('../images/member/lock_icon.png');
+	background-image: url('../../images/member/lock_icon.png');
 	background-size: 20px 20px;
 }
 

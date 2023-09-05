@@ -7,6 +7,7 @@
   <meta charset="UTF-8">
   <title>CarInDrive</title>
   <link rel="stylesheet" type="text/css" href="${path}/resources/css/main.css">
+  
 </head>
 <body>
   <header>

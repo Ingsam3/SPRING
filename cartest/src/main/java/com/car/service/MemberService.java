@@ -9,7 +9,7 @@ public interface MemberService {
 
 	void insertMember(CarMemberVO cm);
 
-	CarMemberVO loginCheck(String login_id);
+	CarMemberVO loginCheck(String m_id);
 
 	
 

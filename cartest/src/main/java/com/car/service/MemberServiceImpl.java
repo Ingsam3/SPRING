@@ -26,10 +26,12 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public CarMemberVO loginCheck(String login_id) {
+	public CarMemberVO loginCheck(String m_id) {
 		
-		return this.memberDao.loginCheck(login_id);
+		return this.memberDao.loginCheck(m_id);
 	}
+
+	
 
 	
 	
