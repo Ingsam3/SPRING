@@ -166,5 +166,13 @@ public class MemberController {
 	    }
 	   
 	    
+	    //이메일 인증 함수
+	    @RequestMapping("/test_email")
+	    public String test_email() {
+	    	
+	    	return null;
+	    }
+	    
+	    
 	   
 }

@@ -17,7 +17,7 @@
 		<div id="form_2">
 			<div id="ment">렌트카 보험 안내</div>
 			<hr>
-			<img alt="자차 보험 안내 이미지" src="${path}/resources/images/insurance.PNG">
+			<img alt="자차 보험 안내 이미지" src="${path}/resources/images/member/insurance.PNG">
 			<div id="ins_txt">
 			<div id="oltext">
 				<ol>
