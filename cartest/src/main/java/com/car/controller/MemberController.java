@@ -164,6 +164,13 @@ public class MemberController {
 	    	
 	    	return "member/serch_pwd";
 	    }
+	    
+	    //navertest
+	    @RequestMapping("/NaverLogin")
+	    public String NaverLogin() {
+	    	
+	    	return "member/NaverLogin";
+	    }
 	   
 	    
 	    //이메일 인증 함수
@@ -172,6 +179,8 @@ public class MemberController {
 	    	
 	    	return null;
 	    }
+	    
+	    
 	    
 	    
 	   
