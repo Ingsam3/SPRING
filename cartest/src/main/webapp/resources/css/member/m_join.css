@@ -2,7 +2,7 @@
 
 #wrap {
 	width: 500px;
-	height: 800px;
+	height: 900px;
 	background-color: white;
 	border-radius: 10px;
 	border: 1px solid #dcdcdc;
@@ -39,8 +39,8 @@
 }
 
 #idform, #pwdform, #nameform, #birthform, #phoneform, #emailform,
-	#genderform, #telform, #pwdCKform, #checkid {
-	width: 400px;
+	#genderform, #telform, #pwdCKform, #checkid,#email_select_form {
+	width: 400px; 
 	height: 50px;
 	margin: 0 auto;
 	margin-top: 20px;
@@ -88,7 +88,7 @@ input:focus {
 	background-image: url('../../images/member/phone.png');
 }
 
-#m_email {
+#m_email, #m_email_se {
 	background-image: url('../../images/member/email.png');
 }
 
@@ -143,7 +143,24 @@ input:focus {
 	color: #969696;
 }
 
-#telform>#m_tel>option {
+#email_select_form > #m_email_se{
+	margin: 0 auto;
+	width: 400px;
+	height: 50px;
+	border-radius: 10px;
+	border: 1px solid #dcdcdc;
+	margin-top: 20px;
+	font-size: 20px;
+	cursor: pointer;
+	color: #969696;
+}
+
+#email_select_form > #m_email_se>option{
+	
+}
+
+
+#telform>#m_tel>option,#email_select_form > #m_email_se>option {
 	text-align: center;
 	cursor: pointer;
 }

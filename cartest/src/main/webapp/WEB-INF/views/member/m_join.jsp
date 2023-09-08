@@ -58,6 +58,14 @@
 			<div id="emailform">
 				<input id="m_email" name="m_email" placeholder="이메일"
 				onfocus="this.placeholder=''" onblur="this.placeholder='이메일'">
+			</div>
+			<div id="email_select_form">	
+				<select id="m_email_se" name="m_email_se" class="select">
+		    		<option value="">이메일 선택</option>
+		    		<option value="naver">naver.com</option>
+		    		<option value="gmail">gmail.com</option>
+		    		<option value="daum">daum.net</option>
+				</select>
 				<span class="emailck"></span>
 			</div>
 			<div id="telform">

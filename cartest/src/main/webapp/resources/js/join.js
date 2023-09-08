@@ -57,6 +57,13 @@ function joinCheck(){
 		  $("#m_email").val("").focus();
 		  return false;
 	  }
+	  
+	  if(!m_email_se){
+          alert("이메일 선택된 항목이 없습니다.");
+          $('#m_email_se').focus();
+          return false;
+      }
+	 
 	
 	  let m_tel = $('#m_tel').val();
 
