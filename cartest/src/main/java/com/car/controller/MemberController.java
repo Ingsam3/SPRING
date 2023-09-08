@@ -5,17 +5,31 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.aspectj.apache.bcel.generic.MULTIANEWARRAY;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 
 import com.car.service.MemberService;
 import com.car.vo.CarMemberVO;
+import com.car.vo.OAuthToken;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.RequiredArgsConstructor;
 import pwdchange.CarPwdCh;
 
 @Controller
@@ -179,6 +193,88 @@ public class MemberController {
 	    	
 	    	return null;
 	    }
+	    //kakao callback
+
+	    @GetMapping("/kakaotest")
+	    public @ResponseBody String kakaotest(String code) {
+	    	   //Data를 리턴해주는 함수
+	    	
+	    	//POST 방식으로 key=value 데이터 요청(카카오 쪽으로)
+	    	RestTemplate rt = new RestTemplate();
+	    	
+	    	//HttpHeader 오브젝트 생성
+	    	HttpHeaders headers = new HttpHeaders();
+	    	headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+	    	//key-value 형태임을 알림
+	    	
+	    	//HttpBody 오브젝트 생성
+	    	MultiValueMap<String ,String> params = new LinkedMultiValueMap<>();
+	    	params.add("grant_type", "authorization_code");
+	    	params.add("client_id", "4094fcc6d950836e2f6c9f216ab46fef");
+	    	params.add("redirect_uri", "http://localhost:7990/member/kakaotest");
+	    	params.add("code", code);
+	    	//값들은 변수화시켜 넣는게 좋음
+	    	
+	    	//HttpHeader와 httpbody를 하나의 오브젝트에 담기
+	    	HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = 
+	    			new HttpEntity<>(params,headers);
+	    	
+	    	//Http 요청 - post 방식으로 - 그리고 response변수의 응답을 받음
+	    	ResponseEntity<String> response = rt.exchange(
+	    			
+	    			"https://kauth.kakao.com/oauth/token",
+	    			HttpMethod.POST,
+	    			kakaoTokenRequest,
+	    			String.class
+	    			//응답받을 타입
+	    			);
+	    	
+	    	
+	    	ObjectMapper obmapper = new ObjectMapper();
+	    	OAuthToken oauthToken =null;
+	    	
+	    	
+	    	
+	    	try {
+				oauthToken = obmapper.readValue(response.getBody(), OAuthToken.class);
+			} catch (JsonMappingException e) {
+				e.printStackTrace();
+			} catch (JsonProcessingException e) {
+	    	e.printStackTrace();
+			}
+	    	
+	    	System.out.println("카카오 엑세스토큰"+oauthToken.getAccess_token());
+	    	
+	    	
+	    	//두번째
+	    	//POST 방식으로 key=value 데이터 요청(카카오 쪽으로)
+	    	RestTemplate rt2 = new RestTemplate();
+	    	
+	    	//HttpHeader 오브젝트 생성
+	    	HttpHeaders headers2 = new HttpHeaders();
+	    	headers2.add("Authorization", "Bearer "+oauthToken.getAccess_token());
+	    	headers2.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+	    	//key-value 형태임을 알림
+	    	
+	    	
+	    	
+	    	//HttpHeader와 httpbody를 하나의 오브젝트에 담기
+	    	HttpEntity<MultiValueMap<String, String>> kakaoProfileRequest2 = 
+	    			new HttpEntity<>(headers2);
+	    	
+	    	//Http 요청 - post 방식으로 - 그리고 response변수의 응답을 받음
+	    	ResponseEntity<String> response2 = rt2.exchange(
+	    			
+	    			"https://kapi.kakao.com/v2/user/me",
+	    			HttpMethod.POST,
+	    			kakaoProfileRequest2,
+	    			String.class
+	    			//응답받을 타입
+	    			);
+	    	
+	    	System.out.println(response2.getBody());
+	    	return response2.getBody();
+	    }//카카오 로그인
 	    
 	    
 	    

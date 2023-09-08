@@ -55,8 +55,10 @@
 			<%-- SNS 로그인 --%>
 			<div id="social">
 				<a href="#"><img src="${path}/resources/images/member/naver_icon.png"  id="naver"></a>
-				<a href="javascript:KakaoLogin();"><img src="${path}/resources/images/member/kakao_icon.png"id="kakao"></a>
-				<a href="#"><img src="${path}/resources/images/member/google_icon.png"  id="google"></a>
+				<a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=4094fcc6d950836e2f6c9f216ab46fef&redirect_uri=http://localhost:7990/member/kakaotest">
+				<img src="${path}/resources/images/member/kakao_icon.png"id="kakao"></a>
+				<a href="#"><img src="${path}/resources/images/member/google_icon.png"  id="google">
+				</a>
 			</div>
 			<%-- 기타--%>
 			<div id="ano">
@@ -70,29 +72,7 @@
 <%-- include : footer --%>
 <%@ include file="../include/footer.jsp" %>
 
-<script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-<script type="text/javascript">
-	//e03721352dc063ea1cf8e656fdf9ae7d
-	window.Kakao.init("e03721352dc063ea1cf8e656fdf9ae7d");
-	
-	function KakaoLogin() {
-		window.Kakao.Auth.login({
-			scope:'profile_nickname,profile_image,gender',
-			success : function (authObj){
-				console.log(authObj);
-				window.Kakao.API.request({
-					url:'/v2/user/me',
-					success : res => {
-						const kakao_acount = res.kakao_acount;
-						console.log(kakao_account);
-					}
-					
-				});
-			}
-			
-		});
-	}
-</script>
+
 
 </body>
 </html>
