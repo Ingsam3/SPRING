@@ -1,6 +1,8 @@
 package com.car.controller;
 
 import java.io.PrintWriter;
+import java.net.http.HttpResponse;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -24,7 +26,9 @@ import org.springframework.http.ResponseEntity;
 
 import com.car.service.MemberService;
 import com.car.vo.CarMemberVO;
+import com.car.vo.KakaoProfile;
 import com.car.vo.OAuthToken;
+import com.car.vo.SocialVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -193,11 +197,14 @@ public class MemberController {
 	    	
 	    	return null;
 	    }
+	    
 	    //kakao callback
-
 	    @GetMapping("/kakaotest")
-	    public @ResponseBody String kakaotest(String code) {
+	    public @ResponseBody String kakaotest(String code, HttpServletResponse res) 
+	    throws Exception{
 	    	   //Data를 리턴해주는 함수
+	    	
+	    	PrintWriter out = res.getWriter();
 	    	
 	    	//POST 방식으로 key=value 데이터 요청(카카오 쪽으로)
 	    	RestTemplate rt = new RestTemplate();
@@ -233,8 +240,6 @@ public class MemberController {
 	    	ObjectMapper obmapper = new ObjectMapper();
 	    	OAuthToken oauthToken =null;
 	    	
-	    	
-	    	
 	    	try {
 				oauthToken = obmapper.readValue(response.getBody(), OAuthToken.class);
 			} catch (JsonMappingException e) {
@@ -255,7 +260,7 @@ public class MemberController {
 	    	headers2.add("Authorization", "Bearer "+oauthToken.getAccess_token());
 	    	headers2.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 	    	//key-value 형태임을 알림
-	    	
+	    	 
 	    	
 	    	
 	    	//HttpHeader와 httpbody를 하나의 오브젝트에 담기
@@ -273,7 +278,47 @@ public class MemberController {
 	    			);
 	    	
 	    	System.out.println(response2.getBody());
-	    	return response2.getBody();
+	    	
+	       	
+	    	//카카오 프로필 정보 받아오기
+	    	ObjectMapper obmapper2 = new ObjectMapper();
+	    	KakaoProfile kakaoProfile =null;
+	    	
+	    	try {
+	    		kakaoProfile = obmapper2.readValue(response2.getBody(), KakaoProfile.class);
+			} catch (JsonMappingException e) {
+				e.printStackTrace();
+			} catch (JsonProcessingException e) {
+	    	e.printStackTrace();
+			}
+	    	
+	    	//UserObject  (c_member 테이블 정보)
+	    	//아이디, 비밀번호, 생일, 이름, 이메일, 통신사, 전화번호, 가입회원 유무, 가입날짜
+	    	System.out.println("카카오 아이디:" +kakaoProfile.getId());
+	    	System.out.println("카카오 이메일:" +kakaoProfile.getKakao_account().getEmail());
+	
+	    	System.out.println("carindrive 카카오 유저 네임 :"+kakaoProfile.getKakao_account().getEmail()+"_"+kakaoProfile.getId());
+	    	System.out.println("carindrive 카카오 유저 이메일 :" + kakaoProfile.getKakao_account().getEmail());
+	    	
+	    	//임시 패스워드
+	    	UUID garbagePassword = UUID.randomUUID();
+	    	System.out.println("carindrive 카카오 유저 패스워드 :" + garbagePassword);
+	    	
+	    	//회원 테이블에 카카오 유저 정보 저장
+	    	SocialVO social = SocialVO.builder()
+	    			.username(kakaoProfile.getKakao_account().getEmail()+"_"+kakaoProfile.getId())
+	    			.password(garbagePassword.toString())
+	    			.email(kakaoProfile.getKakao_account().getEmail())
+	    			.build();
+	    	
+	    	//가입 유무 체크
+	    	//social =  memberService.socailSerch(kakaoProfile.getId());
+	    	
+	    	
+	    		//memberService.insertSocial(social);
+	    	
+	    	
+	    	return "회원가입 완료";
 	    }//카카오 로그인
 	    
 	    

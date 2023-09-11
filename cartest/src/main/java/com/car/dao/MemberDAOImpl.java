@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.car.vo.CarMemberVO;
 import com.car.vo.MemberVO;
+import com.car.vo.SocialVO;
 
 @Repository
 public class MemberDAOImpl implements MemberDAO {
@@ -34,6 +35,8 @@ public class MemberDAOImpl implements MemberDAO {
 			return this.sqlSession.selectOne("C_mem_login",m_id);
 		}
 
+	
+		
 		
 		
 

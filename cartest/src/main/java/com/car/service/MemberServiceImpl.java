@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.car.dao.MemberDAO;
 import com.car.vo.CarMemberVO;
+import com.car.vo.SocialVO;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -32,6 +33,10 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	
+
+	
+
+
 
 	
 	
