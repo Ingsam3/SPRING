@@ -200,11 +200,11 @@ public class MemberController {
 	    
 	    //kakao callback
 	    @GetMapping("/kakaotest")
-	    public @ResponseBody String kakaotest(String code, HttpServletResponse res) 
+	    public @ResponseBody String kakaotest(String code) 
 	    throws Exception{
 	    	   //Data를 리턴해주는 함수
 	    	
-	    	PrintWriter out = res.getWriter();
+	    	
 	    	
 	    	//POST 방식으로 key=value 데이터 요청(카카오 쪽으로)
 	    	RestTemplate rt = new RestTemplate();
@@ -304,6 +304,7 @@ public class MemberController {
 	    	UUID garbagePassword = UUID.randomUUID();
 	    	System.out.println("carindrive 카카오 유저 패스워드 :" + garbagePassword);
 	    	
+	    
 	    	//회원 테이블에 카카오 유저 정보 저장
 	    	SocialVO social = SocialVO.builder()
 	    			.username(kakaoProfile.getKakao_account().getEmail()+"_"+kakaoProfile.getId())
