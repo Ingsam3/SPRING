@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>carindrive : 회원가입 페이지</title>
 <link rel="stylesheet" type="text/css" href="${path}/resources/css/member/m_join.css">
-<script type="text/javascript" src="${path}/resources/js/join.js"></script>
+<script type="text/javascript" src="${path}/resources/js/member/join.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">

@@ -183,12 +183,6 @@ public class MemberController {
 	    	return "member/serch_pwd";
 	    }
 	    
-	    //navertest
-	    @RequestMapping("/NaverLogin")
-	    public String NaverLogin() {
-	    	
-	    	return "member/NaverLogin";
-	    }
 	   
 	    
 	    //이메일 인증 함수
@@ -313,10 +307,14 @@ public class MemberController {
 	    			.build();
 	    	
 	    	//가입 유무 체크
+	    	//SocialVO s= memberService.serchMem();
+	    	//MemberVO m=this.memberService.loginCheck(login_id);
+	    
+	    	
 	    	//social =  memberService.socailSerch(kakaoProfile.getId());
 	    	
-	    	
-	    		//memberService.insertSocial(social);
+	    	//JPA 회원가입  : int result = memberservice.insertSocial(social);
+	    	//memberService.insertSocial(social);
 	    	
 	    	
 	    	return "회원가입 완료";

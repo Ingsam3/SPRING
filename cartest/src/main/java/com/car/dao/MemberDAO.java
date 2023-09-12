@@ -12,11 +12,6 @@ public interface MemberDAO {
 
 	CarMemberVO loginCheck(String m_id);
 
-	
-
-	
-
-
 
 
 

@@ -8,7 +8,7 @@
 <title>carindrive : 로그인페이지</title>
 
 <link rel="stylesheet" type="text/css" href="${path}/resources/css/member/m_log.css">
-<script type="text/javascript" src="${path}/resources/js/m_login.js"></script>
+<script type="text/javascript" src="${path}/resources/js/member/m_login.js"></script>
 
 <script src="${path}/resources/js/jquery.js"></script>
 <script type="text/javascript" src="${path}/resources/js/m_login.js"></script>
