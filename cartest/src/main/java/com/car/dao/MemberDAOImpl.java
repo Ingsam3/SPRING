@@ -42,16 +42,23 @@ public class MemberDAOImpl implements MemberDAO {
 		}//로그인 유무 체크
 
 		@Transactional
-		public Integer insertSocial(SocialVO social) {
-			try {
-				socialRepo.save(social);
-				return 1;
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.out.println("회원가입");
-			}
-			return -1;
-		}//소셜로그인 회원가입
+		@Override
+		public void insertKakao(SocialVO kakaoUser) {
+			this.sqlSession.insert("insertKakao",kakaoUser );
+			
+			//JPA
+			//this.socialRepo.save(kakaoUser);
+			
+		}//카카오 회원가입
+
+		@Override
+		public SocialVO serchkakao(String userEmail) {
+			
+			return this.sqlSession.selectOne("serchKakao",userEmail);
+		}//카카오 로그인 확인
+
+	
+		
 		
 		
 		

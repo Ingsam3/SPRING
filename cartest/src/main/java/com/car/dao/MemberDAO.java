@@ -12,6 +12,12 @@ public interface MemberDAO {
 
 	CarMemberVO loginCheck(String m_id);
 
+	void insertKakao(SocialVO kakaoUser);
+
+	SocialVO serchkakao(String userEmail);
+
+
+
 
 
 

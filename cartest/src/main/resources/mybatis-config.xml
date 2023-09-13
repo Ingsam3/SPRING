@@ -8,7 +8,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 <configuration>
 	<typeAliases> <!-- 이 파일의 역할은 빈 클래스 객체 별칭이름을 관리 -->
 		<typeAlias type="com.car.vo.CarMemberVO" alias="car" />
-		<typeAlias type="com.car.vo.SocialVO" alias="social" />
-		              
+		<typeAlias type="com.car.vo.SocialVO" alias="social" />		              
 	</typeAliases>
 </configuration>

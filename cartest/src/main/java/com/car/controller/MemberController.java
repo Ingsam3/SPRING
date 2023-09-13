@@ -36,6 +36,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import pwdchange.CarPwdCh;
 
+
 @Controller
 @RequestMapping("/member/*")
 public class MemberController {
@@ -183,6 +184,7 @@ public class MemberController {
 	    	return "member/serch_pwd";
 	    }
 	    
+
 	   
 	    
 	    //이메일 인증 함수
@@ -194,7 +196,7 @@ public class MemberController {
 	    
 	    //kakao callback
 	    @GetMapping("/kakaotest")
-	    public @ResponseBody String kakaotest(String code) 
+	    public @ResponseBody ModelAndView kakaotest(String code , HttpSession session) 
 	    throws Exception{
 	    	   //Data를 리턴해주는 함수
 	    	
@@ -290,7 +292,7 @@ public class MemberController {
 	    	//아이디, 비밀번호, 생일, 이름, 이메일, 통신사, 전화번호, 가입회원 유무, 가입날짜
 	    	System.out.println("카카오 아이디:" +kakaoProfile.getId());
 	    	System.out.println("카카오 이메일:" +kakaoProfile.getKakao_account().getEmail());
-	
+	    	System.out.println("카카오 닉네임" +kakaoProfile.getKakao_account().getProfile().getNickname());
 	    	System.out.println("carindrive 카카오 유저 네임 :"+kakaoProfile.getKakao_account().getEmail()+"_"+kakaoProfile.getId());
 	    	System.out.println("carindrive 카카오 유저 이메일 :" + kakaoProfile.getKakao_account().getEmail());
 	    	
@@ -298,30 +300,96 @@ public class MemberController {
 	    	UUID garbagePassword = UUID.randomUUID();
 	    	System.out.println("carindrive 카카오 유저 패스워드 :" + garbagePassword);
 	    	
-	    
+	    /*
 	    	//회원 테이블에 카카오 유저 정보 저장
-	    	SocialVO social = SocialVO.builder()
+	    	SocialVO kakaoUser = SocialVO.builder()
+	    			.Id(kakaoProfile.getId())
 	    			.username(kakaoProfile.getKakao_account().getEmail()+"_"+kakaoProfile.getId())
 	    			.password(garbagePassword.toString())
 	    			.email(kakaoProfile.getKakao_account().getEmail())
 	    			.build();
 	    	
-	    	//가입 유무 체크
-	    	//SocialVO s= memberService.serchMem();
-	    	//MemberVO m=this.memberService.loginCheck(login_id);
-	    
+	    	*/
 	    	
-	    	//social =  memberService.socailSerch(kakaoProfile.getId());
+	    	//SocialVO에 카카오 유저 정보 저장
+	    	Long userId= kakaoProfile.getId();
+	    	String userPwd= garbagePassword.toString();
+	    	String userEmail=kakaoProfile.getKakao_account().getEmail();
+	    	String userName=kakaoProfile.getKakao_account().getEmail()+"_"+kakaoProfile.getId();
+	    	String userNickName=kakaoProfile.getKakao_account().getProfile().getNickname();
 	    	
-	    	//JPA 회원가입  : int result = memberservice.insertSocial(social);
-	    	//memberService.insertSocial(social);
+	    	System.out.println(userName);
+	    	
+	    	SocialVO kakaoUser = new SocialVO();
+	    	
+	    	kakaoUser.setPassword(userPwd);
+	    	kakaoUser.setEmail(userEmail);
+	    	kakaoUser.setUsername(userName);
 	    	
 	    	
-	    	return "회원가입 완료";
+	    	/*
+	    	//로그인 유무 체크
+	    	if(isLogin(session, responsek)) {//로그인 된 상태면
+	    		
+	    		out.println("<script>");
+	    		out.println("alert('이미 로그인 된 상태입니다!');");
+	    		out.println("history.back();");
+	    		out.println("</script>");
+	    		
+	    		
+	    	}else { //로그인 안 된 상태면
+	    		
+	    		
+	    		//회원 비회원 유무 파악
+		    	SocialVO originUser = this.memberService.serchkakao(userEmail);
+		    			    	
+		    	if(originUser == null) { // 가입 안 된 회원
+		    		//회원가입 -> DB에 넣어짐  
+			    	this.memberService.insertKakao(kakaoUser);
+			    	
+
+		    		session.setAttribute("id","사용자");//세션 id키이름에 아이디를 저장
+		    	
+	        		return "main/index";
+		        }else {// 가입 된 회원
+		        	
+		        	out.println("<script>");
+		        	out.println("alert('이미 가입한 회원입니다!');");
+		        	out.println("history.back();");
+		        	out.println("</script>");
+		          		
+		        	}
+	    	}
+	    	
+	    	
+	    	*/
+	    	
+	    	//회원 비회원 유무 파악
+	    	
+	    	System.out.println("1----------------");
+
+	    	SocialVO originUser = this.memberService.serchkakao(userEmail);
+	    	System.out.println("2----------------");
+	    	System.out.println(originUser);
+	    			    	
+	    	if(originUser == null) { // 가입 안 된 회원
+	    		//회원가입 -> DB에 넣어짐  
+		    	this.memberService.insertKakao(kakaoUser);
+		    	System.out.println("3----------------");
+
+	    		session.setAttribute("id",userNickName);//세션 id키이름에 유저 이메일을 저장
+	    		return  new ModelAndView("redirect:/rent/rent"); //일단 예약 화면으로 이동하게 
+	    		//return  new ModelAndView("redirect:/main/index"); //일단 예약 화면으로 이동하게 
+	    		//메인페이지로 이동이 안 됨. 뷰페이지 주소 이상
+	        }else {// 가입 된 회원
+	        	
+	        	return  new ModelAndView("redirect:/member/m_login");
+	    	
+	    	
 	    }//카카오 로그인
 	    
-	    
-	    
-	    
 	   
+	   
+	    }
+	    
 }

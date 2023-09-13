@@ -13,7 +13,10 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
 @Entity 
 @Table(name="social")//C_member 생성
 
@@ -23,9 +26,11 @@ import lombok.Builder;
 		initialValue = 1, //시작값
 		allocationSize = 1 // 기본값 - 50, 증가값 - 1
 		)
-@Builder
+//@Builder
 public class SocialVO { //SocialLogin 유저 정보 테이블
 
+	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	//프로젝트에 연결된 DB의 넘버링 전략을 따름 

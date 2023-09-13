@@ -32,5 +32,23 @@ public class MemberServiceImpl implements MemberService {
 		return this.memberDao.loginCheck(m_id);
 	}
 
+	@Override
+	public void insertKakao(SocialVO kakaoUser) {
+		this.memberDao.insertKakao(kakaoUser);
+		
+	}
+
+	@Override
+	public SocialVO serchkakao(String userEmail) {
+		
+		return this.memberDao.serchkakao(userEmail);
+	}
+
+
+
+	
+
+	
+
 	
 }

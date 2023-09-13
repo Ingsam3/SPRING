@@ -6,10 +6,10 @@
  
  <mapper namespace="Social">
  
- 	<!-- 소셜로그인 중복체크 -->
+ 	<!-- 소셜로그인 중복체크 
  	<select id="소셜로그인 중복 체크" resultType="Long">
  		select * from social where Id = #{Id}
- 	</select>
+ 	</select>-->
  
  	<!-- 소셜 로그인 회원가입 연동
  	<insert id="insertSocial" >
@@ -17,6 +17,20 @@
  		values(socail_seq.nextval(),#{},#{},#{},'user',sysdate)
  	</insert> -->
  	
+ 	
+ 	<!-- 카카오 회원가입 -->
+ 	<insert id="insertKakao" >
+ 		<!--insert into social(Id,username,password,email,role,create_date) 
+		values(DEFAULT,#{username},#{password},#{email},'user',sysdate);  -->
+		<!-- values(3,'1','1','1','user',sysdate); -->
+		insert into social(Id,username,password,email,role,createDate) 
+		values(DEFAULT,#{username},#{password},#{email},'user',sysdate)
+ 	</insert>
+ 	
+ 	<!-- 카카오 회원 찾기 -->
+ 	<select id="serchKakao" resultType="social">
+ 		select * from social where email =#{userEmail}
+ 	</select>
  	
  </mapper>
  

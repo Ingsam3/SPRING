@@ -30,7 +30,7 @@ import lombok.ToString;
 		)
 public class MemberVO { 
 
-	private int m_no;//번호값
+	//private int m_no;//번호값
 	@Id//식별키 기본키 컬럼
 	private String m_id; 
 	private String m_pwd; 
