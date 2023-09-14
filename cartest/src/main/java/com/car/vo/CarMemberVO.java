@@ -16,10 +16,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Entity
-@Table(name="cid_members")//C_member 생성
-@EqualsAndHashCode(of="m_id")
-/*equals(), hashcode(),canEquals() 메서드 자동 제공*/
 public class CarMemberVO { 
 
 	@Id//식별키 기본키 컬럼
@@ -33,8 +29,8 @@ public class CarMemberVO {
 	private int m_state; //가입회원이면 1, 탈퇴회원이면 2
 	
 	
-	@CreationTimestamp
-	private Timestamp regdate;//등록날짜
+
+	private Timestamp regdate;
 	
 	
 }

@@ -3,6 +3,7 @@ package com.car.controller;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.net.http.HttpResponse;
+import java.util.Random;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
@@ -36,6 +38,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
 import pwdchange.CarPwdCh;
+
 
 
 @Controller
@@ -177,7 +180,7 @@ public class MemberController {
 	    	
 	    	return "member/serch_id";
 	    }
-	    
+	 
 	    //비밀번호 찾기 뷰페이지
 	    @RequestMapping("/serch_pwd")
 	    public String serch_pwd() {
@@ -190,10 +193,28 @@ public class MemberController {
 	    
 	    //이메일 인증 함수
 	    @RequestMapping("/test_email")
-	    public String test_email() {
+	    public String test_email(String pwd_id,
+	    		String pwd_name,HttpServletResponse response,CarMemberVO m) {
+	    	
+	    	response.setContentType("text/html;charset=UTF-8");
+	    	//PrintWriter out=response.getWriter();//출력 스트림 out생성
+	    	/*
+	    	//m.setMem_id(pwd_id); m.setMem_name(pwd_name);
+	    	//CarMemberVO pm = this.memberService.pwdMember(m);//아이디와 회원이름을 기준으로 오라클로 
+	    	//부터 회원정보를 검색
+	    	
+	    	if(pm == null) {
+	    		out.println("<script>");
+	    		out.println("alert('회원으로 검색되지 않습니다!\\n"
+	    				+ " 올바른 아이디와 회원이름을 입력하세요!');");
+	    		out.println("history.go(-1);");
+	    		out.println("</script>");
+	    	}else {
+	    	*/
 	    	
 	    	return null;
 	    }
+	   
 	    
 	    //kakao callback
 	    @GetMapping("/kakaotest")
