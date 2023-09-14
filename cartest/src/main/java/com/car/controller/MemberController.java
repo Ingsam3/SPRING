@@ -1,6 +1,7 @@
 package com.car.controller;
 
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.net.http.HttpResponse;
 import java.util.UUID;
 
@@ -196,11 +197,11 @@ public class MemberController {
 	    
 	    //kakao callback
 	    @GetMapping("/kakaotest")
-	    public @ResponseBody ModelAndView kakaotest(String code , HttpSession session) 
+	    public @ResponseBody ModelAndView kakaotest(String code , HttpSession session, HttpServletResponse response) 
 	    throws Exception{
 	    	   //Data를 리턴해주는 함수
-	    	
-	    	
+	    	response.setContentType("text/html; charset=UTF-8");
+	    	PrintWriter out = response.getWriter();
 	    	
 	    	//POST 방식으로 key=value 데이터 요청(카카오 쪽으로)
 	    	RestTemplate rt = new RestTemplate();
@@ -216,14 +217,13 @@ public class MemberController {
 	    	params.add("client_id", "4094fcc6d950836e2f6c9f216ab46fef");
 	    	params.add("redirect_uri", "http://localhost:7990/member/kakaotest");
 	    	params.add("code", code);
-	    	//값들은 변수화시켜 넣는게 좋음
 	    	
 	    	//HttpHeader와 httpbody를 하나의 오브젝트에 담기
 	    	HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = 
 	    			new HttpEntity<>(params,headers);
 	    	
 	    	//Http 요청 - post 방식으로 - 그리고 response변수의 응답을 받음
-	    	ResponseEntity<String> response = rt.exchange(
+	    	ResponseEntity<String> response01 = rt.exchange(
 	    			
 	    			"https://kauth.kakao.com/oauth/token",
 	    			HttpMethod.POST,
@@ -237,7 +237,7 @@ public class MemberController {
 	    	OAuthToken oauthToken =null;
 	    	
 	    	try {
-				oauthToken = obmapper.readValue(response.getBody(), OAuthToken.class);
+				oauthToken = obmapper.readValue(response01.getBody(), OAuthToken.class);
 			} catch (JsonMappingException e) {
 				e.printStackTrace();
 			} catch (JsonProcessingException e) {
@@ -300,7 +300,7 @@ public class MemberController {
 	    	UUID garbagePassword = UUID.randomUUID();
 	    	System.out.println("carindrive 카카오 유저 패스워드 :" + garbagePassword);
 	    	
-	    /*
+	    /* Builder 
 	    	//회원 테이블에 카카오 유저 정보 저장
 	    	SocialVO kakaoUser = SocialVO.builder()
 	    			.Id(kakaoProfile.getId())
@@ -320,76 +320,57 @@ public class MemberController {
 	    	
 	    	System.out.println(userName);
 	    	
+	    	
 	    	SocialVO kakaoUser = new SocialVO();
 	    	
 	    	kakaoUser.setPassword(userPwd);
 	    	kakaoUser.setEmail(userEmail);
 	    	kakaoUser.setUsername(userName);
-	    	
-	    	
-	    	/*
-	    	//로그인 유무 체크
-	    	if(isLogin(session, responsek)) {//로그인 된 상태면
-	    		
-	    		out.println("<script>");
-	    		out.println("alert('이미 로그인 된 상태입니다!');");
-	    		out.println("history.back();");
-	    		out.println("</script>");
-	    		
-	    		
-	    	}else { //로그인 안 된 상태면
-	    		
-	    		
-	    		//회원 비회원 유무 파악
-		    	SocialVO originUser = this.memberService.serchkakao(userEmail);
-		    			    	
-		    	if(originUser == null) { // 가입 안 된 회원
-		    		//회원가입 -> DB에 넣어짐  
-			    	this.memberService.insertKakao(kakaoUser);
-			    	
-
-		    		session.setAttribute("id","사용자");//세션 id키이름에 아이디를 저장
-		    	
-	        		return "main/index";
-		        }else {// 가입 된 회원
-		        	
-		        	out.println("<script>");
-		        	out.println("alert('이미 가입한 회원입니다!');");
-		        	out.println("history.back();");
-		        	out.println("</script>");
-		          		
-		        	}
-	    	}
-	    	
-	    	
-	    	*/
-	    	
+	    	  	
 	    	//회원 비회원 유무 파악
-	    	
-	    	System.out.println("1----------------");
-
 	    	SocialVO originUser = this.memberService.serchkakao(userEmail);
-	    	System.out.println("2----------------");
+	    	System.out.println("1-------로그인 된 상태"); //로그인 된상태면 여기 출력
 	    	System.out.println(originUser);
+	    	
+	    		out.println("<script>");
+	    		out.println("alert('가입하시겠습니까?')");
+	    		out.println("</script>");
+	    	
 	    			    	
 	    	if(originUser == null) { // 가입 안 된 회원
 	    		//회원가입 -> DB에 넣어짐  
+	    		// 가입 안 되면 페이지 이동
+	    
 		    	this.memberService.insertKakao(kakaoUser);
-		    	System.out.println("3----------------");
+		    	System.out.println("2--------회원 가입 완료"); //회원가입 되면 여기출력
 
 	    		session.setAttribute("id",userNickName);//세션 id키이름에 유저 이메일을 저장
 	    		return  new ModelAndView("redirect:/rent/rent"); //일단 예약 화면으로 이동하게 
 	    		//return  new ModelAndView("redirect:/main/index"); //일단 예약 화면으로 이동하게 
 	    		//메인페이지로 이동이 안 됨. 뷰페이지 주소 이상
 	        }else {// 가입 된 회원
-	        	
-	        	return  new ModelAndView("redirect:/member/m_login");
+	        	session.setAttribute("id",userNickName);
+	        	return  new ModelAndView("redirect:/rent/rent");
 	    	
 	    	
-	    }//카카오 로그인
-	    
+	        }//else()
+	  	
+	    }//카카오 로그인 end
 	   
-	   
-	    }
 	    
-}
+	    //알림창
+	    public static void alertAndGo(HttpServletResponse response, String msg, String url) {
+	        try {
+	            response.setContentType("text/html; charset=utf-8");
+	            PrintWriter w = response.getWriter();
+	            w.write("<script>alert('"+msg+"');location.href='"+url+"';</script>");
+	            w.flush();
+	            w.close();
+	        } catch(Exception e) {
+	            e.printStackTrace();
+	        }
+	    }//alertAndGo()
+	    
+	    
+	    
+}//End

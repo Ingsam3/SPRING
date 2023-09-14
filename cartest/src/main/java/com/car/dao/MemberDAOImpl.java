@@ -13,8 +13,8 @@ import com.car.vo.SocialVO;
 @Repository
 public class MemberDAOImpl implements MemberDAO {
 
-		@Autowired
-		private MemberRepository memberRepo;
+	    /*@Autowired
+		private MemberRepository memberRepo;*/
 		
 		@Autowired
 		private SocialRepository socialRepo;

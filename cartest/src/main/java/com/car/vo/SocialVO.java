@@ -18,8 +18,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity 
-@Table(name="social")//C_member 생성
-
+@Table(name="social")
 @SequenceGenerator( //시퀀스 생성기를 설정하는 애노테이션
 		name=" socail_mem_seq", // 시퀀스 제너레이터 이름
 		sequenceName = "socail_seq", //시퀀스 이름
@@ -51,7 +50,6 @@ public class SocialVO { //SocialLogin 유저 정보 테이블
 	@CreationTimestamp // 시간 자동 입력
 	private Timestamp createDate;//가입날짜
 	
-	//전화번호는 권한 승인 되어야 사용가능
 	
 	
 	
