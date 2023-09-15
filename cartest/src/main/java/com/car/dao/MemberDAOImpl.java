@@ -57,6 +57,12 @@ public class MemberDAOImpl implements MemberDAO {
 			return this.sqlSession.selectOne("serchKakao",userEmail);
 		}//카카오 로그인 확인
 
+		@Override
+		public CarMemberVO serchUserEmail(String m_email) {
+			
+			return this.sqlSession.selectOne("Serch_email",m_email);
+		}//유저 이메일 체크
+
 	
 		
 		

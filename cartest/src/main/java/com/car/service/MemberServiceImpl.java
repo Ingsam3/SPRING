@@ -44,6 +44,12 @@ public class MemberServiceImpl implements MemberService {
 		return this.memberDao.serchkakao(userEmail);
 	}
 
+	@Override
+	public CarMemberVO serchUserEmail(String m_email) {
+		
+		return this.memberDao.serchUserEmail(m_email);
+	}
+
 
 
 	

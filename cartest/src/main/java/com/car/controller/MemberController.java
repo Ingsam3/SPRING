@@ -1,5 +1,6 @@
 package com.car.controller;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.net.http.HttpResponse;
@@ -26,7 +27,9 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
 
+import com.car.service.MailService;
 import com.car.service.MemberService;
 import com.car.vo.CarMemberVO;
 import com.car.vo.KakaoProfile;
@@ -47,6 +50,9 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	private final MailService mailService = null;
+
 	
 	@RequestMapping(value="/member", method=RequestMethod.GET)
 	   public String service() {
@@ -175,11 +181,46 @@ public class MemberController {
 	    }//isLogin()
 	    
 	    //아이디 찾기 뷰페이지
-	    @RequestMapping("/serch_id")
+	    @GetMapping("/serch_id")
 	    public String serch_id() {
 	    	
 	    	return "member/serch_id";
 	    }
+	    
+	    //유저 이메일 체크
+	    @PostMapping("/serch_id_email_ck")
+	    public CarMemberVO serch_id_email_ck(String m_name, String m_email
+	    		,HttpServletResponse response,HttpSession session) throws Exception {
+	    	
+	    	response.setContentType("text/html; charset=UTF-8");
+	    	PrintWriter out = response.getWriter();
+	    	
+	    	//회원 이메일 체크
+	    	CarMemberVO cm = this.memberService.serchUserEmail(m_email);
+	    	
+	    	if(cm == null) { // 비회원일 때
+	    		out.println("<script>");
+	        	out.println("alert('가입 안된 회원입니다.!');");
+	        	out.println("history.back();");
+	        	out.println("</script>");
+	    		
+	    	}else { //회원일 때
+	    		
+	    		//이메일 인증
+	    		
+	    		
+	    		//이메일 인증 성공시
+	    		//아이디 가져오기
+	    		System.out.println(cm.getM_id()); //아이디 가져와짐
+	    		//히든으로 있다가 아작스로 인증번호 일치하면 히든해체하여 아이디보이기 or 미니 창 띄우기
+	    		session.setAttribute("userid", cm.getM_id());
+	    		
+	    		return cm;
+	    	}
+	    	
+	    	return null;
+	    }
+	    
 	 
 	    //비밀번호 찾기 뷰페이지
 	    @RequestMapping("/serch_pwd")
@@ -189,31 +230,6 @@ public class MemberController {
 	    }
 	    
 
-	   
-	    
-	    //이메일 인증 함수
-	    @RequestMapping("/test_email")
-	    public String test_email(String pwd_id,
-	    		String pwd_name,HttpServletResponse response,CarMemberVO m) {
-	    	
-	    	response.setContentType("text/html;charset=UTF-8");
-	    	//PrintWriter out=response.getWriter();//출력 스트림 out생성
-	    	/*
-	    	//m.setMem_id(pwd_id); m.setMem_name(pwd_name);
-	    	//CarMemberVO pm = this.memberService.pwdMember(m);//아이디와 회원이름을 기준으로 오라클로 
-	    	//부터 회원정보를 검색
-	    	
-	    	if(pm == null) {
-	    		out.println("<script>");
-	    		out.println("alert('회원으로 검색되지 않습니다!\\n"
-	    				+ " 올바른 아이디와 회원이름을 입력하세요!');");
-	    		out.println("history.go(-1);");
-	    		out.println("</script>");
-	    	}else {
-	    	*/
-	    	
-	    	return null;
-	    }
 	   
 	    
 	    //kakao callback
@@ -394,4 +410,13 @@ public class MemberController {
 	    
 	    
 	    
+	    
+	    
+	    
+	    
+	    
 }//End
+
+
+
+

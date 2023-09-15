@@ -18,6 +18,8 @@ public interface MemberService {
 
 	SocialVO serchkakao(String userEmail);
 
+	CarMemberVO serchUserEmail(String m_email);
+
 
 	
 	

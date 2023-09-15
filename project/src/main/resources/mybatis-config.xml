@@ -14,5 +14,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="net.daum.vo.AdminVO" alias="admin" />                
 		<typeAlias type="net.daum.vo.MemberVO" alias="member" />                
 		<typeAlias type="net.daum.vo.ZipCodeVO" alias="zipcode" />                
+		<typeAlias type="net.daum.vo.BoardDTO" alias="board" />                
 	</typeAliases>
 </configuration>

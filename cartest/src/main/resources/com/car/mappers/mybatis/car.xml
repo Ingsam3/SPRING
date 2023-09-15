@@ -24,8 +24,16 @@
    		select * from cid_members where m_id=#{m_id} and m_state=1
    	</select>
   
+  	<!-- 관리자 로그인 -->
+   	<select id="admin_ck" resultType="car">
+   		select * from c_member where m_id=#{m_id} and m_state=9
+   	</select>
   
-  	
+	<!-- 유저 이메일 검색 -->
+  	<select id="Serch_email" resultType="car">
+  		select m_id from cid_members where m_email =#{m_email}
+  	</select>
+
  </mapper>
  
  
