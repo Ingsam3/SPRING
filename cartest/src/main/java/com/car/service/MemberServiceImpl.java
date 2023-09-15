@@ -1,6 +1,11 @@
 package com.car.service;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 
 import com.car.dao.MemberDAO;
@@ -50,6 +55,15 @@ public class MemberServiceImpl implements MemberService {
 		return this.memberDao.serchUserEmail(m_email);
 	}
 
+	@Override
+	public int sendMail(String m_email) {
+		return 0;
+		
+		
+	}//이메일 보내기
+		
+	}
+
 
 
 	
@@ -57,4 +71,4 @@ public class MemberServiceImpl implements MemberService {
 	
 
 	
-}
+

@@ -32,7 +32,7 @@
 					onfocus="this.placeholder=''" onblur="this.placeholder='이메일'">
 				</div>
 				<div id="button_form1">
-					<input type="button" id="btn01"  value="인증번호받기" onclick="return serch_email();">
+					<input type="submit" id="btn01"  value="인증번호받기" onclick="return serch_email();">
 				</div>
 				
 				<%-- 인증번호 받기 누르면 사용자 이메일로 가서 인증번호 받고, 
@@ -47,6 +47,7 @@
 					<input type="submit" id="btn02" value="찾기" onclick="return last_ck();">
 					<%--이메일 인증 안 되면 alert 이메일을 먼저 인증해주세요. --%>
 				
+			</div>
 			</div>
 	</div>
 </div>
