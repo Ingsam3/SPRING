@@ -1,4 +1,4 @@
-package com.car.controller;
+ package com.car.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -29,8 +29,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 
-import com.car.service.MailService;
 import com.car.service.MemberService;
+import com.car.service.RegisterMail;
 import com.car.vo.CarMemberVO;
 import com.car.vo.KakaoProfile;
 import com.car.vo.OAuthToken;
@@ -162,7 +162,7 @@ public class MemberController {
 	    }//m_logout()
 	    
 	   
-	    //반복적인 코드를 하나로 줄이기 =>로그인 상태 확인
+	    //로그인 상태 확인
 	    public static boolean isLogin(HttpSession session,HttpServletResponse response)
 	    throws Exception{
 	    	PrintWriter out=response.getWriter();
@@ -182,77 +182,51 @@ public class MemberController {
 	    //아이디 찾기 뷰페이지
 	    @GetMapping("/serch_id")
 	    public String serch_id() {
-	    	
+	    
 	    	return "member/serch_id";
 	    }
 	    
-	    private final MailService mailService = null;
-	    
-	    //유저 이메일 체크
-	    @ResponseBody
-	    @PostMapping("/serch_id_email_ck")
-	    public CarMemberVO serch_id_email_ck(String m_name, String m_email, String ck_email,
-	    		HttpServletResponse response,HttpSession session) throws Exception {
+	    //아이디 찾기 ok 뷰페이지
+	    @GetMapping("/serch_id_email_ok")
+	    public String serch_id_email_ok() {
 	    	
-	    	response.setContentType("text/html; charset=UTF-8");
-	    	PrintWriter out = response.getWriter();
-	    	System.out.println("=======1");
-	    	//회원 이메일 체크
-	    	CarMemberVO cm = this.memberService.serchUserEmail(m_email);
-	    	System.out.println("=======2");
-	    	
-	    	//String num = ""+ number;
-    		//return num; -->이 num이 사용자 인증 번호
-	    	
-	    	if(cm == null) { // 비회원일 때
-	    		out.println("<script>");
-	        	out.println("alert('가입 안된 회원입니다!');");
-	        	out.println("history.back();");
-	        	out.println("</script>");
-		    	System.out.println("=======3");
-
-	    		
-	    	}else { //회원일 때
-	    		
-		    	System.out.println("=======4");
-		    	
-	    		//이메일 인증
-	    		//int number = mailService.sendMail(m_email); 
-		    	int number = memberService.sendMail(m_email); 
-	    		//요기 실행 안 됨 m_email에 값 들어오지만,,,
-	    		//내생각엔 mail.Service가 문제인듯,,,
-		    	String num = "" + number;
-	    		
-		    	System.out.println(num);
-	    		System.out.println("=======5");
-		    	
-		    	
-	    		//number -> 사용자에게 보낸 인증번호
-	    		//ck_email -> 사용자가 입력한 인증번호 인데,String 이라 int로 형변환 해야함
-	    		
-	    		
-	    		int user_ck_email = Integer.parseInt(ck_email);
-	    		
-	    		if(number != user_ck_email){//일치하지 않을 때
-	    			
-	    			out.println("<script>");
-		        	out.println("alert('인증번호가 일치하지 않습니다!');");
-		        	out.println("history.back();");
-		        	out.println("</script>");
-	    		}else {//일치할 때
-	    			//이메일 인증 성공시
-	    			//아이디 가져오기
-	    			System.out.println(cm.getM_id()); //아이디 가져와짐
-	    			//히든으로 있다가 아작스로 인증번호 일치하면 히든해체하여 아이디보이기 or 미니 창 띄우기
-	    			session.setAttribute("userid", cm.getM_id());
-	    		
-	    			return cm;
-	    		}
-	    	}
-	    	
-	    	return null;
+	    	return "member/serch_id_email_ok";
 	    }
 	    
+	    
+	   //아이디 이메일 인증 
+	   @Autowired
+	   private RegisterMail registerMail;
+	   
+	    @PostMapping("serch_id_email_ck")
+	    @ResponseBody
+	    public ModelAndView mailConfirm(@RequestParam("m_email") String m_email,
+	         String ck_email, HttpSession session, HttpServletResponse response) throws Exception {
+	    	response.setContentType("text/html;charset=UTF-8");
+	    	PrintWriter out = response.getWriter();
+	    	//이메일 존재하는 지 인증
+	    	CarMemberVO cm = this.memberService.serchUserEmail(m_email);
+	    	
+	    	//존재하면 이메일 인증 실행
+	    	if(cm ==null) { //이메일 존재하지 않는다면 
+	    		out.println("<script>");
+	    		out.println("alert('사용자 정보가 존재하지 않습니다!');");
+	    		out.println("location='serch_id';");
+	    		out.println("</script>");
+	    		
+	    	}else {
+	    		//이메일 인증
+		    	String code = registerMail.sendSimpleMessage(m_email);
+			    System.out.println("인증코드 : " + code);
+			    
+			    session.setAttribute("code", code);		    
+		    	session.setAttribute("userid", cm.getM_id());
+			    
+			    return new ModelAndView("redirect:/member/serch_id_email_ok");
+	    	}
+
+			   return null;
+		}//mailConfirm()
 	 
 	    //비밀번호 찾기 뷰페이지
 	    @RequestMapping("/serch_pwd")
@@ -425,20 +399,9 @@ public class MemberController {
 	        }//else()
 	  	
 	    }//카카오 로그인 end
+
 	   
-	    
-	    //알림창
-	    public static void alertAndGo(HttpServletResponse response, String msg, String url) {
-	        try {
-	            response.setContentType("text/html; charset=utf-8");
-	            PrintWriter w = response.getWriter();
-	            w.write("<script>alert('"+msg+"');location.href='"+url+"';</script>");
-	            w.flush();
-	            w.close();
-	        } catch(Exception e) {
-	            e.printStackTrace();
-	        }
-	    }//alertAndGo()
+	  
 	    
 	    
 	    

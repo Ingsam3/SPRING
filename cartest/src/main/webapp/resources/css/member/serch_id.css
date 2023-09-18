@@ -6,8 +6,8 @@
 }
 
 #serchform {
-	width: 550px;
-	height: 480px;
+	width: 600px;
+	height: 550px;
 	border: 1px solid gray;
 	border-radius: 10px;
 	text-align: center;
@@ -81,4 +81,8 @@ hr{
 #name_form >div > p {
 	margin: 20px 0px 20px 0px;
 	
+}
+
+#button_form1, #name_form, #email_form{
+	margin-top: 60px;
 }

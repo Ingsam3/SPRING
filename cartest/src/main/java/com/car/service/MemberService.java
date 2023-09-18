@@ -20,7 +20,7 @@ public interface MemberService {
 
 	CarMemberVO serchUserEmail(String m_email);
 
-	int sendMail(String m_email);
+	
 	
 	
 

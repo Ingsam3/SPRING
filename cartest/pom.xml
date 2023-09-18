@@ -24,6 +24,7 @@
 	<dependencies>
 	
 		<!-- Mail설정 -->
+		
 	
 		<!--  jsp 실행 가능하게 함. -->
        <dependency>
@@ -45,11 +46,12 @@
          <version>05Nov2002</version>
         </dependency>
 	
-		<!-- SMTP -->
-		<dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
-        </dependency>
+		<!-- SpringBoot mailService -->
+	    <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-mail</artifactId>
+	      
+	    </dependency>
 		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
