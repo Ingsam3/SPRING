@@ -6,9 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>비밀번호 변경 페이지</title>
-<link rel="stylesheet" type="text/css" href="${path}/resources/css/member/change_pwd.css">
-<script src="${path}/resources/js/jquery.js"></script>
-<script type="text/javascript" src="${path}/resources/js/member/pwd_change.js"></script>
+<link rel="stylesheet" type="text/css" href="${path}/css/member/change_pwd.css">
+<script src="${path}/js/jquery.js"></script>
+<script type="text/javascript" src="${path}/js/member/pwd_change.js"></script>
 </head>
 <body>
 <%-- include : main --%>
