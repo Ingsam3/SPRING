@@ -33,6 +33,19 @@
   	<select id="Serch_email" resultType="car">
   		select m_id from cid_members where m_email =#{m_email}
   	</select>
+  	
+  	<!-- 시큐리티 로그인 -->
+  	<select id="getUserAccount" resultType="car">
+        SELECT * FROM TB_USER
+        WHERE USER_ID= #{userId}
+    </select>
+    
+    <!-- 시큐리티 회원가입 -->
+     <insert id="saveUser" >
+        INSERT INTO TB_USER
+        (USER_ID, USER_PW, USER_NAME, USER_AUTH, APPEND_DATE, UPDATE_DATE)
+        VALUES(#{userId},#{userPw},#{userName},#{userAuth},#{appendDate},#{updateDate});
+    </insert>
 
  </mapper>
  
