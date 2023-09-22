@@ -42,16 +42,9 @@ public class CarMemberVO {
 	private String user_auth; //회원 권한
 	private int m_state; //가입회원이면 1, 탈퇴회원이면 2
 	
-	
+	private boolean enabled;
 
 	private Timestamp regdate;
 	
-	 @ManyToMany
-	 @JoinTable(
-	            name = "user_role",
-	            joinColumns = @JoinColumn(name = "user_id"),
-	            inverseJoinColumns = @JoinColumn(name = "role_id"))
-	    private List<Role> roles = new ArrayList<>();
-	
-	
+
 }
