@@ -363,7 +363,7 @@ public class MemberController {
 	    	
 	    	System.out.println(userName);
 	    	
-	    	
+	    	//외래키 부분 이면 여기 수정,,,,
 	    	SocialVO kakaoUser = new SocialVO();
 	    	
 	    	kakaoUser.setPassword(userPwd);

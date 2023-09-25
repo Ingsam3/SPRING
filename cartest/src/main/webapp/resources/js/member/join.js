@@ -52,19 +52,32 @@ function joinCheck(){
 		  $("#m_birth").val("").focus();
 		  return false;
 	  }
+	  
+	  
+	  //생년월일 정규식
+	  let birthCk8 =/^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/;
+	   if(!birthCk8.test(m_birth.value)){
+		  alert("생년월일을 확인해주세요! ");
+		  $("#m_birth").val("").focus();
+		  return false;
+	  }
+	  
+	  
 	  if($.trim($("#m_email").val())== ""){
 		  alert("이메일을 입력하세요!");
 		  $("#m_email").val("").focus();
 		  return false;
 	  }
 	  
-	  if(!m_email_se){
-          alert("이메일 선택된 항목이 없습니다.");
-          $('#m_email_se').focus();
-          return false;
-      }
+	 //이메일 정규식
+	 let emailCktrue = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+	 if(!emailCktrue.test(m_email.value)){
+		  alert("이메일을 확인해주세요! ");
+		  $("#m_email").val("").focus();
+		  return false;
+	  }
 	 
-	
+	 
 	  let m_tel = $('#m_tel').val();
 
       if(!m_tel){
@@ -78,6 +91,16 @@ function joinCheck(){
 		  $("#m_phone").val("").focus();
 		  return false;
 	  }
+	  
+	  //폰번호 정규식 
+	  let phNumCk =/^(01[016789]{1})-?[0-9]{3,4}-?[0-9]{4}$/;
+	  
+	  if(!phNumCk.test(m_phone.value)){
+		  alert("휴대전화 번호를 확인해주세요! ");
+		  $("#m_phone").val("").focus();
+		  return false;
+	  }
+	  
 	  
 }
 

@@ -26,7 +26,7 @@
   
   	<!-- 관리자 로그인 -->
    	<select id="admin_ck" resultType="car">
-   		select * from c_member where m_id=#{m_id} and m_state=9
+   		select * from cid_member where m_id=#{m_id} and m_state=9
    	</select>
   
 	<!-- 유저 이메일 검색 -->
