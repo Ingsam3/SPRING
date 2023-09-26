@@ -1,4 +1,4 @@
-package com.car.vo;
+package com.carindrive.vo;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
