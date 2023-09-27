@@ -6,9 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
-<script src="../js/jquery.js"></script>
-<link href="${path}/resources/css/main.css" rel="stylesheet"/>
-<link href="${path}/resources/css/service.css" rel="stylesheet"/>
+<script src="${path}/js/jquery.js"></script>
+<script src="${path}/js/service.js"></script>
+<link href="${path}/css/main.css" rel="stylesheet"/>
+<link href="${path}/css/service.css" rel="stylesheet"/>
 </head>
 <body>
 <jsp:include page="../include/header.jsp"/>
@@ -17,44 +18,44 @@
 <div id="sub_menu">
  <ul>
   <li><h2><a href="${path}/service/service_center">고객센터</a></h2></li>
-  <li><h2><a href="${path}/service/service_qna">자주 묻는 질문</a></h2></li>
+  <li><h2><a href="${path}/service/service_question">자주 묻는 질문</a></h2></li>
   <li><h2><a href="${path}/service/service_notice">공지사항</a></h2></li>
+  <li><h2><a href="${path}/service/service_qboard">1대1문의</a></h2></li>
  </ul>
 </div>
 
 
 <main>
-    <form method="post" action="reg">
-        <div class="qna_write">
-            <table class="qna_write-table">
-		    <caption class="main title">1:1문의 등록</caption>
-                <tbody>
-                    <tr>
-                        <th>제목</th>
-                        <td class="qna" colspan="3">
-                            <input type="text" name="qna-title" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>첨부파일</th>
-                        <td class="qna" colspan="3">
-                        <input type="file" name="file" /> </td>
-                    </tr>
-                    <tr class="qna-content">
-                        <td colspan="4"><textarea class="qna-content" name="qna-content"></textarea></td>
-                    </tr>
-                    <tr>
-                        <td colspan="4" class="qna-lock">
-                        <input class="qna-lock" type="checkbox" id="open" name="open" value="true">
-                        <label for="open" class="margin-left">비밀글</label></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="qna-write-btns">
-            <input class="btn-write-ok" type="submit" value="등록" />
-            <a class="btn-write-cancel" href="list.html">취소</a>
-        </div>
+    <form method="post" action="qna_write_ok" 
+    	 enctype="multipart/form-data" onsubmit="return qna_check();">
+		<table class="write-table">
+	    <caption class="main title">1:1문의 등록</caption>
+	        <tbody>
+	            <tr>
+	                <th>제목</th>
+	                <td class="serivce" colspan="3">
+	                <input type="text" name="cq_title" id="cq_title" /></td>
+	            </tr>
+	            <tr>
+	                <th>첨부파일</th>
+	                <td class="serivce" colspan="3">
+	                <input type="file" name="cq_file" id="cq_file"/> </td>
+	            </tr>
+	             <tr>
+	                <th>게시물 비밀번호</th>
+	                <td class="serivce" colspan="3">
+	                <input type="password" id="cq_pwd" name="cq_pwd" placeholder="비밀번호를 입력하세요" /> </td>
+	            </tr>
+	            <tr class="content">
+	                <td colspan="4">
+	                <textarea class="cq_cont" id="cq_cont" name="cq_cont"></textarea></td>
+	            </tr>
+	        </tbody>
+        </table>
+        <div class="write-menu">
+			<input type="submit" value="저장" onclick="location='service_qboard?page=${page}';"/> 
+			<input type="button" value="취소" onclick="location='service_center';"/>
+		</div>
     </form>
 </main>
   

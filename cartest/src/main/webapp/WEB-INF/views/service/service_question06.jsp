@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
@@ -8,8 +8,8 @@
 <meta charset="UTF-8">
 <title></title>
 <script src="${path}/js/jquery.js"></script>
+<script src="${path}/js/accordion.js" defer></script>
 <script src="https://kit.fontawesome.com/8eb5905426.js" crossorigin="anonymous"></script>
-<script src="https://kit.fontawesome.com/ce494e5de1.js" crossorigin="anonymous"></script>
 <link href="${path}/css/main.css" rel="stylesheet"/>
 <link href="${path}/css/service.css" rel="stylesheet"/>
 </head>
@@ -34,6 +34,7 @@
  </ul>
 </div>
 
+
 <%-- 질문 검색바 --%>
 <form method="get" action="service_notice">
 <div class="search">
@@ -55,64 +56,23 @@
 </div>
 </form>
 
-<%-- 고객센터 주요 기능 바로가기  --%>
-<div class="shortcut">
-	<div class="shortcut1">
-		<i class="fa-solid fa-phone fa-2xl"></i><br>
-		<b>1111-1111</b><p>365일 24시간 운영</p>
-	</div>
-	<div class="shortcut2">
-		<i class="fa-regular fa-circle-question fa-2xl"></i><br>
-		<a href="${path}/service/service_question"><b>자주 묻는 질문</b></a>
-	</div>
-	<div class="shortcut3">
-		<i class="fa-solid fa-comments fa-2xl"></i><br>
-		<a href="${path}/service/service_qwrite"><b>1:1 문의 하기</b></a>
-	</div>
-</div>
 
-<%-- 최신 공지사항 목록 보기  --%>
-<main>
-<div class="center_nlist">
-	<table class="center_nlist-table">
-	<caption class="main_title">최신 공지사항</caption>
-		<tbody>
-		<tr>
-			<th class="nlist-title">제목</th>
-			<th class="nlist-date">날짜</th>
-		</tr>
-		<c:forEach var="g" items="${glist}">
-		<c:if test="${!empty glist}">
-				<tr>
-					<th>
-						<a href="service_ncont?cs_no=${g.cs_no}"> 
-						<c:if test="${fn:length(g.cs_title)>40}">
-       						${fn:substring(g.cs_title,0,40)}...
-      					</c:if> 
-      					<c:if test="${fn:length(g.cs_title)<40}">
-     						${g.cs_title}
-      					</c:if>
-						</a>
-					</th>
-					<th>${fn:substring(g.cs_date,0,10)}</th>
-				</tr>
-		</c:if>
-		<c:if test="${empty glist}">
-			<tr>
-				<th colspan="2">공지 목록이 없습니다!</th>
-			</tr>
-		</c:if>
-		</c:forEach>
-		</tbody>
-	</table>
-</div>
-</main>
-
-<%-- 공지사항 전체 보기 버튼 --%>
-<div class="notice-all-btn">
-	<a a href="${path}/service/service_notice" class="notice-all">공지사항 전체 보기</a>
-</div>
-<br><br>
+<c:if test="${!empty slist}">
+	<c:forEach var="s" items="${slist}">
+	<div class="accordion">
+		<div class="accordion-item">
+			<div class="accordion-item-header">
+				${s.cs_title}
+			</div>
+			<div class="accordion-item-body">
+				<div class="accordion-item-body-content">
+					${s.cs_cont}
+				</div>
+			</div>
+		</div>
+	</div>
+	</c:forEach>
+</c:if> 
 
 
 <jsp:include page="../include/footer.jsp"/>

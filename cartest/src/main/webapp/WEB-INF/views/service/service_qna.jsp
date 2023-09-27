@@ -6,10 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
-<script src="../js/jquery.js"></script>
+<script src="${path}/js/jquery.js"></script>
 <script src="https://kit.fontawesome.com/8eb5905426.js" crossorigin="anonymous"></script>
-<link href="${path}/resources/css/main.css" rel="stylesheet"/>
-<link href="${path}/resources/css/service.css" rel="stylesheet"/>
+<link href="${path}/css/main.css" rel="stylesheet"/>
+<link href="${path}/css/service.css" rel="stylesheet"/>
 </head>
 <body>
 <jsp:include page="../include/header.jsp"/>
